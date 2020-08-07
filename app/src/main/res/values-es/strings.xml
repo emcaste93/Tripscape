@@ -1,4 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="next">SIG</string>
+    <string name="back">ANT</string>
     <string name="app_name">Tripscape</string>
     <string name="accion_mostrar">Mostrar Lugares</string>
     <string name="accion_preferencias">Preferencias</string>
@@ -8,6 +11,4 @@
     <string name="fui_default_toolbar_title">Tipo de Autentificación</string>
     <string name="fui_sign_in_with_email">Entra con tu correo</string>
     <string name="fui_progress_dialog_signing_up">Creando cuenta...</string>
-    <string name="next">NEXT</string>
-    <string name="back">BACK</string>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -36,4 +36,46 @@
 
     <include layout="@layout/content_main" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|center">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backPageButton"
+            android:layout_gravity="center"
+            android:text="@string/back" />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/circle1"
+            android:src="@drawable/circle_full"
+            />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/circle2"
+            android:src="@drawable/circle_empty"
+            />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/circle3"
+            android:src="@drawable/circle_empty"
+            />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/circle4"
+            android:src="@drawable/circle_empty"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nextPageButton"
+            android:layout_gravity="center"
+            android:text="@string/next"/>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
