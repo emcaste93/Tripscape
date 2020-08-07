@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".presentation.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -34,7 +34,8 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_main" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_gravity="center" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -44,8 +45,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/backPageButton"
+            android:id="@+id/backButton"
             android:layout_gravity="center"
+            android:padding="5dp"
+            android:background="@color/colorBlue"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
             android:text="@string/back" />
         <ImageView
             android:layout_width="20dp"
@@ -74,8 +79,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/nextPageButton"
+            android:id="@+id/nextsButton"
             android:layout_gravity="center"
+            android:padding="5dp"
+            android:background="@color/colorBlue"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
             android:text="@string/next"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

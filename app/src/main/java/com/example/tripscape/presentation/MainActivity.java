@@ -1,9 +1,8 @@
-package com.example.tripscape.activities;
+package com.example.tripscape.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import com.example.tripscape.R;
 
