@@ -13,5 +13,14 @@
     <string name="date">Date</string>
     <string name="persons">Persons</string>
     <string name="enterData">Enter Data</string>
+    <string name="chooseDestination">Choose Destination</string>
     <string name="budget">Budget</string>
+    <string name="backPressedError">There is no previous page!</string>
+    <string name="nextPressedError">There is no next page!</string>
+    <string name="attractions">Attractions</string>
+    <string name="enterDataTitle">Enter your trip data</string>
+    <string name="chooseDestinationTitle">Choose destination</string>
+    <string name="manageActivitesTitle">Manage your activities</string>
+    <string name="detailsTitle">Activity Details</string>
+    <string name="tripPlanTitle">Trip Plan</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerItems">
+        <item>&#60;300€</item>
+        <item>&#60;500€</item>
+        <item>&#60;1000€</item>
+        <item>All</item>
+    </string-array>
+</resources>

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tripscape.R;
 
-public class FragmentSelector extends Fragment {
+public class EnterDataFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflador, ViewGroup contenedor,

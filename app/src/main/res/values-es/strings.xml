@@ -15,4 +15,15 @@
     <string name="persons">Personas</string>
     <string name="enterData">Introduce los datos</string>
     <string name="budget">Presupuesto</string>
+    <string name="chooseDestination">Elija destino</string>
+    <string name="backPressedError">No hay una página anterior!</string>
+    <string name="nextPressedError">No hay siguiente página!</string>
+    <string name="attractions">Atracciones</string>
+    <string name="enterDataTitle">Introduzca sus datos del viaje</string>
+    <string name="chooseDestinationTitle">Elija destino</string>
+    <string name="manageActivitesTitle">Seleccione sus actividades</string>
+    <string name="detailsTitle">Detalles de la actividad</string>
+    <string name="tripPlanTitle">Plan del viaje</string>
+
+
 </resources>
