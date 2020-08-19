@@ -16,4 +16,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorAccent">@color/colorBlue</item>
+    </style>
+
 </resources>
