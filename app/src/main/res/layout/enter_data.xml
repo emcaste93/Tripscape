@@ -100,18 +100,22 @@
             android:paddingBottom="50dp"
             android:textColor="@color/colorBlue"
             android:textSize="16sp" />
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:gravity="center_vertical"
-            android:background="@android:drawable/btn_dropdown"
-            android:textColor="@color/colorBlack"
-            android:spinnerMode="dropdown"
-            android:entries="@array/spinnerItems"/>
+        <LinearLayout android:orientation="horizontal" android:layout_column="1">
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorBlack"
+                android:spinnerMode="dropdown"
+                android:background="@android:drawable/btn_dropdown"
+                android:entries="@array/spinnerItems"/>
+            <!-- android:background="@android:drawable/btn_dropdown"-->
+            <!--style="@style/spinner_style"-->
+        </LinearLayout>
     </TableRow>
     <TableRow android:layout_marginTop="10dp">
         <TextView
@@ -121,15 +125,15 @@
             android:text="@string/attractions"
             android:textColor="@color/colorBlue"
             android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/attractions"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_marginLeft="10dp"
-            android:background="#fff"
-            android:hint="@string/attractions"
-            android:padding="5dp"
-            android:textColor="#000" />
+        <LinearLayout android:orientation="horizontal" android:layout_column="1">
+            <Button
+                android:id="@+id/buttonAttractions"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:background="@drawable/border"
+                android:hint="@string/attractions"
+                android:padding="5dp"
+                android:textColor="@color/colorBlack" />
+        </LinearLayout>
     </TableRow>
 </TableLayout>
