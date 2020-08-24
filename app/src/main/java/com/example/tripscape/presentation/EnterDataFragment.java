@@ -11,12 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.tripscape.R;
+import com.example.tripscape.model.Trip;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,10 +27,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EnterDataFragment extends Fragment {
-    Button buttonStartDate, buttonEndDate, buttonAttractions;
+    Button buttonStartDate, buttonEndDate, buttonAttractions, buttonPlus, buttonMinus;
     Context context;
     DatePickerDialog  startDate, endDate;
     Map<String, Boolean> mapAttractions  = new HashMap<>();
+    TextView txtViewNumPersons;
+    Trip trip;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,6 +43,16 @@ public class EnterDataFragment extends Fragment {
         buttonStartDate = vista.findViewById(R.id.buttonStartDate);
         buttonEndDate = vista.findViewById(R.id.buttonEndDate);
         buttonAttractions = vista.findViewById(R.id.buttonAttractions);
+        buttonPlus = vista.findViewById(R.id.buttonMorePersons);
+        buttonMinus = vista.findViewById(R.id.buttonLessPersons);
+        txtViewNumPersons = vista.findViewById(R.id.txtViewPersons);
+
+        //Get saved data from the trip
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            trip = (Trip) bundle.getSerializable("trip");
+
+        }
 
         initMapAttractions();
         setCalendars();
@@ -81,6 +97,26 @@ public class EnterDataFragment extends Fragment {
                 dialog.show();
             }
         });
+
+        buttonPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               trip.setNumPersons(trip.getNumPersons()+1);
+               txtViewNumPersons.setText(Integer.toString(trip.getNumPersons()));
+            }
+        });
+
+        buttonMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(trip.getNumPersons() == 1) {
+                    return ;
+                }
+                trip.setNumPersons(trip.getNumPersons()-1);
+                txtViewNumPersons.setText(Integer.toString(trip.getNumPersons()));
+            }
+        });
+
         return vista;
     }
 
@@ -108,8 +144,10 @@ public class EnterDataFragment extends Fragment {
     private String getSelectedAttractionsText() {
         String attractionsString = "";
         boolean first = true;
+        ArrayList<String> selectedActivities = new ArrayList<>();
         for(String key: mapAttractions.keySet()) {
             if(mapAttractions.get(key)) {
+                selectedActivities.add(key);
                 if(first) {
                     first = false;
                 }
@@ -119,6 +157,7 @@ public class EnterDataFragment extends Fragment {
                 attractionsString += key;
             }
         }
+        trip.setActivities(selectedActivities);
         return attractionsString;
     }
 

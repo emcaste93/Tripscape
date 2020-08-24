@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tripscape.R;
+import com.example.tripscape.model.Trip;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ImageView> circleList = new ArrayList<>();
     ArrayList<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList;
+    Trip trip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-         //       changeFragment(chooseDestinationFragment);
                 updateNextPageOverview(true, view);
             }
         });
@@ -44,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-           //     changeFragment(enterDataFragment);
                 updateNextPageOverview(false, view);
             }
         });
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         chooseDestinationFragment = new ChooseDestinationFragment();
         enterDataFragment = new EnterDataFragment();
+        trip = new Trip();
         changeFragment(enterDataFragment);
         c1 = findViewById(R.id.circle1);
         c2 = findViewById(R.id.circle2);
@@ -69,9 +70,13 @@ public class MainActivity extends AppCompatActivity {
         titleList =  Arrays.asList(getString(R.string.enterDataTitle), getString(R.string.chooseDestinationTitle),
                 getString(R.string.manageActivitesTitle),getString(R.string.tripPlanTitle));
 
+
     }
 
     private void changeFragment(Fragment fragment) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("trip", trip);
+        fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
