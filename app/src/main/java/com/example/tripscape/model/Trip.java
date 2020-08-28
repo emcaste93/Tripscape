@@ -69,4 +69,12 @@ public class Trip implements Serializable {
         this.activities = activities;
     }
 
+    public void addPerson() {
+        numPersons ++;
+    }
+
+    public void removePerson() {
+        numPersons --;
+    }
+
 }

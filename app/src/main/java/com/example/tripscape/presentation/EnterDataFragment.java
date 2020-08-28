@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -20,10 +18,10 @@ import com.example.tripscape.R;
 import com.example.tripscape.model.Trip;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +31,6 @@ public class EnterDataFragment extends Fragment {
     DatePickerDialog  startDate, endDate;
     Map<String, Boolean> mapAttractions  = new HashMap<>();
     TextView txtViewNumPersons;
-    Trip trip;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,10 +46,10 @@ public class EnterDataFragment extends Fragment {
         txtViewNumPersons = vista.findViewById(R.id.txtViewPersons);
 
         //Get saved data from the trip
-        Bundle bundle = getArguments();
+       /* Bundle bundle = getArguments();
         if(bundle != null) {
             trip = (Trip) bundle.getSerializable("trip");
-        }
+        }*/
 
         //init variables
         init();
@@ -101,23 +98,39 @@ public class EnterDataFragment extends Fragment {
         buttonPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               trip.setNumPersons(trip.getNumPersons()+1);
-               txtViewNumPersons.setText(Integer.toString(trip.getNumPersons()));
+               Trip.getInstance().addPerson();
+               txtViewNumPersons.setText(Integer.toString(getTripNumPersons()));
             }
         });
 
         buttonMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(trip.getNumPersons() == 1) {
+                if(getTripNumPersons() == 1) {
                     return ;
                 }
-                trip.setNumPersons(trip.getNumPersons()-1);
-                txtViewNumPersons.setText(Integer.toString(trip.getNumPersons()));
+                Trip.getInstance().removePerson();
+                txtViewNumPersons.setText(Integer.toString(getTripNumPersons()));
             }
         });
 
         return vista;
+    }
+
+    private int getTripNumPersons() {
+        return Trip.getInstance().getNumPersons();
+    }
+
+    private ArrayList<String> getTripActivities() {
+        return Trip.getInstance().getActivities();
+    }
+
+    private Date getTripStartDate() {
+        return Trip.getInstance().getStartDate();
+    }
+
+    private Date getTripEndDate() {
+        return Trip.getInstance().getEndDate();
     }
 
     private void init() {
@@ -127,10 +140,10 @@ public class EnterDataFragment extends Fragment {
     }
 
     private void initForm() {
-       txtViewNumPersons.setText(String.valueOf(trip.getNumPersons()));
+       txtViewNumPersons.setText(String.valueOf(getTripNumPersons()));
        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-       buttonStartDate.setText(simpleDateFormat.format(trip.getStartDate().getTime()));
-       buttonEndDate.setText(simpleDateFormat.format(trip.getEndDate().getTime()));
+       buttonStartDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
+       buttonEndDate.setText(simpleDateFormat.format(getTripEndDate().getTime()));
        buttonAttractions.setText(getSelectedAttractionsText());
     }
 
@@ -140,7 +153,7 @@ public class EnterDataFragment extends Fragment {
         mapAttractions.put("Rafting",false);
         mapAttractions.put("Sightseeing",false);
         mapAttractions.put("Other",false);
-        for (String activity: trip.getActivities()) {
+        for (String activity: getTripActivities()) {
             mapAttractions.put(activity,true);
         }
     }
@@ -174,7 +187,7 @@ public class EnterDataFragment extends Fragment {
                 attractionsString += key;
             }
         }
-        trip.setActivities(selectedActivities);
+        Trip.getInstance().setActivities(selectedActivities);
         return attractionsString;
     }
 
@@ -186,10 +199,10 @@ public class EnterDataFragment extends Fragment {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                if(simpleDateFormat.format(newDate.getTime()).compareTo(simpleDateFormat.format(trip.getEndDate())) <= 0 ) {
-                    trip.setStartDate(newDate.getTime());
+                if(simpleDateFormat.format(newDate.getTime()).compareTo(simpleDateFormat.format(getTripEndDate())) <= 0 ) {
+                    Trip.getInstance().setStartDate(newDate.getTime());
 
-                    buttonStartDate.setText(simpleDateFormat.format(trip.getStartDate().getTime()));
+                    buttonStartDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
                 }
                 else {
                     Snackbar.make(view, R.string.startDateError, Snackbar.LENGTH_LONG)
@@ -204,10 +217,10 @@ public class EnterDataFragment extends Fragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                if(newDate.getTime().compareTo(trip.getStartDate()) >= 0 ) {
-                    trip.setEndDate(newDate.getTime());
+                if(newDate.getTime().compareTo(getTripStartDate()) >= 0 ) {
+                    Trip.getInstance().setEndDate(newDate.getTime());
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    buttonEndDate.setText(simpleDateFormat.format(trip.getEndDate().getTime()));
+                    buttonEndDate.setText(simpleDateFormat.format(getTripEndDate().getTime()));
                 }
                 else {
                     Snackbar.make(view, R.string.endDateError, Snackbar.LENGTH_LONG)
@@ -224,7 +237,6 @@ public class EnterDataFragment extends Fragment {
     }
 
     @Override public void onDestroy() {
-        ((MainActivity) getActivity()).updateTrip(trip);
         super.onDestroy();
     }
 }

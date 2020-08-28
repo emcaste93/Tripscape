@@ -19,7 +19,6 @@ import com.example.tripscape.model.Trip;
 public class ChooseDestinationFragment extends Fragment {
     Context context;
     TableLayout tableLayout;
-    Trip trip;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,10 +29,10 @@ public class ChooseDestinationFragment extends Fragment {
         tableLayout = vista.findViewById(R.id.chooseDestinationPage);
 
         //Get saved data from the trip
-        Bundle bundle = getArguments();
-        if(bundle != null) {
+       /* Bundle bundle = getArguments();
+          if(bundle != null) {
             trip = (Trip) bundle.getSerializable("trip");
-        }
+        }*/
 
         addDestination();
         addDestination();

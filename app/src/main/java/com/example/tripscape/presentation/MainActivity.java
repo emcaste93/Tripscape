@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ImageView> circleList = new ArrayList<>();
     ArrayList<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList;
-    Trip trip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         chooseDestinationFragment = new ChooseDestinationFragment();
         enterDataFragment = new EnterDataFragment();
-        trip = new Trip();
         changeFragment(enterDataFragment);
         c1 = findViewById(R.id.circle1);
         c2 = findViewById(R.id.circle2);
@@ -75,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeFragment(Fragment fragment) {
-        Bundle bundle = new Bundle();
+       /* Bundle bundle = new Bundle();
         bundle.putSerializable("trip", trip);
-        fragment.setArguments(bundle);
+        fragment.setArguments(bundle);*/
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
@@ -107,9 +105,5 @@ public class MainActivity extends AppCompatActivity {
         txtView.setText(titleList.get(pageNum));
         newPage = circleList.get(pageNum);
         newPage.setImageResource(R.drawable.circle_full);
-    }
-
-    public void updateTrip(Trip trip){
-        this.trip = trip;
     }
 }
