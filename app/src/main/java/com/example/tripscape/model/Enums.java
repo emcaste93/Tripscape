@@ -20,7 +20,6 @@ public class Enums {
         Sightseeing,
         Skiing,
         Canoeing,
-        Snorkeling,
         Sailing,
         Wine_Tasting
     }

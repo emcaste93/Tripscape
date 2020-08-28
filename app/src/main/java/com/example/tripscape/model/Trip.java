@@ -11,6 +11,7 @@ public class Trip implements Serializable {
     private int numPersons, budget;
     private Date startDate, endDate;
     private ArrayList<Activity> activities;
+    private Location destination;
     private static Trip tripInstance;
 
     public Trip() {
@@ -21,6 +22,7 @@ public class Trip implements Serializable {
         budget = 500;
         startDate = new Date();
         endDate = new Date();
+        destination = null;
         activities = new ArrayList<>();
     }
 
@@ -29,6 +31,14 @@ public class Trip implements Serializable {
             tripInstance = new Trip();
         }
         return tripInstance;
+    }
+
+    public Location getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Location destination) {
+        this.destination = destination;
     }
 
     public int getNumPersons() {

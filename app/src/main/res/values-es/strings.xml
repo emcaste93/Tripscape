@@ -2,7 +2,7 @@
 <resources>
     <string name="next">SIG</string>
     <string name="back">ANT</string>
-    <string name="app_name">Tripscape</string>
+    <string name="app_name">Tripescape</string>
     <string name="accion_mostrar">Mostrar Lugares</string>
     <string name="accion_preferencias">Preferencias</string>
     <string name="accion_acerca_de">Acerca de </string>

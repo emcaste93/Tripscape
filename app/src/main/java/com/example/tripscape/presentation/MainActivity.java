@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Button buttonNext, buttonBack;
     ChooseDestinationFragment chooseDestinationFragment;
     EnterDataFragment enterDataFragment;
+    ManageActivitiesFragment manageActivitiesFragment;
     int pageNum = 0;
     ImageView c1, c2, c3, c4;
 
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         chooseDestinationFragment = new ChooseDestinationFragment();
         enterDataFragment = new EnterDataFragment();
+        manageActivitiesFragment = new ManageActivitiesFragment();
         changeFragment(enterDataFragment);
         c1 = findViewById(R.id.circle1);
         c2 = findViewById(R.id.circle2);
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         circleList.add(c4);
         fragmentList.add(enterDataFragment);
         fragmentList.add(chooseDestinationFragment);
+        fragmentList.add(manageActivitiesFragment);
         buttonNext =  findViewById(R.id.nextButton);
         buttonBack =  findViewById(R.id.backButton);
         titleList =  Arrays.asList(getString(R.string.enterDataTitle), getString(R.string.chooseDestinationTitle),

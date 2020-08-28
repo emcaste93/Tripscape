@@ -1,8 +1,11 @@
 package com.example.tripscape.presentation;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +18,19 @@ import android.widget.TableRow;
 import androidx.fragment.app.Fragment;
 import com.example.tripscape.R;
 import com.example.tripscape.data.FirestoreData;
-import com.example.tripscape.model.Attraction;
-import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Enums.Location;
+import com.example.tripscape.model.Trip;
+import com.google.android.material.button.MaterialButton;
 
 
 import java.util.List;
-
-import static com.example.tripscape.model.Enums.*;
 
 public class ChooseDestinationFragment extends Fragment {
     Context context;
     TableLayout tableLayout;
     List<Location> locationList;
     Button lastPressedButton;
+    Location destination;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,10 +42,12 @@ public class ChooseDestinationFragment extends Fragment {
 
         //TODO: Change this in order to get only the attractions for the Trip
         locationList = FirestoreData.getTripLocations();
+        destination = Trip.getInstance().getDestination();
 
         for (Location location: locationList) {
             addDestination(location);
         }
+
         return vista;
     }
 
@@ -64,21 +68,43 @@ public class ChooseDestinationFragment extends Fragment {
         imageView.getLayoutParams().width = (int) getResources().getDimension(R.dimen.imageview_width);
         tableRow.addView(imageView);
 
-        //int buttonStyle = R.style.button_style;
-        //(new ContextThemeWrapper(context, buttonStyle), null, buttonStyle);
+        final GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+        gradientDrawable.setStroke(5, getResources().getColor(R.color.colorBlue));
+        gradientDrawable.setColor(getResources().getColor(R.color.colorWhite));
+
         final Button button = new Button(context);
-        button.setBackgroundColor(getResources().getColor(R.color.colorGrey));
-        button.setText(location.toString());
+        button.setTextColor(getResources().getColor(R.color.colorBlue));
+        button.setText(location.toString() + System.getProperty("line.separator") + FirestoreData.getActivitiesForLocation(location).toString());
+        button.setBackground(gradientDrawable);
+
         rowParams.setMargins(0,20,100,0);
         button.setLayoutParams(rowParams);
+
+        if(destination == location) {
+            button.setBackgroundColor(getResources().getColor(R.color.colorLightGreen));
+            lastPressedButton = button;
+        }
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final GradientDrawable gradientDrawable = new GradientDrawable();
+                gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+                gradientDrawable.setStroke(5, getResources().getColor(R.color.colorBlue));
+
                 if (lastPressedButton != null) {
-                    lastPressedButton.setBackgroundColor(getResources().getColor(R.color.colorGrey));
+                    gradientDrawable.setColor(getResources().getColor(R.color.colorWhite));
+                    lastPressedButton.setBackground(gradientDrawable);
                 }
-                button.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                final GradientDrawable gradientDrawableActive = new GradientDrawable();
+                gradientDrawableActive.setShape(GradientDrawable.RECTANGLE);
+                gradientDrawableActive.setStroke(5, getResources().getColor(R.color.colorBlue));
+                gradientDrawableActive.setColor(getResources().getColor(R.color.colorLightGreen));
+                button.setBackground(gradientDrawableActive);
+                int firstLineSeparator = button.getText().toString().indexOf('\n');
+                String txt = button.getText().toString().substring(0,firstLineSeparator);
+                Trip.getInstance().setDestination(Location.valueOf(txt));
                 lastPressedButton = button;
             }
         });
