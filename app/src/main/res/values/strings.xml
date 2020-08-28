@@ -17,6 +17,8 @@
     <string name="budget">Budget</string>
     <string name="backPressedError">There is no previous page!</string>
     <string name="nextPressedError">There is no next page!</string>
+    <string name="endDateError">You cannot go to the past!</string>
+    <string name="startDateError">Incorrect start date!</string>
     <string name="attractions">Attractions</string>
     <string name="enterDataTitle">Enter your trip data</string>
     <string name="chooseDestinationTitle">Choose destination</string>

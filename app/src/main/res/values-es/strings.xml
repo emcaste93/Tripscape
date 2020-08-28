@@ -18,6 +18,8 @@
     <string name="chooseDestination">Elija destino</string>
     <string name="backPressedError">No hay una página anterior!</string>
     <string name="nextPressedError">No hay siguiente página!</string>
+    <string name="endDateError">No se puede ir al pasado!</string>
+    <string name="startDateError">Fecha de inicio incorrecta!</string>
     <string name="attractions">Atracciones</string>
     <string name="enterDataTitle">Introduzca sus datos del viaje</string>
     <string name="chooseDestinationTitle">Elija destino</string>

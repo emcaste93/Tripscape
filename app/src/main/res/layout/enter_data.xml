@@ -49,18 +49,18 @@
             android:textColor="@color/colorBlue"
             android:textSize="16sp" />
         <LinearLayout android:orientation="horizontal" android:layout_column="1">
+
             <Button
                 android:id="@+id/buttonLessPersons"
-                android:layout_height="30dp"
                 android:layout_width="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="30dp"
                 android:layout_column="1"
+                android:layout_marginTop="20dp"
                 android:background="@color/colorBlue"
-                android:text="-"
                 android:padding="5dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorWhite" />
+                android:text="-"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/txtViewPersons"
                 android:layout_height="30dp"
@@ -92,13 +92,13 @@
 
     </TableRow>
     <TableRow android:layout_marginTop="10dp">
+
         <TextView
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:text="@string/budget"
-            android:paddingBottom="50dp"
             android:textColor="@color/colorBlue"
             android:textSize="16sp" />
         <LinearLayout android:orientation="horizontal" android:layout_column="1">
@@ -119,22 +119,26 @@
         </LinearLayout>
     </TableRow>
     <TableRow android:layout_marginTop="10dp">
+
         <TextView
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/attractions"
             android:textColor="@color/colorBlue"
             android:textSize="16sp" />
         <LinearLayout android:orientation="horizontal" android:layout_column="1">
+
             <Button
                 android:id="@+id/buttonAttractions"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:hint="@string/attractions"
                 android:padding="5dp"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorBlack"
+                android:textSize="10sp" />
         </LinearLayout>
     </TableRow>
 </TableLayout>

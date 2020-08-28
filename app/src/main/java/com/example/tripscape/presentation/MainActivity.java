@@ -33,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+
+        //initialise variables
         init();
+
         //Add action listeners for buttons
         buttonNext.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -69,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
         buttonBack =  findViewById(R.id.backButton);
         titleList =  Arrays.asList(getString(R.string.enterDataTitle), getString(R.string.chooseDestinationTitle),
                 getString(R.string.manageActivitesTitle),getString(R.string.tripPlanTitle));
-
-
     }
 
     private void changeFragment(Fragment fragment) {
@@ -106,5 +107,9 @@ public class MainActivity extends AppCompatActivity {
         txtView.setText(titleList.get(pageNum));
         newPage = circleList.get(pageNum);
         newPage.setImageResource(R.drawable.circle_full);
+    }
+
+    public void updateTrip(Trip trip){
+        this.trip = trip;
     }
 }

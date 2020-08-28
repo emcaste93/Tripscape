@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tripscape.R;
 import com.example.tripscape.model.Trip;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -51,11 +52,10 @@ public class EnterDataFragment extends Fragment {
         Bundle bundle = getArguments();
         if(bundle != null) {
             trip = (Trip) bundle.getSerializable("trip");
-
         }
 
-        initMapAttractions();
-        setCalendars();
+        //init variables
+        init();
 
         buttonStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,12 +120,29 @@ public class EnterDataFragment extends Fragment {
         return vista;
     }
 
+    private void init() {
+        initMapAttractions();
+        initForm();
+        initCalendars();
+    }
+
+    private void initForm() {
+       txtViewNumPersons.setText(String.valueOf(trip.getNumPersons()));
+       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+       buttonStartDate.setText(simpleDateFormat.format(trip.getStartDate().getTime()));
+       buttonEndDate.setText(simpleDateFormat.format(trip.getEndDate().getTime()));
+       buttonAttractions.setText(getSelectedAttractionsText());
+    }
+
     private void initMapAttractions() {
         mapAttractions.put("Hiking",false);
         mapAttractions.put("Snorkeling",true);
         mapAttractions.put("Rafting",false);
-        mapAttractions.put("City",false);
+        mapAttractions.put("Sightseeing",false);
         mapAttractions.put("Other",false);
+        for (String activity: trip.getActivities()) {
+            mapAttractions.put(activity,true);
+        }
     }
 
     private String[] getAllAttractionsKeys() {
@@ -162,14 +179,22 @@ public class EnterDataFragment extends Fragment {
     }
 
 
-    private void setCalendars(){
+    private void initCalendars(){
         final Calendar startCalendar = Calendar.getInstance();
         startDate = new DatePickerDialog(context, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                buttonStartDate.setText(simpleDateFormat.format(newDate.getTime()));
+                if(simpleDateFormat.format(newDate.getTime()).compareTo(simpleDateFormat.format(trip.getEndDate())) <= 0 ) {
+                    trip.setStartDate(newDate.getTime());
+
+                    buttonStartDate.setText(simpleDateFormat.format(trip.getStartDate().getTime()));
+                }
+                else {
+                    Snackbar.make(view, R.string.startDateError, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
 
         }, startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.MONTH), startCalendar.get(Calendar.DAY_OF_MONTH));
@@ -179,8 +204,15 @@ public class EnterDataFragment extends Fragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                buttonEndDate.setText(simpleDateFormat.format(newDate.getTime()));
+                if(newDate.getTime().compareTo(trip.getStartDate()) >= 0 ) {
+                    trip.setEndDate(newDate.getTime());
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    buttonEndDate.setText(simpleDateFormat.format(trip.getEndDate().getTime()));
+                }
+                else {
+                    Snackbar.make(view, R.string.endDateError, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
 
         }, endCalendar.get(Calendar.YEAR), endCalendar.get(Calendar.MONTH), endCalendar.get(Calendar.DAY_OF_MONTH));
@@ -192,6 +224,7 @@ public class EnterDataFragment extends Fragment {
     }
 
     @Override public void onDestroy() {
+        ((MainActivity) getActivity()).updateTrip(trip);
         super.onDestroy();
     }
 }

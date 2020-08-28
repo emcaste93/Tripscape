@@ -14,10 +14,12 @@ import android.widget.TableRow;
 import androidx.fragment.app.Fragment;
 
 import com.example.tripscape.R;
+import com.example.tripscape.model.Trip;
 
 public class ChooseDestinationFragment extends Fragment {
     Context context;
     TableLayout tableLayout;
+    Trip trip;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,6 +28,13 @@ public class ChooseDestinationFragment extends Fragment {
                 container, false);
         context = container.getContext();
         tableLayout = vista.findViewById(R.id.chooseDestinationPage);
+
+        //Get saved data from the trip
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            trip = (Trip) bundle.getSerializable("trip");
+        }
+
         addDestination();
         addDestination();
         addDestination();

@@ -9,14 +9,26 @@ public class Trip implements Serializable {
     private int numPersons, budget;
     private Date startDate, endDate;
     private ArrayList<String> activities;
+    private static Trip tripInstance;
 
     public Trip() {
+        if (tripInstance != null){
+            throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
+        }
         numPersons = 2;
         budget = 500;
         startDate = new Date();
         endDate = new Date();
         activities = new ArrayList<>();
     }
+
+    public static Trip getInstance(){
+        if (tripInstance == null){ //if there is no instance available... create new one
+            tripInstance = new Trip();
+        }
+        return tripInstance;
+    }
+
     public int getNumPersons() {
         return numPersons;
     }
@@ -56,6 +68,5 @@ public class Trip implements Serializable {
     public void setActivities(ArrayList<String> activities) {
         this.activities = activities;
     }
-
 
 }
