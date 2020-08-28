@@ -6,4 +6,5 @@
     <color name="colorLightGreen">#1CFF95</color>
     <color name="colorGreen">#21AD1C</color>
     <color name="colorRed">#FF0000</color>
+    <color name="colorGrey">#C0C0C0</color>
 </resources>

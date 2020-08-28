@@ -112,9 +112,8 @@
                 android:gravity="center_vertical"
                 android:textColor="@color/colorBlack"
                 android:spinnerMode="dropdown"
-                android:background="@android:drawable/btn_dropdown"
-                android:entries="@array/spinnerItems"/>
-            <!-- android:background="@android:drawable/btn_dropdown"-->
+                android:entries="@array/spinnerItems"
+                android:background="@android:drawable/btn_dropdown" />
             <!--style="@style/spinner_style"-->
         </LinearLayout>
     </TableRow>

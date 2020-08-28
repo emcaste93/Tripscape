@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.tripscape.model.Enums.*;
+
 public class Trip implements Serializable {
 
     private int numPersons, budget;
     private Date startDate, endDate;
-    private ArrayList<String> activities;
+    private ArrayList<Activity> activities;
     private static Trip tripInstance;
 
     public Trip() {
@@ -61,11 +63,11 @@ public class Trip implements Serializable {
         this.endDate = endDate;
     }
 
-    public ArrayList<String> getActivities() {
+    public ArrayList<Activity> getActivities() {
         return activities;
     }
 
-    public void setActivities(ArrayList<String> activities) {
+    public void setActivities(ArrayList<Activity> activities) {
         this.activities = activities;
     }
 

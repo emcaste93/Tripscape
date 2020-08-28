@@ -2,9 +2,11 @@ package com.example.tripscape.model;
 
 import java.util.List;
 
+import static com.example.tripscape.model.Enums.*;
+
 public class Attraction {
-    private String name;
-    private Enums.Location location;
+    private Activity activity;
+    private Location location;
     private int price;
     private boolean transportation;
     private String duration;
@@ -13,8 +15,8 @@ public class Attraction {
     private List<String>  seasonsAvailable;
     private String link;
 
-    public Attraction(String name, Enums.Location location, int price, boolean transportation, String duration, String startLocation, String startTime, List<String> seasonsAvailable, String link) {
-        this.name = name;
+    public Attraction(Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime, List<String> seasonsAvailable, String link) {
+        this.activity = activity;
         this.location = location;
         this.price = price;
         this.transportation = transportation;
@@ -25,19 +27,19 @@ public class Attraction {
         this.link = link;
     }
 
-    public String getName() {
-        return name;
+    public Activity getActivity() {
+        return activity;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 
-    public Enums.Location getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(Enums.Location location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 

@@ -8,13 +8,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.tripscape.R;
+import com.example.tripscape.data.FirestoreData;
 import com.example.tripscape.model.Trip;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -25,12 +28,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.tripscape.model.Enums.*;
+
 public class EnterDataFragment extends Fragment {
     Button buttonStartDate, buttonEndDate, buttonAttractions, buttonPlus, buttonMinus;
     Context context;
     DatePickerDialog  startDate, endDate;
     Map<String, Boolean> mapAttractions  = new HashMap<>();
     TextView txtViewNumPersons;
+    Spinner spinnerActivities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +50,7 @@ public class EnterDataFragment extends Fragment {
         buttonPlus = vista.findViewById(R.id.buttonMorePersons);
         buttonMinus = vista.findViewById(R.id.buttonLessPersons);
         txtViewNumPersons = vista.findViewById(R.id.txtViewPersons);
+        spinnerActivities = vista.findViewById(R.id.spinner1);
 
         //Get saved data from the trip
        /* Bundle bundle = getArguments();
@@ -121,7 +128,7 @@ public class EnterDataFragment extends Fragment {
         return Trip.getInstance().getNumPersons();
     }
 
-    private ArrayList<String> getTripActivities() {
+    private ArrayList<Activity> getTripActivities() {
         return Trip.getInstance().getActivities();
     }
 
@@ -148,13 +155,9 @@ public class EnterDataFragment extends Fragment {
     }
 
     private void initMapAttractions() {
-        mapAttractions.put("Hiking",false);
-        mapAttractions.put("Snorkeling",true);
-        mapAttractions.put("Rafting",false);
-        mapAttractions.put("Sightseeing",false);
-        mapAttractions.put("Other",false);
-        for (String activity: getTripActivities()) {
-            mapAttractions.put(activity,true);
+        ArrayList<String> arrayActivities = FirestoreData.getAllActivities();
+        for (String activity: arrayActivities) {
+            mapAttractions.put(activity,getTripActivities().contains(Activity.valueOf(activity)));
         }
     }
 
@@ -174,10 +177,10 @@ public class EnterDataFragment extends Fragment {
     private String getSelectedAttractionsText() {
         String attractionsString = "";
         boolean first = true;
-        ArrayList<String> selectedActivities = new ArrayList<>();
+        ArrayList<Activity> selectedActivities = new ArrayList<>();
         for(String key: mapAttractions.keySet()) {
             if(mapAttractions.get(key)) {
-                selectedActivities.add(key);
+                selectedActivities.add(Activity.valueOf(key));
                 if(first) {
                     first = false;
                 }
