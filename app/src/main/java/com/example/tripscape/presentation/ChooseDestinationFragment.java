@@ -12,13 +12,18 @@ import android.widget.TableRow;
 
 
 import androidx.fragment.app.Fragment;
-
 import com.example.tripscape.R;
-import com.example.tripscape.model.Trip;
+import com.example.tripscape.data.FirestoreData;
+import com.example.tripscape.model.Attraction;
+import com.example.tripscape.model.Enums.Location;
+
+
+import java.util.List;
 
 public class ChooseDestinationFragment extends Fragment {
     Context context;
     TableLayout tableLayout;
+    List<Attraction> attractionList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,20 +33,16 @@ public class ChooseDestinationFragment extends Fragment {
         context = container.getContext();
         tableLayout = vista.findViewById(R.id.chooseDestinationPage);
 
-        //Get saved data from the trip
-       /* Bundle bundle = getArguments();
-          if(bundle != null) {
-            trip = (Trip) bundle.getSerializable("trip");
-        }*/
+        //TODO: Change this in order to get only the attractions for the Trip
+        attractionList = FirestoreData.getAllAttractions();
 
-        addDestination();
-        addDestination();
-        addDestination();
-        addDestination();
+        for (Attraction attraction: attractionList) {
+            addDestination(attraction);
+        }
         return vista;
     }
 
-    private void addDestination() {
+    private void addDestination(Attraction attraction) {
         TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
         //Create new row
@@ -53,17 +54,34 @@ public class ChooseDestinationFragment extends Fragment {
         ImageView imageView = new ImageView(context);
         imageView.setLayoutParams(rowParams);
 
-        imageView.setImageResource(R.drawable.berlin);
+        imageView.setImageResource(getDrawableFromLocation(attraction.getLocation()));
         imageView.getLayoutParams().height = (int) getResources().getDimension(R.dimen.imageview_height);
         imageView.getLayoutParams().width = (int) getResources().getDimension(R.dimen.imageview_width);
         tableRow.addView(imageView);
 
         Button button = new Button(context);
-        button.setText("Munich");
+        button.setText(attraction.getLocation().toString());
+        rowParams.setMargins(0,0,20,0);
+        button.setLayoutParams(rowParams);
         tableRow.addView(button);
 
         //Add the new row to the table
         tableLayout.addView(tableRow);
+    }
+
+    private int getDrawableFromLocation(Location location) {
+        switch (location) {
+            case Munich:
+                 return R.drawable.munich_3;
+            case Berlin:
+                return R.drawable.berlin;
+            case Hamburg:
+                return R.drawable.hamburg;
+            case Black_Forest:
+                return R.drawable.black_forest;
+            default:
+                return  R.drawable.munich_4;
+        }
     }
 
     @Override

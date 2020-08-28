@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tripscape.R;
-import com.example.tripscape.model.Trip;
+import com.example.tripscape.data.FirestoreData;
+import com.example.tripscape.model.Attraction;
+import com.example.tripscape.model.Enums;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -50,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
                 updateNextPageOverview(false, view);
             }
         });
+
+        //generate data into Firestore
+        FirestoreData.generateAttractionsData();
     }
 
     private void init() {
