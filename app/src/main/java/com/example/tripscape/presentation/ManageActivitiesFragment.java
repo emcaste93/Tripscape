@@ -63,11 +63,24 @@ public class ManageActivitiesFragment extends Fragment {
         tableRow.addView(imageView);
 
         Button b = new Button(context);
-        String s = attraction != null ? attraction.getActivity().toString() : "Error";
-        b.setText(s);
-        rowParams.setMargins(0,20,100,0);
+        if(attraction != null) {
+            String s = attraction.getTitle();
+            s += "\n" + "Price: " + attraction.getPrice() + ", Duration: " + attraction.getDuration() ;
+            b.setText(s);
+        }
+
+        rowParams.setMargins(20,50,20,0);
         b.setLayoutParams(rowParams);
         tableRow.addView(b);
+
+        Button buttonLess = new Button(context);
+        buttonLess.setMaxWidth(20);
+        buttonLess.setText("-");
+        rowParams.setMargins(0,50,20,0);
+        buttonLess.setLayoutParams(rowParams);
+     //   buttonLess.setWidth(30);
+    //    buttonLess.setHeight(30);
+        tableRow.addView(buttonLess);
 
         //Add the new row to the table
         tableLayout.addView(tableRow);

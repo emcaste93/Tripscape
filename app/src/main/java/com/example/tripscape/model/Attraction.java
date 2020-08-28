@@ -15,7 +15,10 @@ public class Attraction {
     private List<String>  seasonsAvailable;
     private String link;
 
-    public Attraction(Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime, List<String> seasonsAvailable, String link) {
+    private String title;
+
+    public Attraction(String title, Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime, List<String> seasonsAvailable, String link) {
+        this.title = title;
         this.activity = activity;
         this.location = location;
         this.price = price;
@@ -29,6 +32,14 @@ public class Attraction {
 
     public Activity getActivity() {
         return activity;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setActivity(Activity activity) {
