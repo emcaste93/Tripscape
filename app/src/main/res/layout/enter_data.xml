@@ -129,19 +129,19 @@
             android:layout_column="0"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:text="@string/attractions"
+            android:text="@string/activities"
             android:textColor="@color/colorBlue"
             android:fontFamily="@font/toms_handwritten"
             android:textSize="24dp" />
-        <LinearLayout android:orientation="horizontal" android:layout_column="1">
 
+        <LinearLayout android:orientation="horizontal" android:layout_column="1">
             <Button
                 android:id="@+id/buttonAttractions"
                 android:layout_width="wrap_content"
                 android:maxWidth="200dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
-                android:hint="@string/attractions"
+                android:hint="@string/activities"
                 android:padding="5dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="10dp" />

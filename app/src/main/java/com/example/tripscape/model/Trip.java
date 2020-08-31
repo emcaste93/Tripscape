@@ -1,5 +1,7 @@
 package com.example.tripscape.model;
 
+import com.example.tripscape.data.FirestoreData;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,10 +11,20 @@ import static com.example.tripscape.model.Enums.*;
 public class Trip implements Serializable {
 
     private int numPersons, budget;
+    private int totalPrice;
     private Date startDate, endDate;
-    private ArrayList<Activity> activities;
+    private ArrayList<Activity> desiredActivities;
+    private ArrayList<Attraction> selectedAttractions;
     private Location destination;
     private static Trip tripInstance;
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     public Trip() {
         if (tripInstance != null){
@@ -20,10 +32,12 @@ public class Trip implements Serializable {
         }
         numPersons = 2;
         budget = 500;
+        totalPrice = 0;
         startDate = new Date();
         endDate = new Date();
         destination = null;
-        activities = new ArrayList<>();
+        desiredActivities = new ArrayList<>();
+        selectedAttractions = new ArrayList<>();
     }
 
     public static Trip getInstance(){
@@ -73,12 +87,19 @@ public class Trip implements Serializable {
         this.endDate = endDate;
     }
 
-    public ArrayList<Activity> getActivities() {
-        return activities;
+    public ArrayList<Attraction> getSelectedAttractions() {
+        return selectedAttractions;
+    }
+    public ArrayList<Activity> getDesiredActivities() {
+        return desiredActivities;
     }
 
-    public void setActivities(ArrayList<Activity> activities) {
-        this.activities = activities;
+    public void setSelectedAttractions(ArrayList<Attraction> attractions) {
+        this.selectedAttractions = attractions;
+    }
+
+    public void setDesiredActivities(ArrayList<Activity> activities) {
+        this.desiredActivities = activities;
     }
 
     public void addPerson() {
@@ -87,6 +108,24 @@ public class Trip implements Serializable {
 
     public void removePerson() {
         numPersons --;
+    }
+
+    public void initialiseSelectedAttractions() {
+        totalPrice = 0;
+        selectedAttractions = FirestoreData.getAttractionsForLocation(destination);
+        for(Attraction a: selectedAttractions) {
+            totalPrice += (a.getPrice() * numPersons);
+        }
+    }
+
+    public void addSelectedAttraction(Attraction attraction) {
+        selectedAttractions.add(attraction);
+        totalPrice += (attraction.getPrice() * numPersons);
+    }
+
+    public void removeSelectedAttraction(Attraction attraction) {
+        selectedAttractions.remove(attraction);
+        totalPrice -= (attraction.getPrice() * numPersons);
     }
 
 }

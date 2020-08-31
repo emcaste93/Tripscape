@@ -53,7 +53,7 @@ public class FirestoreData {
 
     public static List<Location> getTripLocations() {
         List<Location> tripLocations = new ArrayList<>();
-        List<Activity> tripActivities = Trip.getInstance().getActivities();
+        List<Activity> tripActivities = Trip.getInstance().getDesiredActivities();
         // If the trip activity is in the list, then add the location of the attraction
         for (Activity activity: tripActivities) {
             for(Attraction attraction: attractions) {

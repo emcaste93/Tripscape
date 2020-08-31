@@ -128,8 +128,8 @@ public class EnterDataFragment extends Fragment {
         return Trip.getInstance().getNumPersons();
     }
 
-    private ArrayList<Activity> getTripActivities() {
-        return Trip.getInstance().getActivities();
+    private ArrayList<Activity> getTripDesiredActivities() {
+        return Trip.getInstance().getDesiredActivities();
     }
 
     private Date getTripStartDate() {
@@ -157,7 +157,7 @@ public class EnterDataFragment extends Fragment {
     private void initMapAttractions() {
         ArrayList<String> arrayActivities = FirestoreData.getAllActivities();
         for (String activity: arrayActivities) {
-            mapAttractions.put(activity,getTripActivities().contains(Activity.valueOf(activity)));
+            mapAttractions.put(activity,getTripDesiredActivities().contains(Activity.valueOf(activity)));
         }
     }
 
@@ -190,7 +190,7 @@ public class EnterDataFragment extends Fragment {
                 attractionsString += key;
             }
         }
-        Trip.getInstance().setActivities(selectedActivities);
+        Trip.getInstance().setDesiredActivities(selectedActivities);
         return attractionsString;
     }
 

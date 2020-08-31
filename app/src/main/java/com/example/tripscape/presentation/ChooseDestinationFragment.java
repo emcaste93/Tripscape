@@ -82,7 +82,7 @@ public class ChooseDestinationFragment extends Fragment {
         button.setBackground(gradientDrawable);
 
 
-        rowParams.setMargins(0,20,100,0);
+        rowParams.setMargins((int) getResources().getDimension(R.dimen.left_margin),(int) getResources().getDimension(R.dimen.inner_margin),(int) getResources().getDimension(R.dimen.right_margin),0);
         button.setLayoutParams(rowParams);
 
         if(destination == location) {
@@ -137,7 +137,7 @@ public class ChooseDestinationFragment extends Fragment {
     private String getLocationMatchString(Location location) {
         String res = "";
         List<Activity> activitiesForLocation = FirestoreData.getActivitiesForLocation(location);
-        List<Activity> tripActivities = Trip.getInstance().getActivities();
+        List<Activity> tripActivities = Trip.getInstance().getDesiredActivities();
         int desiredAcivities = tripActivities.size();
         int count = 0;
         for(Activity tripActivity: tripActivities) {

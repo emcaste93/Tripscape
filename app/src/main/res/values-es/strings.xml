@@ -21,9 +21,10 @@
     <string name="endDateError">No se puede ir al pasado!</string>
     <string name="startDateError">Fecha de inicio incorrecta!</string>
     <string name="attractions">Atracciones</string>
+    <string name="activities">Actividades</string>
     <string name="enterDataTitle">Introduzca sus datos del viaje</string>
     <string name="chooseDestinationTitle">Elija destino</string>
-    <string name="manageActivitesTitle">Seleccione sus actividades</string>
+    <string name="manageActivitesTitle">Seleccione sus atracciones</string>
     <string name="detailsTitle">Detalles de la actividad</string>
     <string name="tripPlanTitle">Plan del viaje</string>
 

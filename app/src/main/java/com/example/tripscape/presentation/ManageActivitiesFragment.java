@@ -2,6 +2,7 @@ package com.example.tripscape.presentation;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransitionImpl;
 
 import com.example.tripscape.R;
 import com.example.tripscape.data.FirestoreData;
@@ -21,6 +23,7 @@ import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Trip;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,8 +32,9 @@ import static com.example.tripscape.model.Enums.*;
 public class ManageActivitiesFragment extends Fragment {
     Context context;
     TableLayout tableLayout;
-    List<Attraction> attractionsList;
+    TextView priceView;
 
+    /** General constructor called when the view is created */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,22 +42,27 @@ public class ManageActivitiesFragment extends Fragment {
                 container, false);
         context = container.getContext();
         tableLayout = vista.findViewById(R.id.manage_activities_page);
-        attractionsList = FirestoreData.getAttractionsForLocation(Trip.getInstance().getDestination());
-
-        for (Attraction attraction: attractionsList) {
-            addAttraction(attraction);
-        }
-
+        priceView = vista.findViewById(R.id.priceTextView);
+        Trip.getInstance().initialiseSelectedAttractions();
+        displayAttractions();
         return vista;
     }
 
-    private void addAttraction(final Attraction attraction) {
-        //TODO:Delete, test
+    /** Used to generate the Main Menu Layout which displays all selected attractions */
+    private void displayAttractions() {
+        for (Attraction attraction: Trip.getInstance().getSelectedAttractions()) {
+            addAttractionToMenu(attraction);
+        }
+        updatePrice();
+    }
+
+    /** Adds a new attraction to the Main Menu */
+    private void addAttractionToMenu(final Attraction attraction) {
         TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
         //Create new row
         TableRow.LayoutParams rowParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-        TableRow tableRow = new TableRow(context);
+        final TableRow tableRow = new TableRow(context);
         tableRow.setLayoutParams(tableParams);
 
         //Create new image view
@@ -72,82 +81,90 @@ public class ManageActivitiesFragment extends Fragment {
             b.setText(s);
         }
 
-        rowParams.setMargins(20,50,20,0);
+        rowParams.setMargins(20,(int) getResources().getDimension(R.dimen.top_margin),(int) getResources().getDimension(R.dimen.right_margin),0);
         b.setLayoutParams(rowParams);
         b.setTextSize(10);
 
         b.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(getActivity(), attraction.getTitle() + "was clicked!",
-                        Toast.LENGTH_LONG).show();
-                final AlertDialog.Builder ad = new AlertDialog.Builder(context,R.style.alertDialog);
-                List<String> options = Arrays.asList("Compartir", "Borrar ", "Insertar");
-                ad.show();
-                return true;
-            }
-        });
-            /*    menu.setItems(opciones) { dialog, opcion ->
-                        when (opcion) {
-                    0 //Compartir
-                    -> {
-                        val (titulo, _, _, urlAudio) = listaLibros!![id]
-                        val anim = AnimationUtils.loadAnimation(actividad, R.anim.anim_compartir)
-                        anim.setAnimationListener(this@SelectorFragment)
-                        v.startAnimation(anim)
-                        val i = Intent(Intent.ACTION_SEND)
-                        i.type = "text/plain"
-                        i.putExtra(Intent.EXTRA_SUBJECT, titulo)
-                        i.putExtra(Intent.EXTRA_TEXT, urlAudio)
-                        startActivity(Intent.createChooser(i, "Compartir"))
-                    }
-                    1 //Borrar
-                    -> {
-                        adaptador!!.borrar(id)
-                        adaptador!!.notifyDataSetChanged()
-                        Snackbar.make(v, "¿Estás seguro?", Snackbar.LENGTH_LONG)
-                                .setAction("SI") {
-                            val anim = AnimationUtils.loadAnimation(actividad, R.anim.menguar)
-                            anim.setAnimationListener(this@SelectorFragment)
-                            v.startAnimation(anim)
-                            listaLibros?.removeAt(id)
-                            adaptador?.notifyDataSetChanged()
-                        }
-                                .show()
-                    }
-                    2 //Insertar
-                    -> {
-                        val posicion = recyclerView!!.getChildLayoutPosition(v)
-                        adaptador?.insertar(adaptador!!.getItem(posicion))
-                        //adaptador.notifyDataSetChanged();
-                        adaptador?.notifyItemInserted(0)
-                        Snackbar.make(v, "Libro insertado", Snackbar.LENGTH_INDEFINITE)
-                                .setAction("OK") { }
-                                .show()
-                    }
-                }
-                }
-                menu.create().show()
-            }
-        });*/
-
-
+                                     @Override
+                                     public boolean onLongClick(View v) {
+                                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                         builder.setTitle("Manage attraction: " + attraction.getActivity() + " (" + attraction.getLocation() + ")");
+                                         builder.setItems(new CharSequence[]
+                                                         {"Add new", "Delete selected", "Share selected"},
+                                                 new DialogInterface.OnClickListener() {
+                                                     public void onClick(DialogInterface dialog, int which) {
+                                                         // The 'which' argument contains the index position
+                                                         // of the selected item
+                                                         switch (which) {
+                                                             case 0:
+                                                                 displayAddAttractionDialog();
+                                                                 break;
+                                                             case 1:
+                                                                 tableLayout.removeView(tableRow);
+                                                                 Trip.getInstance().removeSelectedAttraction(attraction);
+                                                                 updatePrice();
+                                                                 break;
+                                                             case 2:
+                                                                 Toast.makeText(context, "Share clicked!", Toast.LENGTH_SHORT).show();
+                                                                 break;
+                                                         }
+                                                     }
+                                                 });
+                                         builder.create().show();
+                                         return true;
+                                     }
+                                 });
         tableRow.addView(b);
-
-    /*    Button buttonLess = new Button(context);
-        buttonLess.setMaxWidth(20);
-        buttonLess.setText("-");
-        rowParams.setMargins(0,50,20,0);
-        buttonLess.setLayoutParams(rowParams);
-        buttonLess.setWidth(30);
-        buttonLess.setHeight(30);
-        tableRow.addView(buttonLess);*/
-
         //Add the new row to the table
         tableLayout.addView(tableRow);
     }
 
+    /** Displays all attractions that are available for that location and are not part of the selected */
+    private ArrayList<Attraction> getNonSelectedAttractions() {
+        ArrayList<Attraction> nonSelectedAttractions = new ArrayList<>();
+        ArrayList<Attraction> selectedAttractions = Trip.getInstance().getSelectedAttractions();
+        ArrayList<Attraction> availableAttractionsList = FirestoreData.getAttractionsForLocation(Trip.getInstance().getDestination());
+        for (Attraction attraction: availableAttractionsList) {
+            if(!selectedAttractions.contains(attraction)) {
+                nonSelectedAttractions.add(attraction);
+            }
+        }
+        return  nonSelectedAttractions;
+    }
 
+    private void displayAddAttractionDialog() {
+        ArrayList<String> nonSelectedAttractions = new ArrayList<>();
+        for(Attraction attraction: getNonSelectedAttractions() ) {
+            nonSelectedAttractions.add(attraction.getActivity().toString());
+        }
+
+        if(nonSelectedAttractions.size() > 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Add attraction");
+            builder.setItems(nonSelectedAttractions.toArray(new CharSequence[nonSelectedAttractions.size()]),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // The 'which' argument contains the index position
+                            // of the selected item
+                            Attraction newSelectedAttraction = getNonSelectedAttractions().get(which);
+                            Trip.getInstance().addSelectedAttraction(newSelectedAttraction);
+                            addAttractionToMenu(newSelectedAttraction);
+                            updatePrice();
+                        }
+                    });
+            builder.create().show();
+        }
+        else {
+            Toast.makeText(context, "No more available attractions", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updatePrice() {
+        priceView.setText("Price:\n" + Trip.getInstance().getTotalPrice() + " €");
+    }
+
+    /** Helper method used to display the images for each activity */
     private int getDrawableFromActivity(Activity activity) {
         switch (activity) {
             case Hiking:
