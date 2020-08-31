@@ -16,34 +16,34 @@ public class FirestoreData {
 
     public static void generateAttractionsData() {
         Attraction attraction1 =
-                new Attraction("Hiking at Hirschberg", Activity.Hiking, Location.Munich, 20, true, "6h","Bahnhofplatz, Munich, 80335"
+                new Attraction("Hirschberg", Activity.Hiking, Location.Munich, 20, true, "6h","Bahnhofplatz, Munich, 80335"
                         ,"08:30", asList(Season.Summer.toString(), Season.Spring.toString(), Season.Autumn.toString()), "https://chiemsee-sailingcenter.de");
         Attraction attraction2 =
-                new Attraction("Sailing on Chiemsee", Activity.Sailing, Enums.Location.Munich, 30, true, "6h","Bahnhofplatz, Munich, 80335"
+                new Attraction("Chiemsee", Activity.Sailing, Enums.Location.Munich, 30, true, "6h","Bahnhofplatz, Munich, 80335"
                         ,"10:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString()), "https://chiemsee-sailingcenter.de");
         Attraction attraction3 =
-                new Attraction("Sightseeing in Munich",Activity.Sightseeing, Enums.Location.Munich, 30, false, "3h","Marienplatz, Munich, 80331"
+                new Attraction("Munich",Activity.Sightseeing, Enums.Location.Munich, 30, false, "3h","Marienplatz, Munich, 80331"
                         ,"10:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString(),Enums.Season.Autumn.toString(),Enums.Season.Winter.toString()), "https://chiemsee-sailingcenter.de");
         Attraction attraction4 =
-                new Attraction("Skiing in Hirschberg", Activity.Skiing, Enums.Location.Munich, 50, true, "12j","Bahnhofplatz, Munich, 80335"
+                new Attraction("Hirschberg", Activity.Skiing, Enums.Location.Munich, 50, true, "12j","Bahnhofplatz, Munich, 80335"
                         ,"08:00", Arrays.asList(Enums.Season.Autumn.toString(),Enums.Season.Winter.toString()), "https://https://www.skiwelt.at/en/individual-tariff.html");
         Attraction attraction5 =
-                new Attraction("Canoeing in Hamburg", Activity.Canoeing, Location.Hamburg, 10, false, "2h","Rathausmarkt, Hamburg, 20095"
+                new Attraction("Hamburg", Activity.Canoeing, Location.Hamburg, 10, false, "2h","Rathausmarkt, Hamburg, 20095"
                         ,"11:00", asList(Season.Summer.toString(), Season.Spring.toString()), "https://www.hamburg.com/boating/14055536/on-the-alster-lake/");
         Attraction attraction6 =
-                new Attraction("Sailing in Hamburg", Activity.Sailing, Enums.Location.Hamburg, 10, false, "4h","Rathausmarkt, Hamburg, 20095"
+                new Attraction("Hamburg", Activity.Sailing, Enums.Location.Hamburg, 10, false, "4h","Rathausmarkt, Hamburg, 20095"
                         ,"12:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString()), "https://www.hamburg.com/boating/14055536/on-the-alster-lake/");
         Attraction attraction7 =
-                new Attraction("Bus-tour in Berlin", Activity.Sightseeing, Enums.Location.Berlin, 15, true, "3h","Alexanderplatz, Berlin, 10178"
+                new Attraction("Bus-tour", Activity.Sightseeing, Enums.Location.Berlin, 15, true, "3h","Alexanderplatz, Berlin, 10178"
                         ,"16:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString(),Enums.Season.Autumn.toString()), "https://www.getyourguide.de/activity/berlin-l17/berlin-hop-on-hop-off-sightseeing-busfahrt-mit-live-guide-t272147?utm_force=0");
         Attraction attraction8 =
-                new Attraction("Canoeing in Berlin", Activity.Canoeing, Location.Berlin, 12, false, "3h","Alexanderplatz, Berlin, 10178"
+                new Attraction("Canoeing", Activity.Canoeing, Location.Berlin, 12, false, "3h","Alexanderplatz, Berlin, 10178"
                         ,"15:00", asList(Season.Summer.toString(), Season.Spring.toString()), "https://backstagetourism.com/anfrage/");
         Attraction attraction9 =
-                new Attraction("Sailing in the Black Forest", Activity.Sailing, Location.Black_Forest, 25, true, "5h","Mozartstrasse 6, Freiburg, 79104"
+                new Attraction("Sailing", Activity.Sailing, Location.Black_Forest, 25, true, "5h","Mozartstrasse 6, Freiburg, 79104"
                         ,"11:00", Arrays.asList(Season.Summer.toString(), Season.Spring.toString()), "https://www.hamburg.com/boating/14055536/on-the-alster-lake/");
         Attraction attraction10 =
-                new Attraction("Wine-tour in the Black Forest", Activity.Wine_Tasting, Location.Black_Forest, 30, true, "4h","Mozartstrasse 6, Freiburg, 79104"
+                new Attraction("Wine-tour", Activity.Wine_Tasting, Location.Black_Forest, 30, true, "4h","Mozartstrasse 6, Freiburg, 79104"
                         ,"13:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString(),Enums.Season.Autumn.toString()), "https://www.badische-weinstrasse.de/");
 
         //TODO: Insert into Cloud Firestore

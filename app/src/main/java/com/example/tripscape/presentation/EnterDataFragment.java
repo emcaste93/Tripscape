@@ -194,7 +194,6 @@ public class EnterDataFragment extends Fragment {
         return attractionsString;
     }
 
-
     private void initCalendars(){
         final Calendar startCalendar = Calendar.getInstance();
         startDate = new DatePickerDialog(context, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
@@ -202,9 +201,12 @@ public class EnterDataFragment extends Fragment {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                if(simpleDateFormat.format(newDate.getTime()).compareTo(simpleDateFormat.format(getTripEndDate())) <= 0 ) {
-                    Trip.getInstance().setStartDate(newDate.getTime());
+                //Start date valid if it is today or later, and it is earlier than the end date.
 
+                boolean b1 = newDate.getTime().compareTo((getTripEndDate())) <= 0;
+                boolean b2 = newDate.getTime().compareTo(Calendar.getInstance().getTime())  >= 0;
+                if(b1 && b2) {
+                    Trip.getInstance().setStartDate(newDate.getTime());
                     buttonStartDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
                 }
                 else {

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Tripscape.iml" filepath="$PROJECT_DIR$/.idea/Tripscape.iml" group="Tripscape" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Tripscape/app" />
+      <module fileurl="file://$PROJECT_DIR$/Tripscape.iml" filepath="$PROJECT_DIR$/Tripscape.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

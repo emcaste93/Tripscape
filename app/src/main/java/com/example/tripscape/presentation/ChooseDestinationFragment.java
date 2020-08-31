@@ -18,12 +18,15 @@ import android.widget.TableRow;
 import androidx.fragment.app.Fragment;
 import com.example.tripscape.R;
 import com.example.tripscape.data.FirestoreData;
+import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Enums.Location;
 import com.example.tripscape.model.Trip;
 import com.google.android.material.button.MaterialButton;
 
 
 import java.util.List;
+
+import static com.example.tripscape.model.Enums.*;
 
 public class ChooseDestinationFragment extends Fragment {
     Context context;
@@ -75,8 +78,9 @@ public class ChooseDestinationFragment extends Fragment {
 
         final Button button = new Button(context);
         button.setTextColor(getResources().getColor(R.color.colorBlue));
-        button.setText(location.toString() + System.getProperty("line.separator") + FirestoreData.getActivitiesForLocation(location).toString());
+        button.setText(location.toString() + System.getProperty("line.separator") + getLocationMatchString(location));
         button.setBackground(gradientDrawable);
+
 
         rowParams.setMargins(0,20,100,0);
         button.setLayoutParams(rowParams);
@@ -128,6 +132,23 @@ public class ChooseDestinationFragment extends Fragment {
             default:
                 return  R.drawable.munich_4;
         }
+    }
+
+    private String getLocationMatchString(Location location) {
+        String res = "";
+        List<Activity> activitiesForLocation = FirestoreData.getActivitiesForLocation(location);
+        List<Activity> tripActivities = Trip.getInstance().getActivities();
+        int desiredAcivities = tripActivities.size();
+        int count = 0;
+        for(Activity tripActivity: tripActivities) {
+            if(activitiesForLocation.contains(tripActivity)) {
+                count ++;
+            }
+        }
+        int resPercentage = Math.round((count*100)/desiredAcivities);
+        res = resPercentage + "% Match";
+
+        return  res;
     }
 
     @Override
