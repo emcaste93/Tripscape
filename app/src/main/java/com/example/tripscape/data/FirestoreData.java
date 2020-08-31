@@ -1,5 +1,6 @@
 package com.example.tripscape.data;
 
+import com.example.tripscape.R;
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Trip;
@@ -25,7 +26,7 @@ public class FirestoreData {
                 new Attraction("Munich",Activity.Sightseeing, Enums.Location.Munich, 30, false, "3h","Marienplatz, Munich, 80331"
                         ,"10:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString(),Enums.Season.Autumn.toString(),Enums.Season.Winter.toString()), "https://chiemsee-sailingcenter.de");
         Attraction attraction4 =
-                new Attraction("Hirschberg", Activity.Skiing, Enums.Location.Munich, 50, true, "12j","Bahnhofplatz, Munich, 80335"
+                new Attraction("Hirschberg", Activity.Skiing, Enums.Location.Munich, 50, true, "8H","Bahnhofplatz, Munich, 80335"
                         ,"08:00", Arrays.asList(Enums.Season.Autumn.toString(),Enums.Season.Winter.toString()), "https://https://www.skiwelt.at/en/individual-tariff.html");
         Attraction attraction5 =
                 new Attraction("Hamburg", Activity.Canoeing, Location.Hamburg, 10, false, "2h","Rathausmarkt, Hamburg, 20095"
@@ -35,7 +36,7 @@ public class FirestoreData {
                         ,"12:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString()), "https://www.hamburg.com/boating/14055536/on-the-alster-lake/");
         Attraction attraction7 =
                 new Attraction("Bus-tour", Activity.Sightseeing, Enums.Location.Berlin, 15, true, "3h","Alexanderplatz, Berlin, 10178"
-                        ,"16:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString(),Enums.Season.Autumn.toString()), "https://www.getyourguide.de/activity/berlin-l17/berlin-hop-on-hop-off-sightseeing-busfahrt-mit-live-guide-t272147?utm_force=0");
+                        ,"16:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString(),Enums.Season.Autumn.toString()), "https://backstagetourism.com/anfrage/");
         Attraction attraction8 =
                 new Attraction("Canoeing", Activity.Canoeing, Location.Berlin, 12, false, "3h","Alexanderplatz, Berlin, 10178"
                         ,"15:00", asList(Season.Summer.toString(), Season.Spring.toString()), "https://backstagetourism.com/anfrage/");
@@ -102,5 +103,40 @@ public class FirestoreData {
 
     public static List<Attraction> getAllAttractions() {
         return attractions;
+    }
+
+    public static int getDrawableFromLocation(Location location) {
+        switch (location) {
+            case Munich:
+                return R.drawable.munich_3;
+            case Berlin:
+                return R.drawable.berlin;
+            case Hamburg:
+                return R.drawable.hamburg;
+            case Black_Forest:
+                return R.drawable.black_forest;
+            default:
+                return  R.drawable.munich_4;
+        }
+    }
+
+    /** Helper method used to display the images for each activity */
+    public static int getDrawableFromActivity(Activity activity) {
+        switch (activity) {
+            case Hiking:
+                return R.drawable.mountain;
+            case Skiing:
+                return R.drawable.skiing;
+            case Wine_Tasting:
+                return R.drawable.wine;
+            case Canoeing:
+                return R.drawable.kayak;
+            case Sailing:
+                return R.drawable.boat;
+            case Sightseeing:
+                return R.drawable.camera;
+            default:
+                return  R.drawable.munich_4;
+        }
     }
 }

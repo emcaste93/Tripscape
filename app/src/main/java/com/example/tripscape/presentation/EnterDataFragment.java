@@ -52,12 +52,6 @@ public class EnterDataFragment extends Fragment {
         txtViewNumPersons = vista.findViewById(R.id.txtViewPersons);
         spinnerActivities = vista.findViewById(R.id.spinner1);
 
-        //Get saved data from the trip
-       /* Bundle bundle = getArguments();
-        if(bundle != null) {
-            trip = (Trip) bundle.getSerializable("trip");
-        }*/
-
         //init variables
         init();
 

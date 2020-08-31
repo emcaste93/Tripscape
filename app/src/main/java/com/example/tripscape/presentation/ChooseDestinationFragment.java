@@ -66,7 +66,7 @@ public class ChooseDestinationFragment extends Fragment {
         ImageView imageView = new ImageView(context);
         imageView.setLayoutParams(rowParams);
 
-        imageView.setImageResource(getDrawableFromLocation(location));
+        imageView.setImageResource(FirestoreData.getDrawableFromLocation(location));
         imageView.getLayoutParams().height = (int) getResources().getDimension(R.dimen.imageview_height);
         imageView.getLayoutParams().width = (int) getResources().getDimension(R.dimen.imageview_width);
         tableRow.addView(imageView);
@@ -117,21 +117,6 @@ public class ChooseDestinationFragment extends Fragment {
 
         //Add the new row to the table
         tableLayout.addView(tableRow);
-    }
-
-    private int getDrawableFromLocation(Location location) {
-        switch (location) {
-            case Munich:
-                 return R.drawable.munich_3;
-            case Berlin:
-                return R.drawable.berlin;
-            case Hamburg:
-                return R.drawable.hamburg;
-            case Black_Forest:
-                return R.drawable.black_forest;
-            default:
-                return  R.drawable.munich_4;
-        }
     }
 
     private String getLocationMatchString(Location location) {

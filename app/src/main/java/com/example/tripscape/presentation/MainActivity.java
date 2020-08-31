@@ -24,12 +24,14 @@ public class MainActivity extends AppCompatActivity {
     ChooseDestinationFragment chooseDestinationFragment;
     EnterDataFragment enterDataFragment;
     ManageActivitiesFragment manageActivitiesFragment;
+    TripPlanFragment tripPlanFragment;
     int pageNum = 0;
     ImageView c1, c2, c3, c4;
 
     ArrayList<ImageView> circleList = new ArrayList<>();
     ArrayList<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList;
+    boolean detailsFragmentActive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
         chooseDestinationFragment = new ChooseDestinationFragment();
         enterDataFragment = new EnterDataFragment();
         manageActivitiesFragment = new ManageActivitiesFragment();
-        changeFragment(enterDataFragment);
+        tripPlanFragment = new TripPlanFragment();
+        changeFragment(enterDataFragment, null);
         c1 = findViewById(R.id.circle1);
         c2 = findViewById(R.id.circle2);
         c3 = findViewById(R.id.circle3);
@@ -74,22 +77,32 @@ public class MainActivity extends AppCompatActivity {
         fragmentList.add(enterDataFragment);
         fragmentList.add(chooseDestinationFragment);
         fragmentList.add(manageActivitiesFragment);
+        fragmentList.add(tripPlanFragment);
         buttonNext =  findViewById(R.id.nextButton);
         buttonBack =  findViewById(R.id.backButton);
         titleList =  Arrays.asList(getString(R.string.enterDataTitle), getString(R.string.chooseDestinationTitle),
                 getString(R.string.manageActivitesTitle),getString(R.string.tripPlanTitle));
     }
 
-    private void changeFragment(Fragment fragment) {
-       /* Bundle bundle = new Bundle();
-        bundle.putSerializable("trip", trip);
-        fragment.setArguments(bundle);*/
+    public void changeFragment(Fragment fragment, Attraction attraction) {
+       if(AttractionDetailsFragment.class.isInstance(fragment)) {
+           detailsFragmentActive = true;
+           Bundle bundle = new Bundle();
+           bundle.putSerializable("attraction", attraction);
+           fragment.setArguments(bundle);
+       }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     private void updateNextPageOverview(boolean goNextPage, View view) {
+        if(detailsFragmentActive) {
+            Fragment f = fragmentList.get(pageNum);
+            changeFragment(f, null);
+            detailsFragmentActive = false;
+            return ;
+        }
         //Safety check OutOfBound
-        if(goNextPage && pageNum >=3) {
+        if(goNextPage && pageNum >= 3) {
             Snackbar.make(view, R.string.nextPressedError, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return ;
@@ -108,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         //set new Page
         pageNum = goNextPage == true ? pageNum + 1 : pageNum - 1;
         Fragment f = fragmentList.get(pageNum);
-        changeFragment(f);
+        changeFragment(f, null);
         TextView txtView = findViewById(R.id.title);
         txtView.setText(titleList.get(pageNum));
         newPage = circleList.get(pageNum);

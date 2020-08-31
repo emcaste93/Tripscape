@@ -3,6 +3,7 @@ package com.example.tripscape.presentation;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,7 +70,7 @@ public class ManageActivitiesFragment extends Fragment {
         ImageView imageView = new ImageView(context);
         imageView.setLayoutParams(rowParams);
 
-        imageView.setImageResource(getDrawableFromActivity(attraction.getActivity()));
+        imageView.setImageResource(FirestoreData.getDrawableFromActivity(attraction.getActivity()));
         imageView.getLayoutParams().height = (int) getResources().getDimension(R.dimen.imageview_height);
         imageView.getLayoutParams().width = (int) getResources().getDimension(R.dimen.imageview_width);
         tableRow.addView(imageView);
@@ -77,13 +78,20 @@ public class ManageActivitiesFragment extends Fragment {
         final Button b = new Button(context);
         if(attraction != null) {
             String s = attraction.getTitle();
-            s += "\n" + "Price: " + attraction.getPrice() + ", Duration: " + attraction.getDuration() ;
+            s += "\n" + "Price: " + attraction.getPrice() +"€" + " , Duration: " + attraction.getDuration() ;
             b.setText(s);
         }
 
         rowParams.setMargins(20,(int) getResources().getDimension(R.dimen.top_margin),(int) getResources().getDimension(R.dimen.right_margin),0);
         b.setLayoutParams(rowParams);
         b.setTextSize(10);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).changeFragment(new AttractionDetailsFragment(), attraction);
+            }
+        });
 
         b.setOnLongClickListener(new View.OnLongClickListener() {
                                      @Override
@@ -101,9 +109,14 @@ public class ManageActivitiesFragment extends Fragment {
                                                                  displayAddAttractionDialog();
                                                                  break;
                                                              case 1:
-                                                                 tableLayout.removeView(tableRow);
-                                                                 Trip.getInstance().removeSelectedAttraction(attraction);
-                                                                 updatePrice();
+                                                                 if(Trip.getInstance().getSelectedAttractions().size() > 1) {
+                                                                     tableLayout.removeView(tableRow);
+                                                                     Trip.getInstance().removeSelectedAttraction(attraction);
+                                                                     updatePrice();
+                                                                 }
+                                                                 else {
+                                                                     Toast.makeText(context, "You must add more attractions to remove one", Toast.LENGTH_SHORT).show();
+                                                                 }
                                                                  break;
                                                              case 2:
                                                                  Toast.makeText(context, "Share clicked!", Toast.LENGTH_SHORT).show();
@@ -163,25 +176,4 @@ public class ManageActivitiesFragment extends Fragment {
     private void updatePrice() {
         priceView.setText("Price:\n" + Trip.getInstance().getTotalPrice() + " €");
     }
-
-    /** Helper method used to display the images for each activity */
-    private int getDrawableFromActivity(Activity activity) {
-        switch (activity) {
-            case Hiking:
-                return R.drawable.mountain;
-            case Skiing:
-                return R.drawable.skiing;
-            case Wine_Tasting:
-                return R.drawable.wine;
-            case Canoeing:
-                return R.drawable.kayak;
-            case Sailing:
-                return R.drawable.boat;
-            case Sightseeing:
-                return R.drawable.camera;
-            default:
-                return  R.drawable.munich_4;
-        }
-    }
-
 }

@@ -1,10 +1,11 @@
 package com.example.tripscape.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static com.example.tripscape.model.Enums.*;
 
-public class Attraction {
+public class Attraction implements Serializable {
     private Activity activity;
     private Location location;
     private int price;
