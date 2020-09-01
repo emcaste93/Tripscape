@@ -27,6 +27,8 @@
     <string name="manageActivitesTitle">Seleccione sus atracciones</string>
     <string name="detailsTitle">Detalles de la actividad</string>
     <string name="tripPlanTitle">Plan del viaje</string>
+    <string name="included">Incluida</string>
+    <string name="not_included">No incluida</string>
 
 
 </resources>

@@ -3,6 +3,8 @@
     <dimen name="fab_margin">8dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="title_size">24dp</dimen>
+    <dimen name="imageview_width_large">80dp</dimen>
+    <dimen name="imageview_height_large">80dp</dimen>
     <dimen name="imageview_width">64dp</dimen>
     <dimen name="imageview_height">64dp</dimen>
     <dimen name="top_margin">10dp</dimen>

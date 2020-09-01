@@ -121,7 +121,7 @@ public class ChooseDestinationFragment extends Fragment {
 
     private String getLocationMatchString(Location location) {
         String res = "";
-        List<Activity> activitiesForLocation = FirestoreData.getActivitiesForLocation(location);
+        List<Activity> activitiesForLocation = FirestoreData.getActivitiesForLocation(location, Trip.getInstance().getStartDate());
         List<Activity> tripActivities = Trip.getInstance().getDesiredActivities();
         int desiredAcivities = tripActivities.size();
         int count = 0;

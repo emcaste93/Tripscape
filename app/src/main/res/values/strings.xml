@@ -26,4 +26,6 @@
     <string name="manageActivitesTitle">Manage your attractions</string>
     <string name="detailsTitle">Activity Details</string>
     <string name="tripPlanTitle">Trip Plan</string>
+    <string name="included">Included</string>
+    <string name="not_included">Not included</string>
 </resources>

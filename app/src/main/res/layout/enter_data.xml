@@ -138,7 +138,7 @@
             <Button
                 android:id="@+id/buttonAttractions"
                 android:layout_width="wrap_content"
-                android:maxWidth="200dp"
+                android:maxWidth="150dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:hint="@string/activities"

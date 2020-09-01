@@ -137,7 +137,7 @@ public class ManageActivitiesFragment extends Fragment {
     private ArrayList<Attraction> getNonSelectedAttractions() {
         ArrayList<Attraction> nonSelectedAttractions = new ArrayList<>();
         ArrayList<Attraction> selectedAttractions = Trip.getInstance().getSelectedAttractions();
-        ArrayList<Attraction> availableAttractionsList = FirestoreData.getAttractionsForLocation(Trip.getInstance().getDestination());
+        ArrayList<Attraction> availableAttractionsList = FirestoreData.getAttractionsForLocation(Trip.getInstance().getDestination(), Trip.getInstance().getStartDate());
         for (Attraction attraction: availableAttractionsList) {
             if(!selectedAttractions.contains(attraction)) {
                 nonSelectedAttractions.add(attraction);

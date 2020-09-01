@@ -5,8 +5,14 @@ import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Trip;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static com.example.tripscape.model.Enums.*;
@@ -52,6 +58,8 @@ public class FirestoreData {
         attractions = Arrays.asList(attraction1,attraction2,attraction3,attraction4,attraction5,attraction6,attraction7,attraction8,attraction9,attraction10);
     }
 
+
+    /** Retunrs a list of every Location compatible with the trip search(Activities and Season) */
     public static List<Location> getTripLocations() {
         List<Location> tripLocations = new ArrayList<>();
         List<Activity> tripActivities = Trip.getInstance().getDesiredActivities();
@@ -59,12 +67,49 @@ public class FirestoreData {
         for (Activity activity: tripActivities) {
             for(Attraction attraction: attractions) {
                 Location location = attraction.getLocation();
-                if(attraction.getActivity().equals(activity) && !tripLocations.contains(location)) {
+                if(attraction.getActivity().equals(activity) && isAttractionCompatibleWithTripStartDate(attraction,Trip.getInstance().getStartDate())
+                        && !tripLocations.contains(location)) {
                     tripLocations.add(location);
                 }
             }
         }
         return tripLocations;
+    }
+
+    public static boolean isAttractionCompatibleWithTripStartDate(Attraction a, Date startDate) {
+        String season = getSeasonFromDate(startDate);
+        boolean res = a.getSeasonsAvailable().contains(season);
+        return res;
+    }
+
+    public static String getSeasonFromDate(Date d) {
+        String res = Season.Summer.toString();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(d);
+        int month =  calendar.get(Calendar.MONTH) + 1;
+        switch (month) {
+            case 1:
+            case 2:
+            case 12:
+                res = Season.Winter.toString();
+                break;
+            case 3:
+            case 4:
+            case 5:
+                res = Season.Spring.toString();
+                break;
+            case 6:
+            case 7:
+            case 8:
+                res = Season.Summer.toString();
+                break;
+            case 9:
+            case 10:
+            case 11:
+                res = Season.Autumn.toString();
+                break;
+        }
+        return res;
     }
 
     public static ArrayList<String> getAllActivities() {
@@ -77,9 +122,9 @@ public class FirestoreData {
         return activities;
     }
 
-    public static ArrayList<Activity> getActivitiesForLocation(Location location) {
+    public static ArrayList<Activity> getActivitiesForLocation(Location location, Date startDate) {
         ArrayList<Activity> locationActivities = new ArrayList<>();
-        ArrayList<Attraction> locationAttractions = getAttractionsForLocation(location);
+        ArrayList<Attraction> locationAttractions = getAttractionsForLocation(location, startDate);
         for(Attraction locationAttraction : locationAttractions) {
             Activity locationActivity = locationAttraction.getActivity();
             if(!locationActivities.contains(locationActivity)) {
@@ -89,13 +134,12 @@ public class FirestoreData {
         return locationActivities;
     }
 
-    public static ArrayList<Attraction> getAttractionsForLocation(Location location) {
+    public static ArrayList<Attraction> getAttractionsForLocation(Location location, Date startDate) {
         ArrayList<Attraction> tripAttractions = new ArrayList<>();
         for(Attraction attraction: attractions) {
-            if(attraction.getLocation() == location) {
-                if(!tripAttractions.contains(attraction)) {
+            if(attraction.getLocation() == location && isAttractionCompatibleWithTripStartDate(attraction, startDate)
+                && !tripAttractions.contains(attraction)) {
                     tripAttractions.add(attraction);
-                }
             }
         }
         return tripAttractions;
