@@ -8,15 +8,13 @@
     android:stretchColumns="0"
     >
     <TableRow android:layout_marginTop="10dp">
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_column="0"
+        <ImageView
+            android:layout_height="@dimen/imageview_height_small"
+            android:layout_width="@dimen/imageview_width_small"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:text="@string/date"
-            android:textColor="@color/colorBlue"
-            android:fontFamily="@font/toms_handwritten"
-            android:textSize="24dp" />
+            android:src="@drawable/calendar"
+            />
         <LinearLayout android:orientation="horizontal" android:layout_column="1">
             <Button
                 android:id="@+id/buttonStartDate"
@@ -42,15 +40,13 @@
 
     </TableRow>
     <TableRow android:layout_marginTop="10dp">
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_column="0"
+        <ImageView
+            android:layout_height="@dimen/imageview_height_small"
+            android:layout_width="@dimen/imageview_width_small"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:text="@string/persons"
-            android:textColor="@color/colorBlue"
-            android:fontFamily="@font/toms_handwritten"
-            android:textSize="24dp" />
+            android:src="@drawable/person"
+            />
         <LinearLayout android:orientation="horizontal" android:layout_column="1">
 
             <Button
@@ -97,15 +93,13 @@
     </TableRow>
     <TableRow android:layout_marginTop="10dp">
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_column="0"
+        <ImageView
+            android:layout_height="@dimen/imageview_height_small"
+            android:layout_width="@dimen/imageview_width_small"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
-            android:text="@string/budget"
-            android:textColor="@color/colorBlue"
-            android:fontFamily="@font/toms_handwritten"
-            android:textSize="24dp" />
+            android:src="@drawable/budget"
+            />
         <LinearLayout android:orientation="horizontal" android:layout_column="1">
             <Spinner
                 android:id="@+id/spinner1"
@@ -124,20 +118,19 @@
     </TableRow>
     <TableRow android:layout_marginTop="10dp">
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_column="0"
+        <ImageView
+            android:layout_height="@dimen/imageview_height_small"
+            android:layout_width="@dimen/imageview_width_small"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/activities"
-            android:textColor="@color/colorBlue"
-            android:fontFamily="@font/toms_handwritten"
-            android:textSize="24dp" />
+            android:layout_marginTop="30dp"
+            android:src="@drawable/activity"
+            />
 
         <LinearLayout android:orientation="horizontal" android:layout_column="1">
             <Button
                 android:id="@+id/buttonAttractions"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="20dp"
                 android:maxWidth="150dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
