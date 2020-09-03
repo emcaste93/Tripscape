@@ -20,6 +20,7 @@
         android:layout_marginRight="@dimen/right_margin"
         android:layout_marginTop="@dimen/inner_margin"
         android:background="@color/colorBlue"
+        android:textStyle="bold"
         android:padding="5dp"
         android:textColor="@color/colorWhite" />
 </LinearLayout>
