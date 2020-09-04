@@ -4,11 +4,14 @@
 
     <application
         android:allowBackup="true"
+        android:debuggable="true"
         android:icon="@mipmap/logo_tripescape"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_tripescape_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar"
+        android:name="com.example.tripscape.TripApplication">
+        <activity android:name=".data.FirestoreData"></activity>
         <activity android:name=".presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

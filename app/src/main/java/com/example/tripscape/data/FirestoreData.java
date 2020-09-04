@@ -1,13 +1,16 @@
 package com.example.tripscape.data;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.tripscape.R;
+import com.example.tripscape.TripApplication;
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Trip;
+import com.example.tripscape.presentation.EnterDataFragment;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -18,10 +21,29 @@ import java.util.List;
 import static com.example.tripscape.model.Enums.*;
 import static java.util.Arrays.asList;
 
-public class FirestoreData {
-    private static List<Attraction> attractions;
-
-    public static void generateAttractionsData() {
+public class FirestoreData extends AppCompatActivity {
+    private AttractionFirestore attractions;
+    private static List<Attraction> attractionList;
+    public FirestoreData() {
+  /*     TripApplication ta = (TripApplication) getApplication();
+       if(ta != null) {
+           attractions = ta.attractions;
+        //   attractions.getAttractions();
+       }
+       else {*/
+       attractionList = new ArrayList<>();
+       attractions = new AttractionFirestore();
+       Query query = FirebaseFirestore.getInstance()
+               .collection("attractions")
+               .limit(50);
+       attractions.getAttractions(new FirestoreDataCallback(){
+           public void addAttraction(Attraction attraction) {
+               attractionList.add(attraction);
+           }
+       });
+    //   generateAttractionsData();
+    }
+        public static void generateAttractionsData() {
         Attraction attraction1 =
                 new Attraction("Hirschberg", Activity.Hiking, Location.Munich, 20, true, "6h","Bahnhofplatz, Munich, 80335"
                         ,"08:30", asList(Season.Summer.toString(), Season.Spring.toString(), Season.Autumn.toString()), "https://chiemsee-sailingcenter.de");
@@ -54,9 +76,9 @@ public class FirestoreData {
                         ,"13:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString(),Enums.Season.Autumn.toString()), "https://www.badische-weinstrasse.de/");
 
         //TODO: Insert into Cloud Firestore
-      //  attractions = Arrays.asList(attraction1,attraction5,attraction8,attraction9);
-        attractions = Arrays.asList(attraction1,attraction2,attraction3,attraction4,attraction5,attraction6,attraction7,attraction8,attraction9,attraction10);
+        attractionList = Arrays.asList(attraction1,attraction2,attraction3,attraction4,attraction5,attraction6,attraction7,attraction8,attraction9,attraction10);
     }
+
 
 
     /** Retunrs a list of every Location compatible with the trip search(Activities and Season) */
@@ -65,7 +87,7 @@ public class FirestoreData {
         List<Activity> tripActivities = Trip.getInstance().getDesiredActivities();
         // If the trip activity is in the list, then add the location of the attraction
         for (Activity activity: tripActivities) {
-            for(Attraction attraction: attractions) {
+            for(Attraction attraction: attractionList) {
                 Location location = attraction.getLocation();
                 if(attraction.getActivity().equals(activity) && isAttractionCompatibleWithTripStartDate(attraction,Trip.getInstance().getStartDate())
                         && !tripLocations.contains(location)) {
@@ -114,7 +136,7 @@ public class FirestoreData {
 
     public static ArrayList<String> getAllActivities() {
         ArrayList<String> activities = new ArrayList<>();
-        for (Attraction a: attractions) {
+        for (Attraction a: attractionList) {
             if(!activities.contains(a)) {
                 activities.add(a.getActivity().toString());
             }
@@ -136,7 +158,7 @@ public class FirestoreData {
 
     public static ArrayList<Attraction> getAttractionsForLocation(Location location, Date startDate) {
         ArrayList<Attraction> tripAttractions = new ArrayList<>();
-        for(Attraction attraction: attractions) {
+        for(Attraction attraction: attractionList) {
             if(attraction.getLocation() == location && isAttractionCompatibleWithTripStartDate(attraction, startDate)
                 && !tripAttractions.contains(attraction)) {
                     tripAttractions.add(attraction);
@@ -146,7 +168,7 @@ public class FirestoreData {
     }
 
     public static List<Attraction> getAllAttractions() {
-        return attractions;
+        return attractionList;
     }
 
     public static int getDrawableFromLocation(Location location) {
@@ -159,6 +181,10 @@ public class FirestoreData {
                 return R.drawable.hamburg;
             case Black_Forest:
                 return R.drawable.black_forest;
+            case Cologne:
+                return R.drawable.cologne;
+            case Nuremberg:
+                return R.drawable.nuremberg;
             default:
                 return  R.drawable.munich_4;
         }
@@ -179,6 +205,10 @@ public class FirestoreData {
                 return R.drawable.boat;
             case Sightseeing:
                 return R.drawable.camera;
+            case Flying:
+                return R.drawable.plane;
+            case Jetski:
+                return R.drawable.jetski;
             default:
                 return  R.drawable.munich_4;
         }

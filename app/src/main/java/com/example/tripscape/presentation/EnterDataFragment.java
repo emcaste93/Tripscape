@@ -2,9 +2,11 @@ package com.example.tripscape.presentation;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.content.ContentValues.TAG;
 import static com.example.tripscape.model.Enums.*;
 
 public class EnterDataFragment extends Fragment {
@@ -37,7 +40,9 @@ public class EnterDataFragment extends Fragment {
     Map<String, Boolean> mapAttractions  = new HashMap<>();
     TextView txtViewNumPersons;
     Spinner spinnerActivities;
+    ProgressDialog dialog;
 
+    /** Main constructor of the Enter Data page */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,6 +77,9 @@ public class EnterDataFragment extends Fragment {
         buttonAttractions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mapAttractions.size() == 0) {
+                    initMapAttractions();
+                }
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.alertDialog);
                 builder.setTitle("Choose attractions");
                 final String[] listAttractions = getAllAttractionsKeys();
@@ -135,6 +143,9 @@ public class EnterDataFragment extends Fragment {
     }
 
     private void init() {
+        dialog = new ProgressDialog(context);
+        dialog.setTitle("Loading");
+        dialog.setTitle("Please wait");
         initMapAttractions();
         initForm();
         initCalendars();
@@ -149,16 +160,23 @@ public class EnterDataFragment extends Fragment {
     }
 
     private void initMapAttractions() {
-        ArrayList<String> arrayActivities = FirestoreData.getAllActivities();
+        ArrayList<String> arrayActivities;
+        Log.d(TAG, "Getting data for Attractions");
+        arrayActivities = getAllActivities();
         for (String activity: arrayActivities) {
             mapAttractions.put(activity,getTripDesiredActivities().contains(Activity.valueOf(activity)));
         }
+    }
+
+    private ArrayList<String> getAllActivities() {
+        return FirestoreData.getAllActivities();
     }
 
     private String[] getAllAttractionsKeys() {
         return mapAttractions.keySet().toArray(new String[0]);
     }
 
+    /** Returns All possible attractions */
     private boolean[] getAllAttractionsValues() {
         Boolean[] values = mapAttractions.values().toArray(new Boolean[0]);
         boolean[] res = new boolean[values.length];
@@ -168,6 +186,7 @@ public class EnterDataFragment extends Fragment {
         return res;
     }
 
+    /** Used to display in a text-form all selected attractions, in a comma-separated way */
     private String getSelectedAttractionsText() {
         String attractionsString = "";
         boolean first = true;
@@ -188,6 +207,7 @@ public class EnterDataFragment extends Fragment {
         return attractionsString;
     }
 
+    /** Initialises the calendars with an initial date of today and handles it's interaction */
     private void initCalendars(){
         final Calendar startCalendar = Calendar.getInstance();
         startDate = new DatePickerDialog(context, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {

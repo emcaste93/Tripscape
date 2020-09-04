@@ -118,11 +118,13 @@ public class Trip implements Serializable {
         }
     }
 
+    /** Adds an attraction to the selected attractions list and updates the total price */
     public void addSelectedAttraction(Attraction attraction) {
         selectedAttractions.add(attraction);
         totalPrice += (attraction.getPrice() * numPersons);
     }
 
+    /** Removes an attraction from the selected attractions list and updates the total price */
     public void removeSelectedAttraction(Attraction attraction) {
         selectedAttractions.remove(attraction);
         totalPrice -= (attraction.getPrice() * numPersons);

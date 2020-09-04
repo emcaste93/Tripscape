@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -66,7 +67,6 @@ public class ManageActivitiesFragment extends Fragment {
         if(attraction == null ) {
             return;
         }
-
         TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
         //Create new row
@@ -190,6 +190,7 @@ public class ManageActivitiesFragment extends Fragment {
         return  nonSelectedAttractions;
     }
 
+    /** Displays a dialog that allows you to add non-selected attractions to your Trip plan */
     private void displayAddAttractionDialog() {
         ArrayList<String> nonSelectedAttractions = new ArrayList<>();
         for(Attraction attraction: getNonSelectedAttractions() ) {
@@ -217,6 +218,7 @@ public class ManageActivitiesFragment extends Fragment {
         }
     }
 
+    /** Updates the label that displays the total price of the Trip */
     private void updatePrice() {
         priceView.setText("Price:\n" + Trip.getInstance().getTotalPrice() + " €");
     }

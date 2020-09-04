@@ -1,7 +1,6 @@
 package com.example.tripscape.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.tripscape.model.Enums.*;
@@ -18,6 +17,10 @@ public class Attraction implements Serializable {
     private String link;
 
     private String title;
+
+    public Attraction() {
+
+    }
 
     public Attraction(String title, Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime, List<String> seasonsAvailable, String link) {
         this.title = title;

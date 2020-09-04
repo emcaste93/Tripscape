@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "851000037657",
+    "firebase_url": "https://tripscape-cf707.firebaseio.com",
+    "project_id": "tripscape-cf707",
+    "storage_bucket": "tripscape-cf707.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851000037657:android:d753de93d1d95498427588",
+        "android_client_info": {
+          "package_name": "com.example.tripscape"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851000037657-6rlsrh6r3b80eju1vbt4lb6rutnbbk6c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaSRarsdHzgLxr6nT7nfPlKsmmHbRTzz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851000037657-6rlsrh6r3b80eju1vbt4lb6rutnbbk6c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,7 +12,9 @@ public class Enums {
         Munich,
         Hamburg,
         Black_Forest,
-        Berlin
+        Berlin,
+        Nuremberg,
+        Cologne
     }
 
     public enum Activity {
@@ -21,6 +23,8 @@ public class Enums {
         Skiing,
         Canoeing,
         Sailing,
-        Wine_Tasting
+        Wine_Tasting,
+        Jetski,
+        Flying
     }
 }

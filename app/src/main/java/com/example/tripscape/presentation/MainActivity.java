@@ -10,10 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tripscape.R;
+import com.example.tripscape.data.AttractionList;
 import com.example.tripscape.data.FirestoreData;
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,8 +58,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //generate data into Firestore
-        FirestoreData.generateAttractionsData();
+        FirestoreData firestoreData = new FirestoreData();
+
+        //generate test data locally
+      //  FirestoreData.generateAttractionsData();
+
+        //Generate Data into Firestore
+        /*AttractionList attractionList = new AttractionList();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        for(int id = 0; id < attractionList.getSize(); id++) {
+            db.collection("attractions").add(attractionList.getElementAt(id));
+        }*/
     }
 
     private void init() {

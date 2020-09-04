@@ -54,6 +54,7 @@ public class ChooseDestinationFragment extends Fragment {
         return vista;
     }
 
+    /** Adds a row for the destination location, with an image and a button */
     private void addDestination(Location location) {
         TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
@@ -119,6 +120,7 @@ public class ChooseDestinationFragment extends Fragment {
         tableLayout.addView(tableRow);
     }
 
+    /** Calculates the 'match percentage' between your selected activities and the available for the location given as parameter */
     private String getLocationMatchString(Location location) {
         String res = "";
         List<Activity> activitiesForLocation = FirestoreData.getActivitiesForLocation(location, Trip.getInstance().getStartDate());
