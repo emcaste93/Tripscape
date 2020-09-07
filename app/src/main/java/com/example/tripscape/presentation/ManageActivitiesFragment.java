@@ -250,7 +250,15 @@ public class ManageActivitiesFragment extends Fragment {
             public void onClick(View view) {
                 //Create Dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(R.string.total_price_summary);
+                String dialogTitle = getResources().getString(R.string.total_price_summary);
+                int numPersons = Trip.getInstance().getNumPersons();
+                if(numPersons == 1) {
+                    dialogTitle += " (1 Person)";
+                }
+                else {
+                    dialogTitle += " (" + Trip.getInstance().getNumPersons() + " Persons)";
+                }
+                builder.setTitle(dialogTitle);
 
                 TableLayout tableLayout = new TableLayout(context);
                 TableLayout.LayoutParams layoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT,  0.6f);
@@ -268,7 +276,7 @@ public class ManageActivitiesFragment extends Fragment {
                     tr.addView(tx);
 
                     TextView txPrice = new TextView(context);
-                    txPrice.setText(String.valueOf(attraction.getPrice() * Trip.getInstance().getNumPersons()));
+                    txPrice.setText(attraction.getPrice() * Trip.getInstance().getNumPersons() + " €");
                     txPrice.setTextColor(getResources().getColor(R.color.colorGreen));
                     txPrice.setTypeface(Typeface.DEFAULT_BOLD);
                     txPrice.setGravity(Gravity.RIGHT);
@@ -277,7 +285,7 @@ public class ManageActivitiesFragment extends Fragment {
                     tableLayout.addView(tr);
                 }
 
-                //TEST
+                //Add separation Row
                 TableRow tr1 = new TableRow(context);
                 layoutParams.setMargins(100,0,0,0);
                 tr1.setLayoutParams(layoutParams);
@@ -308,7 +316,7 @@ public class ManageActivitiesFragment extends Fragment {
                 tr.addView(txTotalPrice);
 
                 TextView txTotalPriceVal = new TextView(context);
-                txTotalPriceVal.setText(String.valueOf(Trip.getInstance().getTotalPrice()));
+                txTotalPriceVal.setText(Trip.getInstance().getTotalPrice() + " €");
                 txTotalPriceVal.setTextColor(getResources().getColor(R.color.colorBlack));
                 txTotalPriceVal.setTypeface(Typeface.DEFAULT_BOLD);
                 txTotalPriceVal.setGravity(Gravity.RIGHT);
