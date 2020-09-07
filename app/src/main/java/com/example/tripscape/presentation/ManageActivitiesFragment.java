@@ -122,7 +122,7 @@ public class ManageActivitiesFragment extends Fragment {
         //Price
         final TextView txtVwPrice = new TextView(context);
         txtVwPrice.setId(View.generateViewId());
-        txtVwPrice.setText(attraction.getPrice() + "€");
+        txtVwPrice.setText(attraction.getPrice() + " €");
         txtVwPrice.setTextSize(12);
         txtVwPrice.setLayoutParams(rowParams);
         txtVwPrice.setPadding(20,20,0,20);
@@ -263,7 +263,7 @@ public class ManageActivitiesFragment extends Fragment {
                     layoutParams.setMargins(100,0,0,0);
                     tr.setLayoutParams(layoutParams);
                     TextView tx = new TextView(context);
-                    tx.setText(attraction.getTitle() + "\t\t\t");
+                    tx.setText(attraction.getTitle() + " - " + attraction.getActivity().toString() + "\t\t\t");
                     tx.setTextColor(getResources().getColor(R.color.colorBlack));
                     tr.addView(tx);
 
@@ -271,6 +271,7 @@ public class ManageActivitiesFragment extends Fragment {
                     txPrice.setText(String.valueOf(attraction.getPrice() * Trip.getInstance().getNumPersons()));
                     txPrice.setTextColor(getResources().getColor(R.color.colorGreen));
                     txPrice.setTypeface(Typeface.DEFAULT_BOLD);
+                    txPrice.setGravity(Gravity.RIGHT);
                     tr.addView(txPrice);
 
                     tableLayout.addView(tr);
@@ -281,17 +282,18 @@ public class ManageActivitiesFragment extends Fragment {
                 layoutParams.setMargins(100,0,0,0);
                 tr1.setLayoutParams(layoutParams);
 
-                TextView tx1 = new TextView(context);
-                tx1.setText("___________________");
-                tx1.setTextColor(getResources().getColor(R.color.colorBlack));
-                tx1.setTypeface(Typeface.DEFAULT_BOLD);
-                tr1.addView(tx1);
+                TextView txLine = new TextView(context);
+                txLine.setText("___________________");
+                txLine.setTextColor(getResources().getColor(R.color.colorBlack));
+                txLine.setTypeface(Typeface.DEFAULT_BOLD);
+                tr1.addView(txLine);
 
-                TextView txPrice1 = new TextView(context);
-                txPrice1.setText("______");
-                txPrice1.setTextColor(getResources().getColor(R.color.colorBlack));
-                txPrice1.setTypeface(Typeface.DEFAULT_BOLD);
-                tr1.addView(txPrice1);
+                TextView txLinePrice = new TextView(context);
+                txLinePrice.setText("______");
+                txLinePrice.setTextColor(getResources().getColor(R.color.colorBlack));
+                txLinePrice.setTypeface(Typeface.DEFAULT_BOLD);
+                txLinePrice.setGravity(Gravity.RIGHT);
+                tr1.addView(txLinePrice);
                 tableLayout.addView(tr1);
 
                 //Add last row with the total price
@@ -299,17 +301,18 @@ public class ManageActivitiesFragment extends Fragment {
                 layoutParams.setMargins(100,0,0,0);
                 tr.setLayoutParams(layoutParams);
 
-                TextView tx = new TextView(context);
-                tx.setText(R.string.total_price);
-                tx.setTextColor(getResources().getColor(R.color.colorBlack));
-                tx.setTypeface(Typeface.DEFAULT_BOLD);
-                tr.addView(tx);
+                TextView txTotalPrice = new TextView(context);
+                txTotalPrice.setText(R.string.total_price);
+                txTotalPrice.setTextColor(getResources().getColor(R.color.colorBlack));
+                txTotalPrice.setTypeface(Typeface.DEFAULT_BOLD);
+                tr.addView(txTotalPrice);
 
-                TextView txPrice = new TextView(context);
-                txPrice.setText(String.valueOf(Trip.getInstance().getTotalPrice()));
-                txPrice.setTextColor(getResources().getColor(R.color.colorBlack));
-                txPrice.setTypeface(Typeface.DEFAULT_BOLD);
-                tr.addView(txPrice);
+                TextView txTotalPriceVal = new TextView(context);
+                txTotalPriceVal.setText(String.valueOf(Trip.getInstance().getTotalPrice()));
+                txTotalPriceVal.setTextColor(getResources().getColor(R.color.colorBlack));
+                txTotalPriceVal.setTypeface(Typeface.DEFAULT_BOLD);
+                txTotalPriceVal.setGravity(Gravity.RIGHT);
+                tr.addView(txTotalPriceVal);
                 tableLayout.addView(tr);
 
                 builder.setView(tableLayout);
