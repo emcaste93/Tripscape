@@ -8,7 +8,7 @@
     android:stretchColumns="*"
     android:shrinkColumns="*"
     >
-    <TableRow android:layout_marginTop="30dp">
+    <TableRow android:layout_marginTop="10dp">
         <ImageView
             android:layout_height="@dimen/imageview_height"
             android:layout_width="@dimen/imageview_width"
