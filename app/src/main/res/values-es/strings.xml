@@ -28,6 +28,8 @@
     <string name="detailsTitle">Detalles de la actividad</string>
     <string name="tripPlanTitle">Plan del viaje</string>
     <string name="included">Incluida</string>
+    <string name="total_price_summary">Desglose precio total</string>
+    <string name="total_price">Precio total</string>
     <string name="not_included">No incluida</string>
 
 

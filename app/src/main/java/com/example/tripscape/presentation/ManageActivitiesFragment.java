@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -225,6 +226,7 @@ public class ManageActivitiesFragment extends Fragment {
 
     /** Updates the label that displays the total price of the Trip */
     private void updatePrice() {
+        //Init text view or remove old(to display it at the bottom)
         if(priceView == null) {
             priceView = new TextView(context);
         }
@@ -232,6 +234,7 @@ public class ManageActivitiesFragment extends Fragment {
             tableLayout.removeView(priceView);
         }
 
+        //Set layout and values to Text View Price
         priceView.setTextColor(getResources().getColor(R.color.colorBlue));
         priceView.setGravity(Gravity.RIGHT);
         TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
@@ -239,7 +242,90 @@ public class ManageActivitiesFragment extends Fragment {
         priceView.setLayoutParams(tableParams);
         priceView.setPadding(5,5,5,5);
         priceView.setTypeface(Typeface.DEFAULT_BOLD);
-        tableLayout.addView(priceView);
         priceView.setText("Price:\n" + Trip.getInstance().getTotalPrice() + " €");
+
+        //Add Click Listener
+        priceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Create Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(R.string.total_price_summary);
+
+                TableLayout tableLayout = new TableLayout(context);
+                TableLayout.LayoutParams layoutParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT,  0.6f);
+                layoutParams.setMargins(10,10,10,10);
+                tableLayout.setLayoutParams(layoutParams);
+
+                //Insert a row per selected attraction
+               for (Attraction attraction: Trip.getInstance().getSelectedAttractions()) {
+                    TableRow tr = new TableRow(context);
+                    layoutParams.setMargins(100,0,0,0);
+                    tr.setLayoutParams(layoutParams);
+                    TextView tx = new TextView(context);
+                    tx.setText(attraction.getTitle() + "\t\t\t");
+                    tx.setTextColor(getResources().getColor(R.color.colorBlack));
+                    tr.addView(tx);
+
+                    TextView txPrice = new TextView(context);
+                    txPrice.setText(String.valueOf(attraction.getPrice() * Trip.getInstance().getNumPersons()));
+                    txPrice.setTextColor(getResources().getColor(R.color.colorGreen));
+                    txPrice.setTypeface(Typeface.DEFAULT_BOLD);
+                    tr.addView(txPrice);
+
+                    tableLayout.addView(tr);
+                }
+
+                //TEST
+                TableRow tr1 = new TableRow(context);
+                layoutParams.setMargins(100,0,0,0);
+                tr1.setLayoutParams(layoutParams);
+
+                TextView tx1 = new TextView(context);
+                tx1.setText("___________________");
+                tx1.setTextColor(getResources().getColor(R.color.colorBlack));
+                tx1.setTypeface(Typeface.DEFAULT_BOLD);
+                tr1.addView(tx1);
+
+                TextView txPrice1 = new TextView(context);
+                txPrice1.setText("______");
+                txPrice1.setTextColor(getResources().getColor(R.color.colorBlack));
+                txPrice1.setTypeface(Typeface.DEFAULT_BOLD);
+                tr1.addView(txPrice1);
+                tableLayout.addView(tr1);
+
+                //Add last row with the total price
+                TableRow tr = new TableRow(context);
+                layoutParams.setMargins(100,0,0,0);
+                tr.setLayoutParams(layoutParams);
+
+                TextView tx = new TextView(context);
+                tx.setText(R.string.total_price);
+                tx.setTextColor(getResources().getColor(R.color.colorBlack));
+                tx.setTypeface(Typeface.DEFAULT_BOLD);
+                tr.addView(tx);
+
+                TextView txPrice = new TextView(context);
+                txPrice.setText(String.valueOf(Trip.getInstance().getTotalPrice()));
+                txPrice.setTextColor(getResources().getColor(R.color.colorBlack));
+                txPrice.setTypeface(Typeface.DEFAULT_BOLD);
+                tr.addView(txPrice);
+                tableLayout.addView(tr);
+
+                builder.setView(tableLayout);
+
+                //Add Dialog button that will just close the Dialog
+                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.show();
+            }
+        });
+
+        tableLayout.addView(priceView);
     }
 }

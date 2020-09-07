@@ -27,5 +27,7 @@
     <string name="detailsTitle">Activity Details</string>
     <string name="tripPlanTitle">Trip Plan</string>
     <string name="included">Included</string>
+    <string name="total_price_summary">Total price summary</string>
+    <string name="total_price">Total price</string>
     <string name="not_included">Not included</string>
 </resources>

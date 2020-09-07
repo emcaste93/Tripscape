@@ -97,7 +97,7 @@ public class FirestoreData extends AppCompatActivity {
         }
         return tripLocations;
     }
-
+    
     public static boolean isAttractionCompatibleWithTripStartDate(Attraction a, Date startDate) {
         String season = getSeasonFromDate(startDate);
         boolean res = a.getSeasonsAvailable().contains(season);
