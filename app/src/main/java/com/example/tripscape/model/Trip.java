@@ -17,6 +17,7 @@ public class Trip implements Serializable {
     private ArrayList<Attraction> selectedAttractions;
     private Location destination;
     private static Trip tripInstance;
+    private Location lastDestination;
 
     public int getTotalPrice() {
         return totalPrice;
@@ -111,10 +112,13 @@ public class Trip implements Serializable {
     }
 
     public void initialiseSelectedAttractions() {
-        totalPrice = 0;
-        selectedAttractions = FirestoreData.getAttractionsForLocation(destination, startDate);
-        for(Attraction a: selectedAttractions) {
-            totalPrice += (a.getPrice() * numPersons);
+        if (lastDestination == null || lastDestination != destination) {
+            totalPrice = 0;
+            selectedAttractions = FirestoreData.getAttractionsForLocation(destination, startDate);
+            for(Attraction a: selectedAttractions) {
+                totalPrice += (a.getPrice() * numPersons);
+            }
+            lastDestination = destination;
         }
     }
 

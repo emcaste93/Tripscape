@@ -29,6 +29,8 @@ import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Trip;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +41,7 @@ public class ManageActivitiesFragment extends Fragment {
     Context context;
     TableLayout tableLayout;
     TextView priceView;
+    LinearLayout ll;
 
     /** General constructor called when the view is created */
     @Override
@@ -48,7 +51,8 @@ public class ManageActivitiesFragment extends Fragment {
                 container, false);
         context = container.getContext();
         tableLayout = vista.findViewById(R.id.manage_activities_page);
-        priceView = vista.findViewById(R.id.priceTextView);
+        ll = vista.findViewById(R.id.manage_activities_layout);
+        priceView = null;
         Trip.getInstance().initialiseSelectedAttractions();
         displayAttractions();
         return vista;
@@ -72,6 +76,7 @@ public class ManageActivitiesFragment extends Fragment {
         //Create new row
         TableRow.LayoutParams rowParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT,  0.6f);
         final TableRow tableRow = new TableRow(context);
+        tableParams.setMargins(20,0,40, 0);
         tableRow.setLayoutParams(tableParams);
         tableRow.setGravity(Gravity.CENTER);
 
@@ -128,14 +133,8 @@ public class ManageActivitiesFragment extends Fragment {
         rl.addView(txtVwPrice, lp1);
 
         //Event Listeners
-        rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity) getActivity()).changeFragment(new AttractionDetailsFragment(), attraction);
-            }
-        });
 
-        rl.setOnLongClickListener(new View.OnLongClickListener() {
+        tableRow.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -170,9 +169,15 @@ public class ManageActivitiesFragment extends Fragment {
                 return true;
             }
         });
-        //tableRow.setBackground(getResources().getDrawable(R.drawable.border));
-        rl.setBackground(getResources().getDrawable(R.drawable.border));
+        tableRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).changeFragment(new AttractionDetailsFragment(), attraction);
+            }
+        });
+        //Add relative layout to row
         tableRow.addView(rl);
+        tableRow.setBackground(getResources().getDrawable(R.drawable.border));
         //Add the new row to the table
         tableLayout.addView(tableRow);
     }
@@ -220,6 +225,21 @@ public class ManageActivitiesFragment extends Fragment {
 
     /** Updates the label that displays the total price of the Trip */
     private void updatePrice() {
+        if(priceView == null) {
+            priceView = new TextView(context);
+        }
+        else {
+            tableLayout.removeView(priceView);
+        }
+
+        priceView.setTextColor(getResources().getColor(R.color.colorBlue));
+        priceView.setGravity(Gravity.RIGHT);
+        TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+        tableParams.setMargins(10,20,100,10);
+        priceView.setLayoutParams(tableParams);
+        priceView.setPadding(5,5,5,5);
+        priceView.setTypeface(Typeface.DEFAULT_BOLD);
+        tableLayout.addView(priceView);
         priceView.setText("Price:\n" + Trip.getInstance().getTotalPrice() + " €");
     }
 }
