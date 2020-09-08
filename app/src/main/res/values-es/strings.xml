@@ -31,6 +31,8 @@
     <string name="total_price_summary">Desglose precio total</string>
     <string name="total_price">Precio total</string>
     <string name="not_included">No incluida</string>
+    <string name="about">Acerca de</string>
+    <string name="app_description">"Tripescape, planea tus excursiones y actividades deportivas de una manera simple! \n Porque importa el qué y no el dónde."</string>
 
 
 </resources>

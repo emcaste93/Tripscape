@@ -1,9 +1,14 @@
 package com.example.tripscape.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     TripPlanFragment tripPlanFragment;
     int pageNum = 0;
     ImageView c1, c2, c3, c4;
+    Toolbar toolbar;
 
     ArrayList<ImageView> circleList = new ArrayList<>();
     ArrayList<Fragment> fragmentList = new ArrayList<>();
@@ -44,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
         init();
 
         //Add action listeners for buttons
-        buttonNext.setOnClickListener(new View.OnClickListener(){
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateNextPageOverview(true, view);
             }
         });
 
-        buttonBack.setOnClickListener(new View.OnClickListener(){
+        buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateNextPageOverview(false, view);
@@ -61,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         FirestoreData firestoreData = new FirestoreData();
 
         //generate test data locally
-      //  FirestoreData.generateAttractionsData();
+        //  FirestoreData.generateAttractionsData();
 
         //Generate Data into Firestore
         /*AttractionList attractionList = new AttractionList();
@@ -89,39 +95,68 @@ public class MainActivity extends AppCompatActivity {
         fragmentList.add(chooseDestinationFragment);
         fragmentList.add(manageActivitiesFragment);
         fragmentList.add(tripPlanFragment);
-        buttonNext =  findViewById(R.id.nextButton);
-        buttonBack =  findViewById(R.id.backButton);
-        titleList =  Arrays.asList(getString(R.string.enterDataTitle), getString(R.string.chooseDestinationTitle),
-                getString(R.string.manageActivitesTitle),getString(R.string.tripPlanTitle));
+        buttonNext = findViewById(R.id.nextButton);
+        buttonBack = findViewById(R.id.backButton);
+        toolbar = findViewById(R.id.toolbar);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                if(item.getItemId()==R.id.action_about)
+                {
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setTitle(R.string.about);
+                    alertDialog.setMessage(getResources().getString(R.string.app_description));
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
+                else{
+                    // do something
+                }
+
+                return false;
+            }
+        });
+
+        titleList = Arrays.asList(getString(R.string.enterDataTitle), getString(R.string.chooseDestinationTitle),
+                getString(R.string.manageActivitesTitle), getString(R.string.tripPlanTitle));
+        toolbar.inflateMenu(R.menu.menu_manageactivities);
     }
 
     public void changeFragment(Fragment fragment, Attraction attraction) {
-       if(AttractionDetailsFragment.class.isInstance(fragment)) {
-           detailsFragmentActive = true;
-           Bundle bundle = new Bundle();
-           bundle.putSerializable("attraction", attraction);
-           fragment.setArguments(bundle);
-       }
+        if (AttractionDetailsFragment.class.isInstance(fragment)) {
+            detailsFragmentActive = true;
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("attraction", attraction);
+            fragment.setArguments(bundle);
+        }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     private void updateNextPageOverview(boolean goNextPage, View view) {
-        if(detailsFragmentActive) {
+        if (detailsFragmentActive) {
             Fragment f = fragmentList.get(pageNum);
             changeFragment(f, null);
             detailsFragmentActive = false;
-            return ;
+            return;
         }
         //Safety check OutOfBound
-        if(goNextPage && pageNum >= 3) {
+        if (goNextPage && pageNum >= 3) {
             Snackbar.make(view, R.string.nextPressedError, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-            return ;
+            return;
         }
-        if(!goNextPage && pageNum == 0) {
+        if (!goNextPage && pageNum == 0) {
             Snackbar.make(view, R.string.backPressedError, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-            return ;
+            return;
         }
 
         //Reset old Page

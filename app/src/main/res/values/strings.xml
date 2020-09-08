@@ -30,4 +30,7 @@
     <string name="total_price_summary">Total price summary</string>
     <string name="total_price">Total price</string>
     <string name="not_included">Not included</string>
+    <string name="about">About</string>
+    <string name="app_description">"Tripescape, plan your excursions and sport activities in the easiest way! \nBecause it matters what you want to do and not where."</string>
+
 </resources>
