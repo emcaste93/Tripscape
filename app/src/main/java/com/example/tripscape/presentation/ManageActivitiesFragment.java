@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -84,7 +85,6 @@ public class ManageActivitiesFragment extends Fragment {
         //Create new image view
         ImageView imageView = new ImageView(context);
         imageView.setLayoutParams(rowParams);
-
         imageView.setImageResource(FirestoreData.getDrawableFromActivity(attraction.getActivity()));
         imageView.getLayoutParams().height = (int) getResources().getDimension(R.dimen.imageview_height_large);
         imageView.getLayoutParams().width = (int) getResources().getDimension(R.dimen.imageview_width_large);
@@ -92,7 +92,8 @@ public class ManageActivitiesFragment extends Fragment {
 
         //Info:
         RelativeLayout rl = new RelativeLayout(context);
-        rowParams.setMargins(100,20,100,20);
+        rl.setGravity(Gravity.CENTER);
+        rowParams.setMargins(50,10,0,20);
         rl.setLayoutParams(rowParams);
 
         //Title
@@ -101,7 +102,7 @@ public class ManageActivitiesFragment extends Fragment {
         txtVwTitle.setText(attraction.getTitle());
         txtVwTitle.setTextSize(16);
         txtVwTitle.setLayoutParams(rowParams);
-        txtVwTitle.setPadding(20,10,0,0);
+        txtVwTitle.setPadding(20,0,0,0);
         txtVwTitle.setTypeface(Typeface.DEFAULT_BOLD);
         txtVwTitle.setTextColor(getResources().getColor(R.color.colorBlack));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -125,7 +126,7 @@ public class ManageActivitiesFragment extends Fragment {
         txtVwPrice.setText(attraction.getPrice() + " €");
         txtVwPrice.setTextSize(12);
         txtVwPrice.setLayoutParams(rowParams);
-        txtVwPrice.setPadding(20,20,0,20);
+        txtVwPrice.setPadding(20,0,0,20);
         txtVwPrice.setTypeface(Typeface.DEFAULT_BOLD);
         txtVwPrice.setTextColor(getResources().getColor(R.color.colorGreen));
         RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -178,6 +179,25 @@ public class ManageActivitiesFragment extends Fragment {
         });
         //Add relative layout to row
         tableRow.addView(rl);
+
+        //Button remove attraction
+        Button b = new Button(context);
+        b.setText("X");
+        b.setTextSize(14);
+        b.setGravity(Gravity.CENTER);
+        b.setBackgroundColor(Color.TRANSPARENT);
+        b.setLayoutParams(rowParams);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tableLayout.removeView(tableRow);
+                Trip.getInstance().removeSelectedAttraction(attraction);
+                updatePrice();
+            }
+        });
+
+        tableRow.addView(b);
         tableRow.setBackground(getResources().getDrawable(R.drawable.border));
         //Add the new row to the table
         tableLayout.addView(tableRow);
@@ -200,7 +220,7 @@ public class ManageActivitiesFragment extends Fragment {
     private void displayAddAttractionDialog() {
         ArrayList<String> nonSelectedAttractions = new ArrayList<>();
         for(Attraction attraction: getNonSelectedAttractions() ) {
-            nonSelectedAttractions.add(attraction.getActivity().toString());
+            nonSelectedAttractions.add(attraction.getTitle() + " - " + attraction.getActivity().toString());
         }
 
         if(nonSelectedAttractions.size() > 0) {

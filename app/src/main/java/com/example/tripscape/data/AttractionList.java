@@ -53,7 +53,6 @@ public class AttractionList {
                 ,"13:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString(),Enums.Season.Autumn.toString()), "https://www.alltrails.com/trail/germany/baden-wurttemberg/ravenna-gorge-trail"));
         addAttraction(new Attraction("Wingly", Enums.Activity.Flying, Enums.Location.Cologne, 150, false, "4h","Marsplatz 6, Köln, 50667"
                 ,"12:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString(),Enums.Season.Autumn.toString()), "https://www.getyourguide.de/activity/cologne-l19/cologne-sightseeing-flight-in-a-private-plane-t214839?utm_force=0"));
-
     }
 
     public int getSize() {

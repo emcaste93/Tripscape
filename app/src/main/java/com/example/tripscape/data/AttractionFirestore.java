@@ -36,22 +36,6 @@ public class AttractionFirestore {
 
     public void getAttractions(final FirestoreDataCallback firestoreData) {
         AsyncTask<Void, Void, Boolean> task = new FirestoreTask(firestoreData).execute();
-
-      /*  attractions.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
-                    for(DocumentSnapshot document: task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData().toString());
-                        Attraction a = document.toObject(Attraction.class);
-                        firestoreData.addAttraction(a);
-                    }
-                }
-                else {
-                    Log.d(TAG, "Error getting documents ", task.getException());
-                }
-            }
-        });*/
     }
 
     class FirestoreTask extends AsyncTask<Void, Void, Boolean> {

@@ -25,12 +25,6 @@ public class FirestoreData extends AppCompatActivity {
     private AttractionFirestore attractions;
     private static List<Attraction> attractionList;
     public FirestoreData() {
-  /*     TripApplication ta = (TripApplication) getApplication();
-       if(ta != null) {
-           attractions = ta.attractions;
-        //   attractions.getAttractions();
-       }
-       else {*/
        attractionList = new ArrayList<>();
        attractions = new AttractionFirestore();
        Query query = FirebaseFirestore.getInstance()
