@@ -10,7 +10,7 @@ import static com.example.tripscape.model.Enums.*;
 
 public class Trip implements Serializable {
 
-    private int numPersons, budget;
+    private int numPersons, budget, lastBudget;
     private int totalPrice;
     private Date startDate, endDate;
     private ArrayList<Activity> desiredActivities;
@@ -32,17 +32,19 @@ public class Trip implements Serializable {
             throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
         }
         numPersons = 2;
-        budget = 500;
+        budget = 0;
         totalPrice = 0;
         startDate = new Date();
         endDate = new Date();
         destination = null;
         desiredActivities = new ArrayList<>();
         selectedAttractions = new ArrayList<>();
+        lastBudget = 0;
     }
 
     public static Trip getInstance(){
-        if (tripInstance == null){ //if there is no instance available... create new one
+        //If there is no instance available... create new one
+        if (tripInstance == null){
             tripInstance = new Trip();
         }
         return tripInstance;
@@ -112,13 +114,14 @@ public class Trip implements Serializable {
     }
 
     public void initialiseSelectedAttractions() {
-        if (lastDestination == null || lastDestination != destination) {
+        if (lastDestination == null || lastDestination != destination || lastBudget != budget) {
             totalPrice = 0;
-            selectedAttractions = FirestoreData.getAttractionsForLocation(destination, startDate);
+            selectedAttractions = FirestoreData.getAttractionsForLocation(destination, startDate, budget);
             for(Attraction a: selectedAttractions) {
                 totalPrice += (a.getPrice() * numPersons);
             }
             lastDestination = destination;
+            lastBudget = budget;
         }
     }
 

@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -157,6 +159,33 @@ public class EnterDataFragment extends Fragment {
        buttonStartDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
        buttonEndDate.setText(simpleDateFormat.format(getTripEndDate().getTime()));
        buttonAttractions.setText(getSelectedAttractionsText());
+       spinnerActivities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           @Override
+           public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+               String [] budgetArray = getResources().getStringArray(R.array.spinnerItems);
+               int newBudget = 0;
+               switch (i) {
+                   case 0:
+                       newBudget = Integer.parseInt(budgetArray[0].substring(1,4));
+                       break;
+                   case 1:
+                       newBudget = Integer.parseInt(budgetArray[1].substring(1,4));
+                       break;
+                   case 2:
+                       newBudget = Integer.parseInt(budgetArray[2].substring(1,4));
+                       break;
+                   default:
+                       newBudget = 9999;
+                       break;
+               }
+               Trip.getInstance().setBudget(newBudget);
+           }
+
+           @Override
+           public void onNothingSelected(AdapterView<?> adapterView) {
+
+           }
+       });
     }
 
     private void initMapAttractions() {

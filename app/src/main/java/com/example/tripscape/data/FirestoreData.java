@@ -161,6 +161,21 @@ public class FirestoreData extends AppCompatActivity {
         return tripAttractions;
     }
 
+    public static ArrayList<Attraction> getAttractionsForLocation(Location location, Date startDate, int maxBudget) {
+        int budget = 0;
+        ArrayList<Attraction> tripAttractions = new ArrayList<>();
+        for(Attraction attraction: attractionList) {
+            if(attraction.getLocation() == location && isAttractionCompatibleWithTripStartDate(attraction, startDate)
+                    && !tripAttractions.contains(attraction)) {
+                budget += attraction.getPrice() * Trip.getInstance().getNumPersons();
+                if(budget <= maxBudget) {
+                    tripAttractions.add(attraction);
+                }
+            }
+        }
+        return tripAttractions;
+    }
+
     public static List<Attraction> getAllAttractions() {
         return attractionList;
     }
