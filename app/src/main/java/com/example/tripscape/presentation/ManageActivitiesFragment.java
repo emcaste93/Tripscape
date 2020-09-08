@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -42,7 +43,7 @@ import static com.example.tripscape.model.Enums.*;
 public class ManageActivitiesFragment extends Fragment {
     Context context;
     TableLayout tableLayout;
-    TextView priceView;
+    TextView priceView, plusView;
     LinearLayout ll;
 
     /** General constructor called when the view is created */
@@ -55,6 +56,7 @@ public class ManageActivitiesFragment extends Fragment {
         tableLayout = vista.findViewById(R.id.manage_activities_page);
         ll = vista.findViewById(R.id.manage_activities_layout);
         priceView = null;
+        plusView = null;
         Trip.getInstance().initialiseSelectedAttractions();
         displayAttractions();
         return vista;
@@ -249,19 +251,38 @@ public class ManageActivitiesFragment extends Fragment {
         //Init text view or remove old(to display it at the bottom)
         if(priceView == null) {
             priceView = new TextView(context);
+            plusView = new TextView(context);
         }
         else {
             tableLayout.removeView(priceView);
+            tableLayout.removeView(plusView);
         }
+
+        //Plus View button info
+        plusView.setGravity(Gravity.RIGHT);
+        TableLayout.LayoutParams lp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(800,20,100,10);
+        plusView.setLayoutParams(lp);
+        plusView.setPadding(20,20,20,20);
+        plusView.setBackgroundResource(R.drawable.plus);
+
+        plusView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayAddAttractionDialog();
+            }
+        });
+
+        tableLayout.addView(plusView);
+
 
         //Set layout and values to Text View Price
         priceView.setTextColor(getResources().getColor(R.color.colorBlue));
         priceView.setGravity(Gravity.RIGHT);
-        TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-        tableParams.setMargins(10,20,100,10);
-        priceView.setLayoutParams(tableParams);
+        TableLayout.LayoutParams tp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+        tp.setMargins(10,20,100,10);
+        priceView.setLayoutParams(tp);
         priceView.setPadding(5,5,5,5);
-        priceView.setTypeface(Typeface.DEFAULT_BOLD);
         priceView.setText("Price:\n" + Trip.getInstance().getTotalPrice() + " €");
 
         //Add Click Listener
