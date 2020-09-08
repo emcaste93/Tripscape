@@ -39,7 +39,7 @@ public class FirestoreData extends AppCompatActivity {
        });
     //   generateAttractionsData();
     }
-        /*public static void generateAttractionsData() {
+        public static void generateAttractionsData() {
         Attraction attraction1 =
                 new Attraction("Hirschberg", Activity.Hiking, Location.Munich, 20, true, "6h","Bahnhofplatz, Munich, 80335"
                         ,"08:30", asList(Season.Summer.toString(), Season.Spring.toString(), Season.Autumn.toString()), "https://chiemsee-sailingcenter.de");
@@ -72,9 +72,7 @@ public class FirestoreData extends AppCompatActivity {
                         ,"13:00", Arrays.asList(Enums.Season.Summer.toString(), Enums.Season.Spring.toString(),Enums.Season.Autumn.toString()), "https://www.badische-weinstrasse.de/");
 
         attractionList = Arrays.asList(attraction1,attraction2,attraction3,attraction4,attraction5,attraction6,attraction7,attraction8,attraction9,attraction10);
-    }*/
-
-
+    }
 
     /** Retunrs a list of every Location compatible with the trip search(Activities and Season) */
     public static List<Location> getTripLocations() {
