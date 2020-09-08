@@ -24,14 +24,21 @@ import com.example.tripscape.model.Trip;
 import com.google.android.material.button.MaterialButton;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.example.tripscape.model.Enums.*;
 
 public class ChooseDestinationFragment extends Fragment {
     Context context;
     TableLayout tableLayout;
-    List<Location> locationList;
+    HashMap<Location, Integer> locationMap;
+    LinkedHashMap<Location,Integer> sortedLocationMap;
     Button lastPressedButton;
     Location destination;
 
@@ -42,20 +49,54 @@ public class ChooseDestinationFragment extends Fragment {
                 container, false);
         context = container.getContext();
         tableLayout = vista.findViewById(R.id.chooseDestinationPage);
+        sortedLocationMap = new LinkedHashMap<>();
+        locationMap = new HashMap<>();
 
-        //TODO: Change this in order to get only the attractions for the Trip
-        locationList = FirestoreData.getTripLocations();
+        initLocationMap(FirestoreData.getTripLocations());
         destination = Trip.getInstance().getDestination();
+        orderLocationList();
 
-        for (Location location: locationList) {
-            addDestination(location);
+        for (Location location: sortedLocationMap.keySet()) {
+            addDestination(location, sortedLocationMap.get(location));
         }
 
         return vista;
     }
 
+    private void initLocationMap(List<Location> locationList) {
+        for(Location loc: locationList) {
+            locationMap.put(loc, getLocationMatch(loc));
+        }
+    }
+
+    private void orderLocationList() {
+        List<Location> mapKeys = new ArrayList<>(locationMap.keySet());
+        List<Integer> mapValues = new ArrayList<>(locationMap.values());
+
+        Iterator<Integer> valueIt = mapValues.iterator();
+        while (valueIt.hasNext()) {
+            int val = valueIt.next();
+            Iterator<Location> keyIt = mapKeys.iterator();
+            Location key = null;
+
+            while (keyIt.hasNext()) {
+                Location keyTmp = keyIt.next();
+                int valTmp = locationMap.get(keyTmp);
+                if(valTmp >= val || mapKeys.size() == 1) {
+                    val = valTmp;
+                    key = keyTmp;
+                }
+            }
+            if(key != null) {
+                sortedLocationMap.put(key, val);
+                mapKeys.remove(key);
+             //   mapValues.remove(val);
+            }
+        }
+    }
+
     /** Adds a row for the destination location, with an image and a button */
-    private void addDestination(Location location) {
+    private void addDestination(Location location, int match) {
         TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
         //Create new row
@@ -79,7 +120,7 @@ public class ChooseDestinationFragment extends Fragment {
 
         final Button button = new Button(context);
         button.setTextColor(getResources().getColor(R.color.colorBlue));
-        button.setText(location.toString() + System.getProperty("line.separator") + getLocationMatchString(location));
+        button.setText(location.toString() + System.getProperty("line.separator") + match + "% MATCH" );
         button.setBackground(gradientDrawable);
 
 
@@ -121,8 +162,7 @@ public class ChooseDestinationFragment extends Fragment {
     }
 
     /** Calculates the 'match percentage' between your selected activities and the available for the location given as parameter */
-    private String getLocationMatchString(Location location) {
-        String res = "";
+    private int getLocationMatch(Location location) {
         List<Activity> activitiesForLocation = FirestoreData.getActivitiesForLocation(location, Trip.getInstance().getStartDate());
         List<Activity> tripActivities = Trip.getInstance().getDesiredActivities();
         int desiredAcivities = tripActivities.size();
@@ -132,10 +172,8 @@ public class ChooseDestinationFragment extends Fragment {
                 count ++;
             }
         }
-        int resPercentage = Math.round((count*100)/desiredAcivities);
-        res = resPercentage + "% Match";
-
-        return  res;
+        int match = Math.round((count*100)/desiredAcivities);
+        return  match;
     }
 
     @Override
