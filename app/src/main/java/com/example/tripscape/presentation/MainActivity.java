@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         //  FirestoreData.generateAttractionsData();
 
         //Generate Data into Firestore
-        /*AttractionList attractionList = new AttractionList();
+       /* AttractionList attractionList = new AttractionList();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         for(int id = 0; id < attractionList.getSize(); id++) {
             db.collection("attractions").add(attractionList.getElementAt(id));

@@ -27,4 +27,14 @@ public class Enums {
         Jetski,
         Flying
     }
+
+    public enum TripDay {
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thrusday,
+        Friday,
+        Saturday,
+        Sunday
+    }
 }

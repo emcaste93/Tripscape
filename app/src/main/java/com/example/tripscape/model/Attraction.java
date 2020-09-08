@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import static com.example.tripscape.model.Enums.*;
+import static java.util.Arrays.asList;
 
 public class Attraction implements Serializable {
     private Activity activity;
@@ -15,11 +16,26 @@ public class Attraction implements Serializable {
     private String startTime;
     private List<String> seasonsAvailable;
     private String link;
-
+    private List<TripDay> tripDays;
     private String title;
 
     public Attraction() {
 
+    }
+
+
+    public Attraction(String title, Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime, List<String> seasonsAvailable, String link, List<TripDay> tripDays) {
+        this.title = title;
+        this.activity = activity;
+        this.location = location;
+        this.price = price;
+        this.transportation = transportation;
+        this.duration = duration;
+        this.startLocation = startLocation;
+        this.startTime = startTime;
+        this.seasonsAvailable = seasonsAvailable;
+        this.link = link;
+        this.tripDays = tripDays;
     }
 
     public Attraction(String title, Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime, List<String> seasonsAvailable, String link) {
@@ -33,6 +49,15 @@ public class Attraction implements Serializable {
         this.startTime = startTime;
         this.seasonsAvailable = seasonsAvailable;
         this.link = link;
+        this.tripDays = asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Thrusday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday);
+    }
+
+    public List<TripDay> getTripDays() {
+        return tripDays;
+    }
+
+    public void setTripDays(List<TripDay> tripDays) {
+        this.tripDays = tripDays;
     }
 
     public Activity getActivity() {
