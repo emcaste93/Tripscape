@@ -13,7 +13,7 @@ public class TripApplication extends Application {
         super.onCreate();
         attractions = new AttractionFirestore();
         Query query = FirebaseFirestore.getInstance()
-                .collection("attractions")
+                .collection("attractionsGermany")
                 .limit(50);
     }
 }

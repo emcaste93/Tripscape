@@ -39,8 +39,8 @@ public class DateHelper {
             case Tuesday:
                 return TripDay.Wednesday;
             case Wednesday:
-                return TripDay.Thrusday;
-            case Thrusday:
+                return TripDay.Thursday;
+            case Thursday:
                 return TripDay.Friday;
             case Friday:
                 return TripDay.Saturday;
@@ -72,7 +72,7 @@ public class DateHelper {
                 res = TripDay.Wednesday;
                 break;
             case 5:
-                res = TripDay.Thrusday;
+                res = TripDay.Thursday;
                 break;
             case 6:
                 res = TripDay.Friday;

@@ -1,48 +1,87 @@
 package com.example.tripscape.presentation;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-
 import com.example.tripscape.R;
-import com.example.tripscape.data.FirestoreData;
-import com.example.tripscape.model.Enums;
+import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Trip;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 
-public class TripPlanFragment extends Fragment {
-Context context;
-LinearLayout linearLayout;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.trip_plan,
-                container, false);
-        context = container.getContext();
-        linearLayout = vista.findViewById(R.id.page_trip_plan);
+import java.util.Map;
 
-        initTripPlan();
-        return vista;
+
+public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
+    GoogleMap map;
+    MapView mapView;
+    View mView;
+
+    public TripPlanFragment() {
+
     }
 
-    private void initTripPlan() {
-        //Create new image view and a button
-        ImageView imageView = new ImageView(context);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+       mView = inflater.inflate(R.layout.trip_plan, container, false);
+       return mView;
+    }
 
-        imageView.setImageResource(FirestoreData.getDrawableFromLocation(Enums.Location.Berlin));
-        imageView.setMinimumHeight((int) getResources().getDimension(R.dimen.imageview_height));
-        imageView.setMinimumWidth((int) getResources().getDimension(R.dimen.imageview_width));
-        linearLayout.addView(imageView);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view,savedInstanceState);
 
-        TextView tx = new TextView(context);
-        tx.setText("TEST ME");
-        linearLayout.addView(tx);
+        mapView = (MapView) mView.findViewById(R.id.mapview);
+        if(mapView != null) {
+            mapView.onCreate(null);
+            mapView.onResume();
+            mapView.getMapAsync(this);
+        }
+    }
+
+    private void addMarkers() {
+        for (Attraction attraction : Trip.getInstance().getSelectedAttractions()) {
+            map.addMarker(new MarkerOptions().position(new LatLng(40.689247, -64 - 044502)).title("Statue of Liberty").snippet("I hope to get there"));
+
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        MapsInitializer.initialize(getContext());
+
+        map = googleMap;
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        addMarkers();
+
+        CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.689247, -74.044502)).zoom(16).bearing(0).tilt(45).build();
+    }
+
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 }

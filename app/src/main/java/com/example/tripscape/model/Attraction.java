@@ -1,5 +1,9 @@
 package com.example.tripscape.model;
 
+import android.util.Pair;
+
+import com.google.firebase.firestore.GeoPoint;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,13 +22,15 @@ public class Attraction implements Serializable {
     private String link;
     private List<TripDay> tripDays;
     private String title;
+    private GeoPoint coordinates;
 
     public Attraction() {
 
     }
 
 
-    public Attraction(String title, Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime, List<String> seasonsAvailable, String link, List<TripDay> tripDays) {
+    public Attraction(String title, Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime,
+                      List<String> seasonsAvailable, String link, List<TripDay> tripDays, GeoPoint coordinates) {
         this.title = title;
         this.activity = activity;
         this.location = location;
@@ -36,6 +42,7 @@ public class Attraction implements Serializable {
         this.seasonsAvailable = seasonsAvailable;
         this.link = link;
         this.tripDays = tripDays;
+        this.coordinates = coordinates;
     }
 
     public Attraction(String title, Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime, List<String> seasonsAvailable, String link) {
@@ -49,7 +56,8 @@ public class Attraction implements Serializable {
         this.startTime = startTime;
         this.seasonsAvailable = seasonsAvailable;
         this.link = link;
-        this.tripDays = asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Thrusday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday);
+        this.tripDays = asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday);
+        this.coordinates = new GeoPoint(40.689247, -64 - 044502);
     }
 
     public List<TripDay> getTripDays() {

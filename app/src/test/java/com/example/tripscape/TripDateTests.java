@@ -1,7 +1,5 @@
 package com.example.tripscape;
 
-import android.widget.BaseExpandableListAdapter;
-
 import com.example.tripscape.model.DateHelper;
 import com.example.tripscape.model.Enums;
 
@@ -76,7 +74,7 @@ public class TripDateTests {
     @Test
     public void getTripWeekDay_ShallReturn_SuMoTuWedThFrSa() {
         ArrayList<Enums.TripDay> expectedresultList = new ArrayList<>(
-                Arrays.asList( Enums.TripDay.Tuesday, Enums.TripDay.Wednesday, Enums.TripDay.Thrusday, Enums.TripDay.Friday, Enums.TripDay.Saturday, Enums.TripDay.Sunday, Enums.TripDay.Monday));
+                Arrays.asList( Enums.TripDay.Tuesday, Enums.TripDay.Wednesday, Enums.TripDay.Thursday, Enums.TripDay.Friday, Enums.TripDay.Saturday, Enums.TripDay.Sunday, Enums.TripDay.Monday));
         ArrayList<Enums.TripDay> result = null;
         String startDateString = "31-08-2020"; //Mo
         String endDateString = "07-09-2020"; //Mo
@@ -100,7 +98,7 @@ public class TripDateTests {
         ArrayList<Enums.TripDay> list1 = new ArrayList<>(
                 Arrays.asList( Enums.TripDay.Saturday, Enums.TripDay.Monday));
         ArrayList<Enums.TripDay> list2 = new ArrayList<>(
-                Arrays.asList( Enums.TripDay.Tuesday, Enums.TripDay.Wednesday, Enums.TripDay.Thrusday, Enums.TripDay.Friday, Enums.TripDay.Saturday, Enums.TripDay.Sunday, Enums.TripDay.Monday));
+                Arrays.asList( Enums.TripDay.Tuesday, Enums.TripDay.Wednesday, Enums.TripDay.Thursday, Enums.TripDay.Friday, Enums.TripDay.Saturday, Enums.TripDay.Sunday, Enums.TripDay.Monday));
 
         boolean result = DateHelper.containsListAnyDayFromList(list1, list2);
 

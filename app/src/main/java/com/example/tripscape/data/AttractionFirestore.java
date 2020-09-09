@@ -19,7 +19,7 @@ public class AttractionFirestore {
 
     public AttractionFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        attractions = db.collection("attractions");
+        attractions = db.collection("attractionsGermany");
     }
 
     public void addAttracionToCollection(Attraction attraction) {

@@ -30,7 +30,7 @@ public class FirestoreData extends AppCompatActivity {
        attractionList = new ArrayList<>();
        attractions = new AttractionFirestore();
        Query query = FirebaseFirestore.getInstance()
-               .collection("attractions")
+               .collection("attractionsGermany")
                .limit(50);
        attractions.getAttractions(new FirestoreDataCallback(){
            public void addAttraction(Attraction attraction) {

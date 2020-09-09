@@ -32,7 +32,7 @@ public class Enums {
         Monday,
         Tuesday,
         Wednesday,
-        Thrusday,
+        Thursday,
         Friday,
         Saturday,
         Sunday

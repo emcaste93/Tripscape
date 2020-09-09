@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tripscape">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <permission
+        android:name="com.example.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.example.permission.MAPS_RECEIVE"/>
+
     <application
         android:allowBackup="true"
         android:debuggable="true"
@@ -11,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:name="com.example.tripscape.TripApplication">
+
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDur0_CyqaMWj6vLVKmztm6YT6rLLNoz94"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
         <activity android:name=".data.FirestoreData"></activity>
         <activity android:name=".presentation.MainActivity">
             <intent-filter>
@@ -19,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
 
 </manifest>
