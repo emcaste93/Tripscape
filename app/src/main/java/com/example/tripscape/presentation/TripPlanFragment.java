@@ -51,8 +51,10 @@ public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
 
     private void addMarkers() {
         for (Attraction attraction : Trip.getInstance().getSelectedAttractions()) {
-            map.addMarker(new MarkerOptions().position(new LatLng(40.689247, -64 - 044502)).title("Statue of Liberty").snippet("I hope to get there"));
-
+            map.addMarker(new MarkerOptions()
+                    .position(new LatLng(attraction.getCoordinates().getLatitude(), attraction.getCoordinates().getLongitude()))
+                    .title(attraction.getTitle())
+                    .snippet("THIS IS A SNIPPET"));
         }
     }
 

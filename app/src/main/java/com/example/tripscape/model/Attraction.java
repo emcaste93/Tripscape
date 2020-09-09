@@ -29,8 +29,8 @@ public class Attraction implements Serializable {
     }
 
 
-    public Attraction(String title, Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime,
-                      List<String> seasonsAvailable, String link, List<TripDay> tripDays, GeoPoint coordinates) {
+    public Attraction(String title, Activity activity, Location location, int price, boolean transportation ,String duration, String startLocation, String startTime,
+                      List<String> seasonsAvailable, String link, List<TripDay> tripDays, GeoPoint coordinates, double latitude) {
         this.title = title;
         this.activity = activity;
         this.location = location;
@@ -58,6 +58,14 @@ public class Attraction implements Serializable {
         this.link = link;
         this.tripDays = asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday);
         this.coordinates = new GeoPoint(40.689247, -64 - 044502);
+    }
+
+    public GeoPoint getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(GeoPoint coordinates) {
+        this.coordinates = coordinates;
     }
 
     public List<TripDay> getTripDays() {
