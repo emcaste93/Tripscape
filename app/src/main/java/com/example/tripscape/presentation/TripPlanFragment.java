@@ -1,12 +1,15 @@
 package com.example.tripscape.presentation;
 
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import com.example.tripscape.R;
 import com.example.tripscape.model.Attraction;
+import com.example.tripscape.model.MapsHelper;
 import com.example.tripscape.model.Trip;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,6 +23,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 
 public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
@@ -66,7 +71,12 @@ public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         addMarkers();
 
-        CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.689247, -74.044502)).zoom(16).bearing(0).tilt(45).build();
+        MapsHelper gpsHelper = new MapsHelper();
+        Location loc = gpsHelper.getCurrentLocation(getContext());
+        if (loc!=null){
+            Log.d(TAG, "onMapReady: " + loc.getLatitude() + ", " + loc.getLongitude());
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(loc.getLatitude(),loc.getLongitude()), 15.0f));
+        }
     }
 
     @Override
