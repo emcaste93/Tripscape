@@ -110,32 +110,50 @@ public class ManageActivitiesFragment extends Fragment {
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         rl.addView(txtVwTitle,lp);
 
-        //More info
-        TextView txtVwInfo = new TextView(context);
-        txtVwInfo.setText(attraction.getStartLocation());
-        txtVwInfo.setLayoutParams(rowParams);
-        txtVwInfo.setTextSize(10);
-        txtVwInfo.setId(View.generateViewId());
-        txtVwInfo.setPadding(20,20,0,0);
-        txtVwInfo.setTextColor(getResources().getColor(R.color.colorBlack));
+        //Start location
+        TextView txtViewAddress = new TextView(context);
+        txtViewAddress.setText(attraction.getStartLocation());
+        txtViewAddress.setLayoutParams(rowParams);
+        txtViewAddress.setTextSize(10);
+        txtViewAddress.setId(View.generateViewId());
+        txtViewAddress.setPadding(20,20,0,0);
+        txtViewAddress.setTextColor(getResources().getColor(R.color.colorBlack));
         RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         params2.addRule(RelativeLayout.BELOW, txtVwTitle.getId());
-        rl.addView(txtVwInfo, params2);
+        rl.addView(txtViewAddress, params2);
+
+        //Date and price
+
+        LinearLayout dateAndPriceLayout  = new LinearLayout(context);
+        dateAndPriceLayout.setOrientation(LinearLayout.HORIZONTAL);
+        dateAndPriceLayout.setLayoutParams(rowParams);
+        RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp2.addRule(RelativeLayout.BELOW, txtViewAddress.getId());
+
 
         //Price
         final TextView txtVwPrice = new TextView(context);
         txtVwPrice.setId(View.generateViewId());
-        txtVwPrice.setText(attraction.getPrice() + " €");
+        txtVwPrice.setText(attraction.getStartTime());
         txtVwPrice.setTextSize(12);
+        rowParams.setMargins(20,0,0,0);
         txtVwPrice.setLayoutParams(rowParams);
-        txtVwPrice.setPadding(20,0,0,20);
+        txtVwPrice.setPadding(0,0,0,20);
         txtVwPrice.setTypeface(Typeface.DEFAULT_BOLD);
-        txtVwPrice.setTextColor(getResources().getColor(R.color.colorGreen));
-        RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp1.addRule(RelativeLayout.BELOW, txtVwInfo.getId());
+        txtVwPrice.setTextColor(getResources().getColor(R.color.colorBlack));
+        dateAndPriceLayout.addView(txtVwPrice);
 
-        rl.addView(txtVwPrice, lp1);
+        final TextView txtVwPrice2 = new TextView(context);
+        txtVwPrice2.setId(View.generateViewId());
+        txtVwPrice2.setText(attraction.getPrice() * Trip.getInstance().getNumPersons() + " €");
+        txtVwPrice2.setTextSize(12);
+       // txtVwPrice2.setLayoutParams(rowParams);
+        //txtVwPrice2.setPadding(20,0,0,20);
+        txtVwPrice2.setTypeface(Typeface.DEFAULT_BOLD);
+        txtVwPrice2.setTextColor(getColorForPrice(attraction.getPrice()));
+        dateAndPriceLayout.addView(txtVwPrice2);
 
+        rl.addView(dateAndPriceLayout, lp2);
         //Event Listeners
 
         tableRow.setOnLongClickListener(new View.OnLongClickListener() {
@@ -318,7 +336,7 @@ public class ManageActivitiesFragment extends Fragment {
 
                     TextView txPrice = new TextView(context);
                     txPrice.setText(attraction.getPrice() * Trip.getInstance().getNumPersons() + " €");
-                    txPrice.setTextColor(getResources().getColor(R.color.colorGreen));
+                    txPrice.setTextColor(getColorForPrice(attraction.getPrice()));
                     txPrice.setTypeface(Typeface.DEFAULT_BOLD);
                     txPrice.setGravity(Gravity.RIGHT);
                     tr.addView(txPrice);
@@ -379,5 +397,14 @@ public class ManageActivitiesFragment extends Fragment {
         });
 
         tableLayout.addView(priceView);
+    }
+
+    /** Returns the color for the text from a price per person */
+    private int getColorForPrice(double price) {
+        int resColor = getResources().getColor(R.color.colorOrange);
+        if(price <= 50) {
+            resColor = getResources().getColor(R.color.colorGreen);
+        }
+        return resColor;
     }
 }
