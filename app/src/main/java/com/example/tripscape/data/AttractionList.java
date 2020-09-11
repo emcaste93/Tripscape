@@ -12,8 +12,8 @@ import static java.util.Arrays.asList;
 
 public class AttractionList {
     protected List<Attraction> attractionList;
-    GeoPoint coordinatesHirschberg, coordinatesChiemsee, coordinatesMunich, coordinatesZugspitze, coordinatesSoell, coordinatesHamburg, coordinatesBerlin, coordinatesBlackForest,
-        coordinatesNuremberg, coordinatesCologne;
+    GeoPoint coordinatesHirschberg, coordinatesChiemsee, coordinatesMunich, coordinatesZugspitze, coordinatesSoell, coordinatesAlterSee, coordinatesBerlin, coordinatesBlackForest,
+        coordinatesNuremberg, coordinatesCologne, coordinatesRavenaGorge, coordinatesFeldBerg;
     public AttractionList() {
         attractionList = new ArrayList<>();
         coordinatesHirschberg = new GeoPoint(47.660783,11.696084);
@@ -21,11 +21,13 @@ public class AttractionList {
         coordinatesMunich = new GeoPoint(48.137565, 11.575513);
         coordinatesZugspitze = new GeoPoint(47.421675, 10.985065);
         coordinatesSoell = new GeoPoint(47.504006, 12.192491);
-        coordinatesHamburg = new GeoPoint(53.551044, 9.992941);
+        coordinatesAlterSee = new GeoPoint(53.562502, 10.010320);
         coordinatesBerlin = new GeoPoint(52.522053, 13.413381);
         coordinatesBlackForest = new GeoPoint(47.999994, 7.859852);
         coordinatesNuremberg = new GeoPoint(49.455864, 11.075302);
         coordinatesCologne = new GeoPoint(50.937945, 6.959345);
+        coordinatesRavenaGorge = new GeoPoint(47.920685, 8.086533);
+        coordinatesFeldBerg = new GeoPoint(47.875469, 8.005767);
         addSampleData();
     }
 
@@ -46,10 +48,10 @@ public class AttractionList {
                 ,"08:00", Arrays.asList(Season.Autumn.toString(), Season.Winter.toString()), "https://www.skiresort.info/ski-resort/zugspitze/",asList(TripDay.Tuesday, TripDay.Wednesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesZugspitze, 1.4));
         addAttraction(new Attraction("Söll", Activity.Skiing, Location.Munich, 70, true, "10H","Bahnhofplatz, Munich, 80335"
                 ,"08:00", Arrays.asList(Season.Autumn.toString(), Season.Winter.toString(), Season.Spring.toString()), "https://https://www.skiwelt.at/en/individual-tariff.html",asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesSoell, 40.1));
-        addAttraction(new Attraction("Hamburg", Activity.Canoeing, Location.Hamburg, 10, true, "2h","Rathausmarkt, Hamburg, 20095"
-                ,"11:00", asList(Season.Summer.toString(), Season.Spring.toString()), "https://www.hamburg.com/boating/14055536/on-the-alster-lake/",asList(TripDay.Monday, TripDay.Tuesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesHamburg, 49.0));
-        addAttraction(new Attraction("Hamburg", Activity.Sailing, Location.Hamburg, 10, true, "4h","Rathausmarkt, Hamburg, 20095"
-                ,"12:00", Arrays.asList(Season.Summer.toString(), Season.Spring.toString()), "https://www.hamburg.com/boating/14055536/on-the-alster-lake/",asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesHamburg, 49.1));
+        addAttraction(new Attraction("Alstersee", Activity.Canoeing, Location.Hamburg, 10, true, "2h","Rathausmarkt, Hamburg, 20095"
+                ,"11:00", asList(Season.Summer.toString(), Season.Spring.toString()), "https://www.hamburg.com/boating/14055536/on-the-alster-lake/",asList(TripDay.Monday, TripDay.Tuesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesAlterSee, 49.0));
+        addAttraction(new Attraction("Alstersee", Activity.Sailing, Location.Hamburg, 10, true, "4h","Rathausmarkt, Hamburg, 20095"
+                ,"12:00", Arrays.asList(Season.Summer.toString(), Season.Spring.toString()), "https://www.hamburg.com/boating/14055536/on-the-alster-lake/",asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesAlterSee, 49.1));
         addAttraction(new Attraction("Bus-tour", Activity.Sightseeing, Location.Berlin, 15, true, "3h","Alexanderplatz, Berlin, 10178"
                 ,"16:00", Arrays.asList(Season.Summer.toString(), Season.Spring.toString(), Season.Autumn.toString()), "https://backstagetourism.com/anfrage/",asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesBerlin, 31.1));
         addAttraction(new Attraction("Canoeing", Activity.Canoeing, Location.Berlin, 12, true, "3h","Alexanderplatz, Berlin, 10178"
@@ -59,9 +61,9 @@ public class AttractionList {
         addAttraction(new Attraction("Wine-tour", Activity.Wine_Tasting, Location.Black_Forest, 30, true, "4h","Mozartstrasse, Freiburg, 79104"
                 ,"13:00", Arrays.asList(Season.Summer.toString(), Season.Spring.toString(), Season.Autumn.toString()), "https://www.badische-weinstrasse.de/",asList(TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesBlackForest, 3));
         addAttraction(new Attraction("Feldberg", Activity.Skiing, Location.Black_Forest, 60, true, "4h","Mozartstrasse, Freiburg, 79104"
-                ,"13:00", Arrays.asList(Season.Winter.toString(), Season.Autumn.toString()), "https://www.skiresort.info/ski-resort/feldberg-seebuckgrafenmattfahl/",asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesBlackForest, 1));
+                ,"13:00", Arrays.asList(Season.Winter.toString(), Season.Autumn.toString()), "https://www.skiresort.info/ski-resort/feldberg-seebuckgrafenmattfahl/",asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesFeldBerg, 1));
         addAttraction(new Attraction("Ravenna Gorge", Activity.Hiking, Location.Black_Forest, 20, true, "4h","Mozartstrasse, Freiburg, 79104"
-                ,"13:00", Arrays.asList(Season.Summer.toString(), Season.Spring.toString(), Season.Autumn.toString()), "https://www.alltrails.com/trail/germany/baden-wurttemberg/ravenna-gorge-trail",asList(TripDay.Tuesday, TripDay.Wednesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesBlackForest, 3));
+                ,"13:00", Arrays.asList(Season.Summer.toString(), Season.Spring.toString(), Season.Autumn.toString()), "https://www.alltrails.com/trail/germany/baden-wurttemberg/ravenna-gorge-trail",asList(TripDay.Tuesday, TripDay.Wednesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesRavenaGorge, 3));
         addAttraction(new Attraction("Walking tour", Activity.Sightseeing, Location.Nuremberg, 10, true, "2h","Füll, Nuremberg, 90403"
                 ,"13:00", Arrays.asList(Season.Summer.toString(), Season.Spring.toString(), Season.Autumn.toString()), "https://www.alltrails.com/trail/germany/baden-wurttemberg/ravenna-gorge-trail",asList(TripDay.Monday, TripDay.Tuesday, TripDay.Wednesday, TripDay.Thursday, TripDay.Friday, TripDay.Saturday, TripDay.Sunday), coordinatesNuremberg, -1.0));
         addAttraction(new Attraction("Wingly", Activity.Flying, Location.Cologne, 150, true, "4h","Marsplatz 6, Köln, 50667"
