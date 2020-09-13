@@ -1,5 +1,6 @@
 package com.example.tripscape.presentation;
 
+import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,10 +32,7 @@ public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap map;
     MapView mapView;
     View mView;
-
-    public TripPlanFragment() {
-
-    }
+    private static final int LOCATION_PERMISSION_REQUEST = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,7 +69,7 @@ public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         addMarkers();
 
-        MapsHelper gpsHelper = new MapsHelper();
+        MapsHelper gpsHelper = new MapsHelper(getActivity(),LOCATION_PERMISSION_REQUEST);
         Location loc = gpsHelper.getCurrentLocation(getContext());
         if (loc!=null){
             Log.d(TAG, "onMapReady: " + loc.getLatitude() + ", " + loc.getLongitude());
