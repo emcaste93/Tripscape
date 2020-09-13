@@ -122,6 +122,7 @@ public class ChooseDestinationFragment extends Fragment {
         button.setTextColor(getResources().getColor(R.color.colorBlue));
         button.setText(location.toString() + System.getProperty("line.separator") + match + "% MATCH" );
         button.setBackground(gradientDrawable);
+        button.setTextSize(10);
 
 
         rowParams.setMargins((int) getResources().getDimension(R.dimen.left_margin),(int) getResources().getDimension(R.dimen.inner_margin),(int) getResources().getDimension(R.dimen.right_margin),0);

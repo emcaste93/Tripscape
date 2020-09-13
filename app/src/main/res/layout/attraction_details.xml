@@ -1,66 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <ImageView
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_gravity="center"
-        android:layout_width="@dimen/imageview_width"
-        android:layout_height="@dimen/imageview_height"
-        android:id="@+id/imgVwDetails" />
 
-    <TextView
+<LinearLayout android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/label_style"
-        android:text="Start location:" />
-    <TextView
-        android:id="@+id/txtViewStartLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/text_style"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start time:"
-        style="@style/label_style"/>
-    <TextView
-        android:id="@+id/txtViewStartTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/text_style"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Price:"
-        style="@style/label_style"/>
-    <TextView
-        android:id="@+id/txtViewPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/text_style"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Transportation:"
-        style="@style/label_style"/>
-    <TextView
-        android:id="@+id/txtViewTransportation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/text_style"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Link:"
-        style="@style/label_style"/>
-    <TextView
-        android:id="@+id/txtViewLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textIsSelectable="true"
-        style="@style/text_style"/>
+        android:layout_height="wrap_content" >
 
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_marginTop="@dimen/top_margin"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/imageview_width"
+            android:layout_height="@dimen/imageview_height"
+            android:id="@+id/imgVwDetails" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/label_style"
+            android:text="Start location:" />
+        <TextView
+            android:id="@+id/txtViewStartLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_style"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start time:"
+            style="@style/label_style"/>
+        <TextView
+            android:id="@+id/txtViewStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_style"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price:"
+            style="@style/label_style"/>
+        <TextView
+            android:id="@+id/txtViewPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_style"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transportation:"
+            style="@style/label_style"/>
+        <TextView
+            android:id="@+id/txtViewTransportation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_style"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Link:"
+            style="@style/label_style"/>
+        <TextView
+            android:id="@+id/txtViewLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            style="@style/text_style"/>
+
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
