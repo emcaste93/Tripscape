@@ -30,6 +30,7 @@ import com.example.tripscape.R;
 import com.example.tripscape.data.FirestoreData;
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
+import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.example.tripscape.model.Trip;
 
 import org.w3c.dom.Text;
@@ -227,7 +228,7 @@ public class ManageActivitiesFragment extends Fragment {
     private ArrayList<Attraction> getNonSelectedAttractions() {
         ArrayList<Attraction> nonSelectedAttractions = new ArrayList<>();
         ArrayList<Attraction> selectedAttractions = Trip.getInstance().getSelectedAttractions();
-        ArrayList<Attraction> availableAttractionsList = FirestoreData.getAttractionsForLocation(Trip.getInstance().getDestination(), Trip.getInstance().getStartDate());
+        ArrayList<Attraction> availableAttractionsList = FirestoreDataAdapterImpl.getInstance().getAttractionsForLocation(Trip.getInstance().getDestination(), Trip.getInstance().getStartDate());
         for (Attraction attraction: availableAttractionsList) {
             if(!selectedAttractions.contains(attraction)) {
                 nonSelectedAttractions.add(attraction);

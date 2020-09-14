@@ -20,6 +20,8 @@ import com.example.tripscape.R;
 import com.example.tripscape.data.FirestoreData;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Enums.Location;
+import com.example.tripscape.model.FirestoreDataAdapter;
+import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.example.tripscape.model.Trip;
 import com.google.android.material.button.MaterialButton;
 
@@ -52,7 +54,7 @@ public class ChooseDestinationFragment extends Fragment {
         sortedLocationMap = new LinkedHashMap<>();
         locationMap = new HashMap<>();
 
-        initLocationMap(FirestoreData.getTripLocations());
+        initLocationMap(FirestoreDataAdapterImpl.getInstance().getTripLocations());
         destination = Trip.getInstance().getDestination();
         orderLocationList();
 
@@ -164,7 +166,7 @@ public class ChooseDestinationFragment extends Fragment {
 
     /** Calculates the 'match percentage' between your selected activities and the available for the location given as parameter */
     private int getLocationMatch(Location location) {
-        List<Activity> activitiesForLocation = FirestoreData.getActivitiesForLocation(location, Trip.getInstance().getStartDate());
+        List<Activity> activitiesForLocation = FirestoreDataAdapterImpl.getInstance().getActivitiesForLocation(location, Trip.getInstance().getStartDate());
         List<Activity> tripActivities = Trip.getInstance().getDesiredActivities();
         int desiredAcivities = tripActivities.size();
         int count = 0;

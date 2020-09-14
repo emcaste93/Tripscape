@@ -26,6 +26,7 @@ import static java.util.Arrays.asList;
 public class FirestoreData extends AppCompatActivity {
     private AttractionFirestore attractions;
     private static List<Attraction> attractionList;
+
     public FirestoreData() {
        attractionList = new ArrayList<>();
        attractions = new AttractionFirestore();
@@ -75,7 +76,7 @@ public class FirestoreData extends AppCompatActivity {
     }
 
     /** Retunrs a list of every Location compatible with the trip search(Activities and Season) */
-    public static List<Location> getTripLocations() {
+    public List<Location> getTripLocations() {
         List<Location> tripLocations = new ArrayList<>();
         List<Activity> tripActivities = Trip.getInstance().getDesiredActivities();
         // If the trip activity is in the list, then add the location of the attraction
@@ -83,15 +84,19 @@ public class FirestoreData extends AppCompatActivity {
             for(Attraction attraction: attractionList) {
                 Location location = attraction.getLocation();
                 if(attraction.getActivity().equals(activity) && isAttractionCompatibleWithTripStartDate(attraction,Trip.getInstance().getStartDate())
-                        && !tripLocations.contains(location)) {
+                        && isAttractionCompatibleWithTripBudget(attraction, Trip.getInstance().getNumPersons(),Trip.getInstance().getBudget()) && !tripLocations.contains(location)) {
                     tripLocations.add(location);
                 }
             }
         }
         return tripLocations;
     }
+
+    private boolean isAttractionCompatibleWithTripBudget(Attraction a, int numPersons, int budget) {
+        return a.getPrice() * numPersons <= budget;
+    }
     
-    public static boolean isAttractionCompatibleWithTripStartDate(Attraction a, Date startDate) {
+    public boolean isAttractionCompatibleWithTripStartDate(Attraction a, Date startDate) {
         String season = getSeasonFromDate(startDate);
         boolean res = a.getSeasonsAvailable().contains(season);
         return res;
@@ -137,7 +142,7 @@ public class FirestoreData extends AppCompatActivity {
         return activities;
     }
 
-    public static ArrayList<Activity> getActivitiesForLocation(Location location, Date startDate) {
+    public ArrayList<Activity> getActivitiesForLocation(Location location, Date startDate) {
         ArrayList<Activity> locationActivities = new ArrayList<>();
         ArrayList<Attraction> locationAttractions = getAttractionsForLocation(location, startDate);
         for(Attraction locationAttraction : locationAttractions) {
@@ -149,7 +154,7 @@ public class FirestoreData extends AppCompatActivity {
         return locationActivities;
     }
 
-    public static ArrayList<Attraction> getAttractionsForLocation(Location location, Date startDate) {
+    public ArrayList<Attraction> getAttractionsForLocation(Location location, Date startDate) {
         ArrayList<Attraction> tripAttractions = new ArrayList<>();
         for(Attraction attraction: attractionList) {
             if(attraction.getLocation() == location && isAttractionCompatibleWithTripStartDate(attraction, startDate)
@@ -160,13 +165,16 @@ public class FirestoreData extends AppCompatActivity {
         return tripAttractions;
     }
 
-    public static ArrayList<Attraction> getAttractionsForLocation(Location location, Date startDate, Date endDate, int maxBudget) {
+    public ArrayList<Attraction> getAttractionsForLocation(Location location, Date startDate, Date endDate, int maxBudget) {
         List<TripDay> days = DateHelper.getDayListFromDates(startDate, endDate);
         int budget = 0;
         ArrayList<Attraction> tripAttractions = new ArrayList<>();
         for(Attraction attraction: attractionList) {
-            if(attraction.getLocation() == location && isAttractionCompatibleWithTripStartDate(attraction, startDate)
-                    && !tripAttractions.contains(attraction) && DateHelper.containsListAnyDayFromList(days, attraction.getTripDays()) ) {
+            if(Trip.getInstance().getDesiredActivities().contains(attraction.getActivity())
+                    && attraction.getLocation() == location
+                    && isAttractionCompatibleWithTripStartDate(attraction, startDate)
+                    && DateHelper.containsListAnyDayFromList(days, attraction.getTripDays())
+                    && !tripAttractions.contains(attraction)  ) {
                 budget += attraction.getPrice() * Trip.getInstance().getNumPersons();
                 if(budget <= maxBudget) {
                     tripAttractions.add(attraction);
