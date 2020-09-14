@@ -5,7 +5,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tripscape.R;
 import com.example.tripscape.data.AttractionList;
@@ -20,6 +25,7 @@ import com.example.tripscape.data.FirestoreData;
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.FirestoreDataAdapterImpl;
+import com.example.tripscape.model.Trip;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -62,10 +68,15 @@ public class MainActivity extends AppCompatActivity {
         adapter = new FirestoreDataAdapterImpl();
 
         changeFragment(enterDataFragment, null);
+
         c1 = findViewById(R.id.circle1);
         c2 = findViewById(R.id.circle2);
         c3 = findViewById(R.id.circle3);
         c4 = findViewById(R.id.circle4);
+        buttonNext = findViewById(R.id.nextButton);
+        buttonBack = findViewById(R.id.backButton);
+        toolbar = findViewById(R.id.toolbar);
+
         circleList.add(c1);
         circleList.add(c2);
         circleList.add(c3);
@@ -74,27 +85,82 @@ public class MainActivity extends AppCompatActivity {
         fragmentList.add(chooseDestinationFragment);
         fragmentList.add(manageActivitiesFragment);
         fragmentList.add(tripPlanFragment);
-        buttonNext = findViewById(R.id.nextButton);
-        buttonBack = findViewById(R.id.backButton);
-        toolbar = findViewById(R.id.toolbar);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                if(item.getItemId()==R.id.action_about)
+                if(item.getItemId() == R.id.action_about)
                 {
-                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                    alertDialog.setTitle(R.string.about);
-                    alertDialog.setMessage(getResources().getString(R.string.app_description));
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.alertDialog);
+                    builder.setCancelable(false);
+                    builder.setTitle(R.string.about);
+                    builder.setMessage(getResources().getString(R.string.app_description));
+                    builder.setPositiveButton("OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             });
+                    final AlertDialog alertDialog = builder.create();
                     alertDialog.show();
+                    Button b = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                    if(b != null) {
+                       b.setTextSize(14);
+                       b.setTypeface(Typeface.DEFAULT_BOLD);
+                       b.setTextColor(getResources().getColor(R.color.colorBlack));
+                    }
+                    int textViewId = alertDialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+                    TextView tv = alertDialog.findViewById(textViewId);
+                    tv.setTextColor(getResources().getColor(R.color.colorBlack));
+                }
+                else if(item.getItemId() == R.id.action_share) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.alertDialog);
+                    builder.setCancelable(false);
+                    builder.setTitle(R.string.share);
+                    builder.setMessage(getResources().getString(R.string.share_confirmation_question));
+                    builder.setPositiveButton(getResources().getString(R.string.share),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if(Trip.getInstance().getSelectedAttractions().size() == 0) {
+                                        Toast.makeText(MainActivity.this, "You must complete the search of the attractions of the trip before sharing!",Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        //Send info per email
+                                        Intent emailIntent = new Intent(Intent.ACTION_SENDTO,
+                                                Uri.fromParts("mailto", "emcaste93@gmail.com", null)) ;
+                                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Tripescape - Trip data");
+                                        emailIntent.putExtra(Intent.EXTRA_TEXT, Trip.getInstance().getTripData());
+                                        if (emailIntent.resolveActivity(getPackageManager()) != null) {
+                                            startActivity(Intent.createChooser(emailIntent, "Send email ..."));
+                                        }
+                                    }
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    final AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    Button bPositive = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                    Button bNegative = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+                    if(bPositive != null) {
+                        bPositive.setTextSize(14);
+                        bPositive.setTypeface(Typeface.DEFAULT_BOLD);
+                        bPositive.setTextColor(getResources().getColor(R.color.colorGreen));
+                    }
+                    if(bNegative != null) {
+                        bNegative.setTextSize(14);
+                        bNegative.setTypeface(Typeface.DEFAULT_BOLD);
+                        bNegative.setTextColor(getResources().getColor(R.color.colorRed));
+                    }
+                    int textViewId = alertDialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+                    TextView tv = alertDialog.findViewById(textViewId);
+                    tv.setTextColor(getResources().getColor(R.color.colorBlack));
                 }
                 else{
                     // do something

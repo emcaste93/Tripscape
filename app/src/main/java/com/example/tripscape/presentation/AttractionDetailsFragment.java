@@ -43,7 +43,7 @@ public class AttractionDetailsFragment  extends Fragment {
 
     private void displayData() {
         if(attraction != null) {
-            tvStartLocation.setText(attraction.getStartLocation());
+            tvStartLocation.setText(attraction.getStartAddress());
             tvStartTime.setText(attraction.getStartTime());
             tvPrice.setText( attraction.getPrice() + "€");
             String transportationText = attraction.getTransportation() ? "Included" : "Not included";

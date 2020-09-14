@@ -111,9 +111,9 @@ public class ManageActivitiesFragment extends Fragment {
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         rl.addView(txtVwTitle,lp);
 
-        //Start location
+        //Start address
         TextView txtViewAddress = new TextView(context);
-        txtViewAddress.setText(attraction.getStartLocation());
+        txtViewAddress.setText(attraction.getStartAddress());
         txtViewAddress.setLayoutParams(rowParams);
         txtViewAddress.setTextSize(10);
         txtViewAddress.setId(View.generateViewId());

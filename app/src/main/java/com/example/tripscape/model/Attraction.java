@@ -16,7 +16,7 @@ public class Attraction implements Serializable {
     private int price;
     private boolean transportation;
     private String duration;
-    private String startLocation;
+    private String startAddress;
     private String startTime;
     private List<String> seasonsAvailable;
     private String link;
@@ -29,7 +29,7 @@ public class Attraction implements Serializable {
     }
 
 
-    public Attraction(String title, Activity activity, Location location, int price, boolean transportation ,String duration, String startLocation, String startTime,
+    public Attraction(String title, Activity activity, Location location, int price, boolean transportation ,String duration, String startAddress, String startTime,
                       List<String> seasonsAvailable, String link, List<TripDay> tripDays, GeoPoint coordinates, double latitude) {
         this.title = title;
         this.activity = activity;
@@ -37,7 +37,7 @@ public class Attraction implements Serializable {
         this.price = price;
         this.transportation = transportation;
         this.duration = duration;
-        this.startLocation = startLocation;
+        this.startAddress = startAddress;
         this.startTime = startTime;
         this.seasonsAvailable = seasonsAvailable;
         this.link = link;
@@ -45,14 +45,14 @@ public class Attraction implements Serializable {
         this.coordinates = coordinates;
     }
 
-    public Attraction(String title, Activity activity, Location location, int price, boolean transportation, String duration, String startLocation, String startTime, List<String> seasonsAvailable, String link) {
+    public Attraction(String title, Activity activity, Location location, int price, boolean transportation, String duration, String startAddress, String startTime, List<String> seasonsAvailable, String link) {
         this.title = title;
         this.activity = activity;
         this.location = location;
         this.price = price;
         this.transportation = transportation;
         this.duration = duration;
-        this.startLocation = startLocation;
+        this.startAddress = startAddress;
         this.startTime = startTime;
         this.seasonsAvailable = seasonsAvailable;
         this.link = link;
@@ -124,12 +124,12 @@ public class Attraction implements Serializable {
         this.duration = duration;
     }
 
-    public String getStartLocation() {
-        return startLocation;
+    public String getStartAddress() {
+        return startAddress;
     }
 
-    public void setStartLocation(String startLocation) {
-        this.startLocation = startLocation;
+    public void setStartAddress(String startLocation) {
+        this.startAddress = startLocation;
     }
 
     public String getStartTime() {
@@ -154,5 +154,12 @@ public class Attraction implements Serializable {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    @Override
+    public String toString() {
+        String res = "";
+        res = String.format("Title: %s \nLocation: %s \nStartAddress:  %s, \nStartTime:  %s , \nPrice: %d  \nLink:  %s", title,location.toString(),startAddress, startTime, price, link);
+        return res;
     }
 }

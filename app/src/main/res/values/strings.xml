@@ -31,6 +31,9 @@
     <string name="total_price">Total price</string>
     <string name="not_included">Not included</string>
     <string name="about">About</string>
-    <string name="app_description">"Tripescape, plan your excursions and sport activities in the easiest way! \nBecause it matters what you want to do and not where."</string>
+    <string name="share">Share</string>
+    <string name="cancel">Cancel</string>
+    <string name="share_confirmation_question">Are you sure you wanna share your trip information per email?</string>
+    <string name="app_description">"Tripescape, plan your excursions and sport activities in the easiest way! \nBecause it matters what you want to do and not where.\n"</string>
 
 </resources>

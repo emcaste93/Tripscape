@@ -83,8 +83,10 @@ public class FirestoreData extends AppCompatActivity {
         for (Activity activity: tripActivities) {
             for(Attraction attraction: attractionList) {
                 Location location = attraction.getLocation();
-                if(attraction.getActivity().equals(activity) && isAttractionCompatibleWithTripStartDate(attraction,Trip.getInstance().getStartDate())
-                        && isAttractionCompatibleWithTripBudget(attraction, Trip.getInstance().getNumPersons(),Trip.getInstance().getBudget()) && !tripLocations.contains(location)) {
+                if(attraction.getActivity().equals(activity)
+                        && isAttractionCompatibleWithTripStartDate(attraction,Trip.getInstance().getStartDate())
+                        && isAttractionCompatibleWithTripBudget(attraction, Trip.getInstance().getNumPersons(),Trip.getInstance().getBudget())
+                        && !tripLocations.contains(location)) {
                     tripLocations.add(location);
                 }
             }

@@ -3,6 +3,7 @@ package com.example.tripscape.model;
 import com.example.tripscape.data.FirestoreData;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -136,6 +137,21 @@ public class Trip implements Serializable {
     public void removeSelectedAttraction(Attraction attraction) {
         selectedAttractions.remove(attraction);
         totalPrice -= (attraction.getPrice() * numPersons);
+    }
+
+    public String getTripData() {
+        String data = "";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        data += "Start Date: " + simpleDateFormat.format(startDate);
+        data += "\nEnd Date: " + simpleDateFormat.format(endDate);
+        data += "\nDestination: " + destination.toString();
+        data += "\n\n*** Selected attractions: *** ";
+        int count = 0;
+        for(Attraction a: selectedAttractions) {
+            count ++;
+            data += "\n " + count + ") " + a.toString();
+        }
+        return data;
     }
 
 }
