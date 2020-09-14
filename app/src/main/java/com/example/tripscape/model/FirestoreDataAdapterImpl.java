@@ -1,5 +1,6 @@
 package com.example.tripscape.model;
 
+import com.example.tripscape.data.AttractionList;
 import com.example.tripscape.data.FirestoreData;
 
 import java.util.ArrayList;
@@ -48,5 +49,10 @@ public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
     @Override
     public ArrayList<Enums.Activity> getActivitiesForLocation(Enums.Location location, Date startDate) {
         return firestoreData.getActivitiesForLocation(location, startDate);
+    }
+
+    @Override
+    public AttractionList getAttractionList() {
+        return new AttractionList();
     }
 }

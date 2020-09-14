@@ -19,6 +19,7 @@ import com.example.tripscape.data.AttractionList;
 import com.example.tripscape.data.FirestoreData;
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
+import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -70,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
         //  FirestoreData.generateAttractionsData();
 
         //Generate Data into Firestore
-        AttractionList attractionList = new AttractionList();
-        /*FirebaseFirestore db = FirebaseFirestore.getInstance();
+       /* AttractionList attractionList = FirestoreDataAdapterImpl.getInstance().getAttractionList();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         for(int id = 0; id < attractionList.getSize(); id++) {
             db.collection("attractionsGermany").add(attractionList.getElementAt(id));
         }*/
