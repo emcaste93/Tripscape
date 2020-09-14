@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     int pageNum = 0;
     ImageView c1, c2, c3, c4;
     Toolbar toolbar;
+    FirestoreDataAdapterImpl adapter;
 
     ArrayList<ImageView> circleList = new ArrayList<>();
     ArrayList<Fragment> fragmentList = new ArrayList<>();
@@ -49,40 +50,17 @@ public class MainActivity extends AppCompatActivity {
 
         //initialise variables
         init();
-
-        //Add action listeners for buttons
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateNextPageOverview(true, view);
-            }
-        });
-
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateNextPageOverview(false, view);
-            }
-        });
-
-        FirestoreData firestoreData = new FirestoreData();
-
-        //generate test data locally
-        //  FirestoreData.generateAttractionsData();
-
-        //Generate Data into Firestore
-       /* AttractionList attractionList = FirestoreDataAdapterImpl.getInstance().getAttractionList();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        for(int id = 0; id < attractionList.getSize(); id++) {
-            db.collection("attractionsGermany").add(attractionList.getElementAt(id));
-        }*/
     }
 
     private void init() {
+      //  generateFirebaseData(); USAGE: UNCOMMENT TO GENERATE NEW TEST DATA TO CLOUD FIRESTORE(Will add duplicates if not manual double check it is empty)
+
         chooseDestinationFragment = new ChooseDestinationFragment();
         enterDataFragment = new EnterDataFragment();
         manageActivitiesFragment = new ManageActivitiesFragment();
         tripPlanFragment = new TripPlanFragment();
+        adapter = new FirestoreDataAdapterImpl();
+
         changeFragment(enterDataFragment, null);
         c1 = findViewById(R.id.circle1);
         c2 = findViewById(R.id.circle2);
@@ -129,6 +107,31 @@ public class MainActivity extends AppCompatActivity {
         titleList = Arrays.asList(getString(R.string.enterDataTitle), getString(R.string.chooseDestinationTitle),
                 getString(R.string.manageActivitesTitle), getString(R.string.tripPlanTitle));
         toolbar.inflateMenu(R.menu.menu_manageactivities);
+
+        //Add action listeners for buttons
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateNextPageOverview(true, view);
+            }
+        });
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateNextPageOverview(false, view);
+            }
+        });
+    }
+
+    private void generateFirebaseData() {
+        FirestoreDataAdapterImpl.getInstance().generateFirestoreData();
+    }
+
+    private void generateLocalData() {
+        //generate test data locally
+        //  FirestoreData.generateAttractionsData();
+
     }
 
     public void changeFragment(Fragment fragment, Attraction attraction) {

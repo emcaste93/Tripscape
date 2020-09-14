@@ -38,6 +38,12 @@ public class AttractionFirestore {
         AsyncTask<Void, Void, Boolean> task = new FirestoreTask(firestoreData).execute();
     }
 
+    public void generateFirestoreData(AttractionList attractionList) {
+        for(int id = 0; id < attractionList.getSize(); id++) {
+            attractions.add(attractionList.getElementAt(id));
+        }
+    }
+
     class FirestoreTask extends AsyncTask<Void, Void, Boolean> {
         boolean isSuccessful;
         boolean isComplete;

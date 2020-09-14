@@ -1,7 +1,9 @@
 package com.example.tripscape.model;
 
+import com.example.tripscape.data.AttractionFirestore;
 import com.example.tripscape.data.AttractionList;
 import com.example.tripscape.data.FirestoreData;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,5 +56,13 @@ public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
     @Override
     public AttractionList getAttractionList() {
         return new AttractionList();
+    }
+
+    @Override
+    public void generateFirestoreData() {
+        //Generate Data into Firestore
+        AttractionList attractionList = getAttractionList();
+        AttractionFirestore attractionFirestore = new AttractionFirestore();
+        attractionFirestore.generateFirestoreData(attractionList);
     }
 }
