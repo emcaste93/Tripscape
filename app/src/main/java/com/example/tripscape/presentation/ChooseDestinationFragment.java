@@ -43,6 +43,7 @@ public class ChooseDestinationFragment extends Fragment {
     LinkedHashMap<Location,Integer> sortedLocationMap;
     Button lastPressedButton;
     Location destination;
+    ArrayList<Button> buttons;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,14 +54,18 @@ public class ChooseDestinationFragment extends Fragment {
         tableLayout = vista.findViewById(R.id.chooseDestinationPage);
         sortedLocationMap = new LinkedHashMap<>();
         locationMap = new HashMap<>();
+        buttons = new ArrayList<>();
 
         initLocationMap(FirestoreDataAdapterImpl.getInstance().getTripLocations());
         destination = Trip.getInstance().getDestination();
         orderLocationList();
 
+
         for (Location location: sortedLocationMap.keySet()) {
             addDestination(location, sortedLocationMap.get(location));
         }
+
+        customizeSelectedButton(buttons.get(0));
 
         return vista;
     }
@@ -92,7 +97,6 @@ public class ChooseDestinationFragment extends Fragment {
             if(key != null) {
                 sortedLocationMap.put(key, val);
                 mapKeys.remove(key);
-             //   mapValues.remove(val);
             }
         }
     }
@@ -126,7 +130,6 @@ public class ChooseDestinationFragment extends Fragment {
         button.setBackground(gradientDrawable);
         button.setTextSize(10);
 
-
         rowParams.setMargins((int) getResources().getDimension(R.dimen.left_margin),(int) getResources().getDimension(R.dimen.inner_margin),(int) getResources().getDimension(R.dimen.right_margin),0);
         button.setLayoutParams(rowParams);
 
@@ -135,33 +138,35 @@ public class ChooseDestinationFragment extends Fragment {
             lastPressedButton = button;
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final GradientDrawable gradientDrawable = new GradientDrawable();
-                gradientDrawable.setShape(GradientDrawable.RECTANGLE);
-                gradientDrawable.setStroke(5, getResources().getColor(R.color.colorBlue));
-
-                if (lastPressedButton != null) {
-                    gradientDrawable.setColor(getResources().getColor(R.color.colorWhite));
-                    lastPressedButton.setBackground(gradientDrawable);
-                }
-                final GradientDrawable gradientDrawableActive = new GradientDrawable();
-                gradientDrawableActive.setShape(GradientDrawable.RECTANGLE);
-                gradientDrawableActive.setStroke(5, getResources().getColor(R.color.colorBlue));
-                gradientDrawableActive.setColor(getResources().getColor(R.color.colorLightGreen));
-                button.setBackground(gradientDrawableActive);
-                int firstLineSeparator = button.getText().toString().indexOf('\n');
-                String txt = button.getText().toString().substring(0,firstLineSeparator);
-                Trip.getInstance().setDestination(Location.valueOf(txt));
-                lastPressedButton = button;
-            }
+        button.setOnClickListener(view -> {
+            customizeSelectedButton(button);
         });
 
         tableRow.addView(button);
 
         //Add the new row to the table
         tableLayout.addView(tableRow);
+        buttons.add(button);
+    }
+
+    private void customizeSelectedButton(Button button) {
+        final GradientDrawable gradientDrawable1 = new GradientDrawable();
+        gradientDrawable1.setShape(GradientDrawable.RECTANGLE);
+        gradientDrawable1.setStroke(5, getResources().getColor(R.color.colorBlue));
+
+        if (lastPressedButton != null) {
+            gradientDrawable1.setColor(getResources().getColor(R.color.colorWhite));
+            lastPressedButton.setBackground(gradientDrawable1);
+        }
+        final GradientDrawable gradientDrawableActive = new GradientDrawable();
+        gradientDrawableActive.setShape(GradientDrawable.RECTANGLE);
+        gradientDrawableActive.setStroke(5, getResources().getColor(R.color.colorBlue));
+        gradientDrawableActive.setColor(getResources().getColor(R.color.colorLightGreen));
+        button.setBackground(gradientDrawableActive);
+        int firstLineSeparator = button.getText().toString().indexOf('\n');
+        String txt = button.getText().toString().substring(0,firstLineSeparator);
+        Trip.getInstance().setDestination(Location.valueOf(txt));
+        lastPressedButton = button;
     }
 
     /** Calculates the 'match percentage' between your selected activities and the available for the location given as parameter */
