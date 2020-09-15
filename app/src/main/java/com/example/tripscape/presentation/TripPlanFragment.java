@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import com.example.tripscape.R;
+import com.example.tripscape.data.FirestoreData;
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.MapsHelper;
 import com.example.tripscape.model.Trip;
@@ -19,10 +20,12 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
@@ -32,6 +35,7 @@ public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap map;
     MapView mapView;
     View mView;
+    double latitude = 0, longitude = 0;
     private static final int LOCATION_PERMISSION_REQUEST = 1;
 
     @Override
@@ -53,12 +57,20 @@ public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void addMarkers() {
-        for (Attraction attraction : Trip.getInstance().getSelectedAttractions()) {
+        double totalLong = 0, totalLat = 0;
+        List<Attraction> tripAttractions = Trip.getInstance().getSelectedAttractions();
+        for (Attraction attraction : tripAttractions) {
+            totalLong += attraction.getCoordinates().getLongitude();
+            totalLat += attraction.getCoordinates().getLatitude();
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(attraction.getCoordinates().getLatitude(), attraction.getCoordinates().getLongitude()))
                     .title(attraction.getTitle())
-                    .snippet("THIS IS A SNIPPET"));
+                    .snippet(attraction.getActivity().toString())
+                    .icon(BitmapDescriptorFactory.fromResource(FirestoreData.getDrawableFromActivity(attraction.getActivity()))));
         }
+        //Set latitude and longitude as the "average point" from all attractions
+        longitude = totalLong / tripAttractions.size();
+        latitude = totalLat / tripAttractions.size();
     }
 
     @Override
@@ -70,10 +82,17 @@ public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
         addMarkers();
 
         MapsHelper gpsHelper = new MapsHelper(getActivity(),LOCATION_PERMISSION_REQUEST);
-        Location loc = gpsHelper.getCurrentLocation(getContext());
-        if (loc!=null){
-            Log.d(TAG, "onMapReady: " + loc.getLatitude() + ", " + loc.getLongitude());
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(loc.getLatitude(),loc.getLongitude()), 15.0f));
+
+        if(longitude > 0  && latitude > 0) {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 10.0f));
+        }
+        else {
+            //Get Current Location
+           Location loc = gpsHelper.getCurrentLocation(getContext());
+            if (loc!=null){
+                Log.d(TAG, "onMapReady: " + loc.getLatitude() + ", " + loc.getLongitude());
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(loc.getLatitude(),loc.getLongitude()), 10.0f));
+            }
         }
     }
 

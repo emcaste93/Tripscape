@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-      //  generateFirebaseData(); USAGE: UNCOMMENT TO GENERATE NEW TEST DATA TO CLOUD FIRESTORE(Will add duplicates if not manual double check it is empty)
+      //  generateFirebaseData(); // USAGE:UNCOMMENT TO GENERATE NEW TEST DATA TO CLOUD FIRESTORE(Will add duplicates if not manual double check it is empty)
 
         chooseDestinationFragment = new ChooseDestinationFragment();
         enterDataFragment = new EnterDataFragment();
