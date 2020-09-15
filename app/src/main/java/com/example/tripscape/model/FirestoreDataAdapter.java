@@ -14,4 +14,5 @@ public interface FirestoreDataAdapter {
     ArrayList<Enums.Activity> getActivitiesForLocation(Enums.Location location, Date startDate);
     AttractionList getAttractionList();
     void generateFirestoreData();
+    ArrayList<Enums.Activity> getAllActivities();
 }

@@ -5,6 +5,7 @@ import com.example.tripscape.data.FirestoreData;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import static com.example.tripscape.model.Enums.*;
@@ -28,7 +29,7 @@ public class Trip implements Serializable {
         budget = 0;
         totalPrice = 0;
         startDate = new Date();
-        endDate = new Date();
+        setEndDateAsStartDayPlusXDays(7);
         destination = null;
         desiredActivities = new ArrayList<>();
         selectedAttractions = new ArrayList<>();
@@ -41,6 +42,13 @@ public class Trip implements Serializable {
             tripInstance = new Trip();
         }
         return tripInstance;
+    }
+
+    private void setEndDateAsStartDayPlusXDays(int x) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        calendar.add(Calendar.DAY_OF_YEAR, x);
+        endDate = calendar.getTime();
     }
 
     public int getTotalPrice() {

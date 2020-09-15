@@ -120,11 +120,11 @@ public class FirestoreData extends AppCompatActivity {
         return res;
     }
 
-    public static ArrayList<String> getAllActivities() {
-        ArrayList<String> activities = new ArrayList<>();
+    public ArrayList<Activity> getAllActivities() {
+        ArrayList<Activity> activities = new ArrayList<>();
         for (Attraction a: attractionList) {
             if(!activities.contains(a)) {
-                activities.add(a.getActivity().toString());
+                activities.add(a.getActivity());
             }
         }
         return activities;

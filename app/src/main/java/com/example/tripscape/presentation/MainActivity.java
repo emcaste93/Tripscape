@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList;
     boolean detailsFragmentActive = false;
-    boolean firestoreDataLoaded = false;
-    ProgressDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,88 +93,78 @@ public class MainActivity extends AppCompatActivity {
         fragmentList.add(manageActivitiesFragment);
         fragmentList.add(tripPlanFragment);
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        toolbar.setOnMenuItemClickListener(item -> {
 
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                if(item.getItemId() == R.id.action_about)
-                {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.alertDialog);
-                    builder.setCancelable(false);
-                    builder.setTitle(R.string.about);
-                    builder.setMessage(getResources().getString(R.string.app_description));
-                    builder.setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    final AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-                    Button b = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-                    if(b != null) {
-                       b.setTextSize(14);
-                       b.setTypeface(Typeface.DEFAULT_BOLD);
-                       b.setTextColor(getResources().getColor(R.color.colorBlack));
-                    }
-                    int textViewId = alertDialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                    TextView tv = alertDialog.findViewById(textViewId);
-                    tv.setTextColor(getResources().getColor(R.color.colorBlack));
+            if(item.getItemId() == R.id.action_about)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.alertDialog);
+                builder.setCancelable(false);
+                builder.setTitle(R.string.about);
+                builder.setMessage(getResources().getString(R.string.app_description));
+                builder.setPositiveButton("OK",
+                        (dialog, which) -> dialog.dismiss());
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                Button b = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                if(b != null) {
+                   b.setTextSize(14);
+                   b.setTypeface(Typeface.DEFAULT_BOLD);
+                   b.setTextColor(getResources().getColor(R.color.colorBlack));
                 }
-                else if(item.getItemId() == R.id.action_share) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.alertDialog);
-                    builder.setCancelable(false);
-                    builder.setTitle(R.string.share);
-                    builder.setMessage(getResources().getString(R.string.share_confirmation_question));
-                    builder.setPositiveButton(getResources().getString(R.string.share),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if(Trip.getInstance().getSelectedAttractions().size() == 0) {
-                                        Toast.makeText(MainActivity.this, "You must complete the search of the attractions of the trip before sharing!",Toast.LENGTH_SHORT).show();
-                                    }
-                                    else {
-                                        //Send info per email
-                                        Intent emailIntent = new Intent(Intent.ACTION_SENDTO,
-                                                Uri.fromParts("mailto", "emcaste93@gmail.com", null)) ;
-                                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Tripescape - Trip data");
-                                        emailIntent.putExtra(Intent.EXTRA_TEXT, Trip.getInstance().getTripData());
-                                        if (emailIntent.resolveActivity(getPackageManager()) != null) {
-                                            startActivity(Intent.createChooser(emailIntent, "Send email ..."));
-                                        }
-                                    }
-                                    dialog.dismiss();
-                                }
-                            });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    final AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-                    Button bPositive = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-                    Button bNegative = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-                    if(bPositive != null) {
-                        bPositive.setTextSize(14);
-                        bPositive.setTypeface(Typeface.DEFAULT_BOLD);
-                        bPositive.setTextColor(getResources().getColor(R.color.colorGreen));
-                    }
-                    if(bNegative != null) {
-                        bNegative.setTextSize(14);
-                        bNegative.setTypeface(Typeface.DEFAULT_BOLD);
-                        bNegative.setTextColor(getResources().getColor(R.color.colorRed));
-                    }
-                    int textViewId = alertDialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                    TextView tv = alertDialog.findViewById(textViewId);
-                    tv.setTextColor(getResources().getColor(R.color.colorBlack));
-                }
-                else{
-                    // do something
-                }
-
-                return false;
+                int textViewId = alertDialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+                TextView tv = alertDialog.findViewById(textViewId);
+                tv.setTextColor(getResources().getColor(R.color.colorBlack));
             }
+            else if(item.getItemId() == R.id.action_share) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.alertDialog);
+                builder.setCancelable(false);
+                builder.setTitle(R.string.share);
+                builder.setMessage(getResources().getString(R.string.share_confirmation_question));
+                builder.setPositiveButton(getResources().getString(R.string.share),
+                        (dialog, which) -> {
+                            if(Trip.getInstance().getSelectedAttractions().size() == 0) {
+                                Toast.makeText(MainActivity.this, "You must complete the search of the attractions of the trip before sharing!",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                //Send info per email
+                                Intent emailIntent = new Intent(Intent.ACTION_SENDTO,
+                                        Uri.fromParts("mailto", "emcaste93@gmail.com", null)) ;
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Tripescape - Trip data");
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, Trip.getInstance().getTripData());
+                                if (emailIntent.resolveActivity(getPackageManager()) != null) {
+                                    startActivity(Intent.createChooser(emailIntent, "Send email ..."));
+                                }
+                            }
+                            dialog.dismiss();
+                        });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                Button bPositive = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                Button bNegative = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+                if(bPositive != null) {
+                    bPositive.setTextSize(14);
+                    bPositive.setTypeface(Typeface.DEFAULT_BOLD);
+                    bPositive.setTextColor(getResources().getColor(R.color.colorGreen));
+                }
+                if(bNegative != null) {
+                    bNegative.setTextSize(14);
+                    bNegative.setTypeface(Typeface.DEFAULT_BOLD);
+                    bNegative.setTextColor(getResources().getColor(R.color.colorRed));
+                }
+                int textViewId = alertDialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+                TextView tv = alertDialog.findViewById(textViewId);
+                tv.setTextColor(getResources().getColor(R.color.colorBlack));
+            }
+            else{
+                // do something
+            }
+
+            return false;
         });
 
         titleList = Arrays.asList(getString(R.string.enterDataTitle), getString(R.string.chooseDestinationTitle),
@@ -184,31 +172,9 @@ public class MainActivity extends AppCompatActivity {
         toolbar.inflateMenu(R.menu.menu_manageactivities);
 
         //Add action listeners for buttons
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               // if(firestoreDataLoaded) {
-                    updateNextPageOverview(true, view);
-           //     }
-            //    else {
-            //        loadingDialog = ProgressDialog.show(MainActivity.this, "", "Loading. Please wait...", true);
-           //     }
-            }
-        });
+        buttonNext.setOnClickListener(view -> updateNextPageOverview(true, view));
 
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateNextPageOverview(false, view);
-            }
-        });
-    }
-
-    public void setFirestoreDataLoaded(boolean dataLoaded) {
-        firestoreDataLoaded = dataLoaded;
-        if(dataLoaded) {
-            loadingDialog.dismiss();
-        }
+        buttonBack.setOnClickListener(view -> updateNextPageOverview(false, view));
     }
 
     private void generateFirebaseData() {
@@ -277,9 +243,12 @@ public class MainActivity extends AppCompatActivity {
                         //   Log.d(TAG, "onSuccess: LIST EMPTY");
                         return;
                     } else {
-                        // Add all to your list
+                        //Save data into Attraction class and initialise Selected Activities to All activities
                         List<Attraction> attractions = documentSnapshots.toObjects(Attraction.class);
                         adapter.getInstance().setFirestoreDataAttractionList(attractions);
+                        Trip.getInstance().setDesiredActivities(adapter.getInstance().getAllActivities());
+                        enterDataFragment.initMapAttractions();
+
                     }
                     loadingDialog.dismiss();
                 })

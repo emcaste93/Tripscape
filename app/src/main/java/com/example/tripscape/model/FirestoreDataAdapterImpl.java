@@ -66,6 +66,11 @@ public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
         attractionFirestore.generateFirestoreData(attractionList);
     }
 
+    @Override
+    public ArrayList<Enums.Activity> getAllActivities() {
+        return firestoreData.getAllActivities();
+    }
+
     public void setFirestoreDataAttractionList(List<Attraction> attractions) {
         firestoreData.setAttractionList(attractions);
     }

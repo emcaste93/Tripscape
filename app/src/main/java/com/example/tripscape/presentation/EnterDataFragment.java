@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tripscape.R;
 import com.example.tripscape.data.FirestoreData;
+import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.example.tripscape.model.Trip;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -62,67 +63,40 @@ public class EnterDataFragment extends Fragment {
         //init variables
         init();
 
-        buttonStartDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startDate.show();
+        buttonStartDate.setOnClickListener(v -> startDate.show());
+
+        buttonEndDate.setOnClickListener(v -> endDate.show());
+
+        buttonAttractions.setOnClickListener(v -> {
+            if(mapAttractions.size() == 0) {
+                initMapAttractions();
             }
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.alertDialog);
+            builder.setTitle("Choose attractions");
+            final String[] listAttractions = getAllAttractionsKeys();
+
+            builder.setMultiChoiceItems(listAttractions, getAllAttractionsValues(), (dialog, pos, isChecked) -> mapAttractions.put(listAttractions[pos], isChecked));
+
+            builder.setPositiveButton("Done", (dialog, which) -> {
+                buttonAttractions.setText(getSelectedAttractionsText());
+                dialog.dismiss();
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
-        buttonEndDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                endDate.show();
-            }
+        buttonPlus.setOnClickListener(v -> {
+           Trip.getInstance().addPerson();
+           txtViewNumPersons.setText(Integer.toString(getTripNumPersons()));
         });
 
-        buttonAttractions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mapAttractions.size() == 0) {
-                    initMapAttractions();
-                }
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.alertDialog);
-                builder.setTitle("Choose attractions");
-                final String[] listAttractions = getAllAttractionsKeys();
-
-                builder.setMultiChoiceItems(listAttractions, getAllAttractionsValues(), new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int pos, boolean isChecked) {
-                        mapAttractions.put(listAttractions[pos], isChecked);
-                    }
-                });
-
-                builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        buttonAttractions.setText(getSelectedAttractionsText());
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
+        buttonMinus.setOnClickListener(v -> {
+            if(getTripNumPersons() == 1) {
+                return ;
             }
-        });
-
-        buttonPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               Trip.getInstance().addPerson();
-               txtViewNumPersons.setText(Integer.toString(getTripNumPersons()));
-            }
-        });
-
-        buttonMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(getTripNumPersons() == 1) {
-                    return ;
-                }
-                Trip.getInstance().removePerson();
-                txtViewNumPersons.setText(Integer.toString(getTripNumPersons()));
-            }
+            Trip.getInstance().removePerson();
+            txtViewNumPersons.setText(Integer.toString(getTripNumPersons()));
         });
 
         return vista;
@@ -148,7 +122,6 @@ public class EnterDataFragment extends Fragment {
         dialog = new ProgressDialog(context);
         dialog.setTitle("Loading");
         dialog.setTitle("Please wait");
-        initMapAttractions();
         initForm();
         initCalendars();
     }
@@ -159,11 +132,12 @@ public class EnterDataFragment extends Fragment {
        buttonStartDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
        buttonEndDate.setText(simpleDateFormat.format(getTripEndDate().getTime()));
        buttonAttractions.setText(getSelectedAttractionsText());
+       spinnerActivities.setSelection(3);
        spinnerActivities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
            @Override
            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                String [] budgetArray = getResources().getStringArray(R.array.spinnerItems);
-               int newBudget = 0;
+               int newBudget;
                switch (i) {
                    case 0:
                        newBudget = Integer.parseInt(budgetArray[0].substring(1,4));
@@ -188,17 +162,19 @@ public class EnterDataFragment extends Fragment {
        });
     }
 
-    private void initMapAttractions() {
-        ArrayList<String> arrayActivities;
+    public void initMapAttractions() {
+        ArrayList<Activity> allActivitiesArrayList;
+        ArrayList<Activity> tripDesiredActivities = getTripDesiredActivities();
         Log.d(TAG, "Getting data for Attractions");
-        arrayActivities = getAllActivities();
-        for (String activity: arrayActivities) {
-            mapAttractions.put(activity,getTripDesiredActivities().contains(Activity.valueOf(activity)));
+        allActivitiesArrayList =  FirestoreDataAdapterImpl.getInstance().getAllActivities();
+        for (Activity activity: allActivitiesArrayList) {
+            mapAttractions.put(activity.toString(),tripDesiredActivities.contains(activity));
         }
+        buttonAttractions.setText(getSelectedAttractionsText());
     }
 
-    private ArrayList<String> getAllActivities() {
-        return FirestoreData.getAllActivities();
+    private ArrayList<Activity> getAllActivities() {
+        return FirestoreDataAdapterImpl.getInstance().getAllActivities();
     }
 
     private String[] getAllAttractionsKeys() {
@@ -240,50 +216,44 @@ public class EnterDataFragment extends Fragment {
     private void initCalendars(){
         final Calendar startCalendar = Calendar.getInstance();
         final Calendar endCalendar = Calendar.getInstance();
-        startDate = new DatePickerDialog(context, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        startDate = new DatePickerDialog(context, R.style.datepicker, (view, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-                //Start date valid if it is today or later, and it is earlier than the end date.
-                boolean b1 = newDate.getTime().compareTo((getTripEndDate())) > 0;
-                boolean b2 = newDate.getTime().compareTo(Calendar.getInstance().getTime())  >= 0;
-                if(b2) {
-                    Trip.getInstance().setStartDate(newDate.getTime());
-                    buttonStartDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
-                    startCalendar.setTime(newDate.getTime());
-                    Trip.getInstance().setStartDate(newDate.getTime());
-                    if(b1) {
-                        buttonEndDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
-                        endCalendar.setTime(newDate.getTime());
-                        Trip.getInstance().setEndDate(newDate.getTime());
-                    }
-                }
-                else {
-                    Snackbar.make(view, R.string.startDateError, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+            //Start date valid if it is today or later, and it is earlier than the end date.
+            boolean b1 = newDate.getTime().compareTo((getTripEndDate())) > 0;
+            boolean b2 = newDate.getTime().compareTo(Calendar.getInstance().getTime())  >= 0;
+            if(b2) {
+                Trip.getInstance().setStartDate(newDate.getTime());
+                buttonStartDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
+                startCalendar.setTime(newDate.getTime());
+                Trip.getInstance().setStartDate(newDate.getTime());
+                if(b1) {
+                    buttonEndDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
+                    endCalendar.setTime(newDate.getTime());
+                    Trip.getInstance().setEndDate(newDate.getTime());
                 }
             }
-
+            else {
+                Snackbar.make(view, R.string.startDateError, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
         }, startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.MONTH), startCalendar.get(Calendar.DAY_OF_MONTH));
 
-        endDate = new DatePickerDialog(context, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                if(newDate.getTime().compareTo(getTripStartDate()) >= 0 ) {
-                    Trip.getInstance().setEndDate(newDate.getTime());
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    buttonEndDate.setText(simpleDateFormat.format(getTripEndDate().getTime()));
-                    Trip.getInstance().setEndDate(newDate.getTime());
-                }
-                else {
-                    Snackbar.make(view, R.string.endDateError, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+        endDate = new DatePickerDialog(context, R.style.datepicker, (view, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            if(newDate.getTime().compareTo(getTripStartDate()) >= 0 ) {
+                Trip.getInstance().setEndDate(newDate.getTime());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                buttonEndDate.setText(simpleDateFormat.format(getTripEndDate().getTime()));
+                Trip.getInstance().setEndDate(newDate.getTime());
             }
-
+            else {
+                Snackbar.make(view, R.string.endDateError, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
         }, endCalendar.get(Calendar.YEAR), endCalendar.get(Calendar.MONTH), endCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
