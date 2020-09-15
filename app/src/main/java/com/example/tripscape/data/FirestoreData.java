@@ -1,24 +1,18 @@
 package com.example.tripscape.data;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.tripscape.R;
-import com.example.tripscape.TripApplication;
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.DateHelper;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Trip;
-import com.example.tripscape.presentation.EnterDataFragment;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.TimeZone;
+
 
 import static com.example.tripscape.model.Enums.*;
 import static java.util.Arrays.asList;
@@ -26,19 +20,11 @@ import static java.util.Arrays.asList;
 public class FirestoreData extends AppCompatActivity {
     private AttractionFirestore attractions;
     private static List<Attraction> attractionList;
+    private static final String TAG = "Tripescape";
 
     public FirestoreData() {
        attractionList = new ArrayList<>();
        attractions = new AttractionFirestore();
-       Query query = FirebaseFirestore.getInstance()
-               .collection("attractionsGermany")
-               .limit(50);
-       attractions.getAttractions(new FirestoreDataCallback(){
-           public void addAttraction(Attraction attraction) {
-               attractionList.add(attraction);
-           }
-       });
-    //   generateAttractionsData();
     }
         public static void generateAttractionsData() {
         Attraction attraction1 =
@@ -231,5 +217,9 @@ public class FirestoreData extends AppCompatActivity {
             default:
                 return  R.drawable.munich_4;
         }
+    }
+
+    public void setAttractionList(List<Attraction> attractions) {
+        attractionList = attractions;
     }
 }

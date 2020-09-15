@@ -47,7 +47,7 @@ public class AttractionFirestore {
     class FirestoreTask extends AsyncTask<Void, Void, Boolean> {
         boolean isSuccessful;
         boolean isComplete;
-       FirestoreDataCallback callback;
+        FirestoreDataCallback callback;
 
         public FirestoreTask(FirestoreDataCallback callback) {
             this.callback = callback;

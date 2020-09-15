@@ -192,12 +192,7 @@ public class ManageActivitiesFragment extends Fragment {
                 return true;
             }
         });
-        tableRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity) getActivity()).changeFragment(new AttractionDetailsFragment(), attraction);
-            }
-        });
+        tableRow.setOnClickListener(view -> ((MainActivity) getActivity()).changeFragment(new AttractionDetailsFragment(), attraction));
         //Add relative layout to row
         tableRow.addView(rl);
 

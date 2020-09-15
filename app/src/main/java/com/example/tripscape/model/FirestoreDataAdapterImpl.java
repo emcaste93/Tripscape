@@ -65,4 +65,8 @@ public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
         AttractionFirestore attractionFirestore = new AttractionFirestore();
         attractionFirestore.generateFirestoreData(attractionList);
     }
+
+    public void setFirestoreDataAttractionList(List<Attraction> attractions) {
+        firestoreData.setAttractionList(attractions);
+    }
 }

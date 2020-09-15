@@ -1,11 +1,13 @@
 package com.example.tripscape.presentation;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -26,8 +28,12 @@ import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.example.tripscape.model.Trip;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList;
     boolean detailsFragmentActive = false;
+    boolean firestoreDataLoaded = false;
+    ProgressDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         manageActivitiesFragment = new ManageActivitiesFragment();
         tripPlanFragment = new TripPlanFragment();
         adapter = new FirestoreDataAdapterImpl();
+        readFirestoreData();
 
         changeFragment(enterDataFragment, null);
 
@@ -178,7 +187,12 @@ public class MainActivity extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateNextPageOverview(true, view);
+               // if(firestoreDataLoaded) {
+                    updateNextPageOverview(true, view);
+           //     }
+            //    else {
+            //        loadingDialog = ProgressDialog.show(MainActivity.this, "", "Loading. Please wait...", true);
+           //     }
             }
         });
 
@@ -188,6 +202,13 @@ public class MainActivity extends AppCompatActivity {
                 updateNextPageOverview(false, view);
             }
         });
+    }
+
+    public void setFirestoreDataLoaded(boolean dataLoaded) {
+        firestoreDataLoaded = dataLoaded;
+        if(dataLoaded) {
+            loadingDialog.dismiss();
+        }
     }
 
     private void generateFirebaseData() {
@@ -242,5 +263,26 @@ public class MainActivity extends AppCompatActivity {
         txtView.setText(titleList.get(pageNum));
         newPage = circleList.get(pageNum);
         newPage.setImageResource(R.drawable.circle_full);
+    }
+
+    public void readFirestoreData () {
+        Query query = FirebaseFirestore.getInstance()
+                .collection("attractionsGermany")
+                .limit(50);
+        ProgressDialog loadingDialog = ProgressDialog.show(MainActivity.this, "", "Loading data. Please wait...", true);
+
+        query.get().
+                addOnSuccessListener(documentSnapshots -> {
+                    if (documentSnapshots.isEmpty()) {
+                        //   Log.d(TAG, "onSuccess: LIST EMPTY");
+                        return;
+                    } else {
+                        // Add all to your list
+                        List<Attraction> attractions = documentSnapshots.toObjects(Attraction.class);
+                        adapter.getInstance().setFirestoreDataAttractionList(attractions);
+                    }
+                    loadingDialog.dismiss();
+                })
+                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show());
     }
 }
