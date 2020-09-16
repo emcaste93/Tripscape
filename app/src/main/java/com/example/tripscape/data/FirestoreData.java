@@ -84,7 +84,7 @@ public class FirestoreData extends AppCompatActivity {
         return a.getPrice() * numPersons <= budget;
     }
     
-    public boolean isAttractionCompatibleWithTripStartDate(Attraction a, Date startDate) {
+    public static boolean isAttractionCompatibleWithTripStartDate(Attraction a, Date startDate) {
         String season = getSeasonFromDate(startDate);
         boolean res = a.getSeasonsAvailable().contains(season);
         return res;

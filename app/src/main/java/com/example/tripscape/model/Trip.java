@@ -1,6 +1,7 @@
 package com.example.tripscape.model;
 
 import com.example.tripscape.data.FirestoreData;
+import com.google.firebase.firestore.Exclude;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,7 @@ public class Trip implements Serializable {
 
     public Trip() {
         if (tripInstance != null){
-            throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
+         //   throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
         }
         numPersons = 2;
         budget = 0;
@@ -75,6 +76,7 @@ public class Trip implements Serializable {
         this.numPersons = numPersons;
     }
 
+    @Exclude
     public int getBudget() {
         return budget;
     }
@@ -102,6 +104,8 @@ public class Trip implements Serializable {
     public ArrayList<Attraction> getSelectedAttractions() {
         return selectedAttractions;
     }
+
+    @Exclude
     public ArrayList<Activity> getDesiredActivities() {
         return desiredActivities;
     }
@@ -147,6 +151,7 @@ public class Trip implements Serializable {
         totalPrice -= (attraction.getPrice() * numPersons);
     }
 
+    @Exclude
     public String getTripData() {
         String data = "";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");

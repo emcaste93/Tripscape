@@ -1,12 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical"
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    >
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <TextView
+                android:id="@+id/pageTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:layout_gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/title_size"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|left"
+                app:srcCompat="@drawable/user_icon_off"/>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/action_text"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/trip_text"
+        android:textColor="@color/colorBlue"
+        android:fontFamily="@font/roboto"
+        android:layout_marginLeft="20dp"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:background="@color/colorWhite"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_myTrips"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:scrollbars="vertical">
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

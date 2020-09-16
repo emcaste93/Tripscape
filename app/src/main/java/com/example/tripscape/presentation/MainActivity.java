@@ -262,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("OK",
                     (dialog, which) -> {
                         dialog.dismiss();
+                        FirestoreDataAdapterImpl.getInstance().saveTripData();
                         Intent intent = new Intent(this, MyTripsActivity.class);
                         startActivity(intent);
                     });

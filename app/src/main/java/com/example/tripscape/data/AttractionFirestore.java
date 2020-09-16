@@ -22,23 +22,41 @@ import java.util.List;
 
 public class AttractionFirestore {
     private CollectionReference attractions;
+    private CollectionReference trips;
     private static final String TAG = "Tripescape";
 
     public AttractionFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         attractions = db.collection("attractionsGermany");
+        trips = db.collection("tripsGermany");
     }
 
     public void addAttracionToCollection(Attraction attraction) {
         attractions.document().set(attraction);
     }
 
+    public void addTripToCollection(Trip trip) {
+        trips.document().set(trip);
+    }
+
     public String addEmptyAttrationToCollection() {
         return attractions.document().getId();
     }
 
+    public String addEmptyTripToCollection() {
+        return trips.document().getId();
+    }
+
     public void updateAttraction(String id, Attraction attraction) {
         attractions.document(id).set(attraction);
+    }
+
+    public void updateTrip(String id, Trip trip) {
+        attractions.document(id).set(trip);
+    }
+
+    public void saveTripData(Trip trip) {
+        trips.add(trip);
     }
 
     public void generateFirestoreData(AttractionList attractionList) {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
+
+    <ImageView
+        android:id="@+id/tripIcon"
+        android:layout_width="@dimen/imageview_width_large"
+        android:layout_height="@dimen/imageview_height_large"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/logo"/>
+
+    <TextView android:id="@+id/tripTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tripIcon"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:maxLines="1"
+        android:textSize="20dp"
+        android:text="test"
+        android:textStyle="bold"
+        />
+    <TextView android:id="@+id/tripSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:textSize="16dp"
+        android:layout_toRightOf="@id/tripIcon"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:maxLines="1"
+        android:text="test2"
+        />
+</RelativeLayout>

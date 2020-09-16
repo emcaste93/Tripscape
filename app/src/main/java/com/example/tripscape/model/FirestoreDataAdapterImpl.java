@@ -12,12 +12,14 @@ import java.util.List;
 public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
     private FirestoreData firestoreData;
     private static FirestoreDataAdapterImpl firestoreDataInstance;
+    AttractionFirestore attractionFirestore;
 
     public FirestoreDataAdapterImpl() {
         if (firestoreDataInstance != null){
         //    throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
         }
         firestoreData = new FirestoreData();
+        attractionFirestore = new AttractionFirestore();
     }
 
     public static FirestoreDataAdapterImpl getInstance(){
@@ -62,8 +64,12 @@ public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
     public void generateFirestoreData() {
         //Generate Data into Firestore
         AttractionList attractionList = getAttractionList();
-        AttractionFirestore attractionFirestore = new AttractionFirestore();
         attractionFirestore.generateFirestoreData(attractionList);
+    }
+
+    @Override
+    public void saveTripData() {
+        attractionFirestore.saveTripData(Trip.getInstance());
     }
 
     @Override

@@ -39,6 +39,7 @@
     <string name="action_text">Elija una acción</string>
     <string name="exit">Salir y guardar</string>
     <string name="exit_text">Quieres salir y guardar tus datos?</string>
+    <string name="trip_text">Seleccione un viaje guardado</string>
     <string name="share_confirmation_question">Está seguro de que quiere compartir la información sobre su viaje por correo?</string>
     <string name="app_description">"Tripescape, planea tus excursiones y actividades deportivas de una manera simple! \n Porque importa el qué y no el dónde.\n"</string>
 
