@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+     android:background="@color/colorWhite"
+    >
+
+
+    <ImageView
+        android:layout_marginTop="50dp"
+        android:layout_width="@dimen/imageview_width_extra_large"
+        android:layout_height="@dimen/imageview_height_extra_large"
+        android:src="@drawable/logo"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_marginTop="75dp"
+        android:id="@+id/action_text"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/action_text"
+        android:textColor="@color/colorBlue"
+        android:fontFamily="@font/roboto"
+        android:layout_gravity="center"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:background="@color/colorWhite"/>
+
+    <Button
+        android:layout_marginTop="30dp"
+        android:id="@+id/button_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search"
+        android:layout_gravity="center"
+        android:width="200dp"
+        android:padding="5dp"
+        android:background="@color/colorBlue"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:fontFamily="@font/roboto"
+        android:drawableLeft="@android:drawable/ic_menu_search"
+        />
+
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:id="@+id/button_mytrips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="200dp"
+        android:textSize="20dp"
+        android:text="@string/mytrips"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:background="@color/colorBlue"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto"
+        android:drawableLeft="@android:drawable/ic_menu_myplaces"
+        />
+
+
+</LinearLayout>

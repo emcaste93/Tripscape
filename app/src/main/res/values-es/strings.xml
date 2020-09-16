@@ -34,6 +34,9 @@
     <string name="about">Acerca de</string>
     <string name="share">Compartir</string>
     <string name="cancel">Cancelar</string>
+    <string name="search">Nueva búsqueda</string>
+    <string name="mytrips">Mis viajes</string>
+    <string name="action_text">Elija una acción</string>
     <string name="share_confirmation_question">Está seguro de que quiere compartir la información sobre su viaje por correo?</string>
     <string name="app_description">"Tripescape, planea tus excursiones y actividades deportivas de una manera simple! \n Porque importa el qué y no el dónde.\n"</string>
 

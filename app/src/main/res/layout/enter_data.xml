@@ -79,8 +79,8 @@
                     android:textStyle="bold"
                     android:padding="5dp"
                     android:textColor="@color/colorBlack"
-                    android:fontFamily="@font/toms_handwritten"
-                    android:textSize="24dp"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="14dp"
                     android:background="@drawable/border"/>
                 <Button
                     android:id="@+id/buttonMorePersons"

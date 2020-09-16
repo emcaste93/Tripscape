@@ -211,8 +211,10 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (!goNextPage && pageNum == 0) {
-            Snackbar.make(view, R.string.backPressedError, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            Intent intent = new Intent(this, ActionActivity.class);
+            startActivity(intent);
+            /*Snackbar.make(view, R.string.backPressedError, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();*/
             return;
         }
 

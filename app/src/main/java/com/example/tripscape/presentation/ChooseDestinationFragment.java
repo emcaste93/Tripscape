@@ -65,7 +65,9 @@ public class ChooseDestinationFragment extends Fragment {
             addDestination(location, sortedLocationMap.get(location));
         }
 
-        customizeSelectedButton(buttons.get(0));
+        if(buttons != null && buttons.size() > 0) {
+            customizeSelectedButton(buttons.get(0));
+        }
 
         return vista;
     }

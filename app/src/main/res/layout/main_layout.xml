@@ -45,7 +45,7 @@
             android:layout_marginBottom="20dp"
             android:text="@string/enterData"
             android:textColor="@color/colorBlue"
-            android:fontFamily="@font/toms_handwritten"
+            android:fontFamily="@font/roboto"
             android:textSize="32sp"
             android:textStyle="bold"
             android:background="@color/colorWhite"/>
@@ -75,7 +75,7 @@
             android:background="@color/colorBlue"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
-            android:fontFamily="@font/toms_handwritten"
+            android:fontFamily="@font/roboto"
             android:textSize="24dp"
             android:text="@string/back" />
         <ImageView
@@ -111,7 +111,7 @@
             android:background="@color/colorBlue"
             android:textColor="@color/colorWhite"
             android:textSize="24dp"
-            android:fontFamily="@font/toms_handwritten"
+            android:fontFamily="@font/roboto"
             android:textStyle="bold"
             android:text="@string/next" />
     </LinearLayout>

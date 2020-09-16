@@ -15,7 +15,7 @@ public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
 
     public FirestoreDataAdapterImpl() {
         if (firestoreDataInstance != null){
-            throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
+        //    throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
         }
         firestoreData = new FirestoreData();
     }
