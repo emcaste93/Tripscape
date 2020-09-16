@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -255,36 +256,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayExitDialog() {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.alertDialog);
-            builder.setCancelable(false);
-            builder.setTitle(R.string.exit);
-            builder.setMessage(getResources().getString(R.string.exit_text));
-            builder.setPositiveButton("OK",
-                    (dialog, which) -> {
-                        dialog.dismiss();
-                        FirestoreDataAdapterImpl.getInstance().saveTripData();
-                        Intent intent = new Intent(this, MyTripsActivity.class);
-                        startActivity(intent);
-                    });
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setTitle(R.string.exit);
 
-            builder.setNegativeButton("Cancel",
-                (dialog, which) -> dialog.dismiss());
-            final AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-            Button oKbutton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-            Button cancelButton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-            if(oKbutton != null) {
-                oKbutton.setTextSize(14);
-                oKbutton.setTypeface(Typeface.DEFAULT_BOLD);
-                oKbutton.setTextColor(getResources().getColor(R.color.colorBlue));
-            }
-            if(cancelButton != null) {
-                cancelButton.setTextSize(14);
-                cancelButton.setTypeface(Typeface.DEFAULT_BOLD);
-                cancelButton.setTextColor(getResources().getColor(R.color.colorRed));
-            }
-            int textViewId = alertDialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-            TextView tv = alertDialog.findViewById(textViewId);
-            tv.setTextColor(getResources().getColor(R.color.colorBlack));
+        TextView text = dialog.findViewById(R.id.dialogText);
+        text.setText(R.string.exit_text);
+
+        ImageButton btnCancel = dialog.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(view -> dialog.dismiss());
+
+        Button btnExitAndSave = dialog.findViewById(R.id.btnExitAndSave);
+        btnExitAndSave.setOnClickListener(view -> {
+            dialog.dismiss();
+            FirestoreDataAdapterImpl.getInstance().saveTripData();
+            Intent intent = new Intent(this, MyTripsActivity.class);
+            startActivity(intent);
+        });
+
+        Button btnExit = dialog.findViewById(R.id.btnExit);
+        btnExit.setOnClickListener(view -> {
+            dialog.dismiss();
+            Intent intent = new Intent(this, MyTripsActivity.class);
+            startActivity(intent);
+        });
+
+        dialog.show();
     }
 }
