@@ -10,6 +10,7 @@
 
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_marginTop="50dp"
         android:layout_width="@dimen/imageview_width_extra_large"
         android:layout_height="@dimen/imageview_height_extra_large"

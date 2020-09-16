@@ -206,15 +206,12 @@ public class MainActivity extends AppCompatActivity {
         }
         //Safety check OutOfBound
         if (goNextPage && pageNum >= 3) {
-            Snackbar.make(view, R.string.nextPressedError, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            displayExitDialog();
             return;
         }
         if (!goNextPage && pageNum == 0) {
             Intent intent = new Intent(this, ActionActivity.class);
             startActivity(intent);
-            /*Snackbar.make(view, R.string.backPressedError, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();*/
             return;
         }
 
@@ -255,5 +252,38 @@ public class MainActivity extends AppCompatActivity {
                     loadingDialog.dismiss();
                 })
                 .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show());
+    }
+
+    private void displayExitDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.alertDialog);
+            builder.setCancelable(false);
+            builder.setTitle(R.string.exit);
+            builder.setMessage(getResources().getString(R.string.exit_text));
+            builder.setPositiveButton("OK",
+                    (dialog, which) -> {
+                        dialog.dismiss();
+                        Intent intent = new Intent(this, MyTripsActivity.class);
+                        startActivity(intent);
+                    });
+
+            builder.setNegativeButton("Cancel",
+                (dialog, which) -> dialog.dismiss());
+            final AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            Button oKbutton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            Button cancelButton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+            if(oKbutton != null) {
+                oKbutton.setTextSize(14);
+                oKbutton.setTypeface(Typeface.DEFAULT_BOLD);
+                oKbutton.setTextColor(getResources().getColor(R.color.colorBlue));
+            }
+            if(cancelButton != null) {
+                cancelButton.setTextSize(14);
+                cancelButton.setTypeface(Typeface.DEFAULT_BOLD);
+                cancelButton.setTextColor(getResources().getColor(R.color.colorRed));
+            }
+            int textViewId = alertDialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+            TextView tv = alertDialog.findViewById(textViewId);
+            tv.setTextColor(getResources().getColor(R.color.colorBlack));
     }
 }

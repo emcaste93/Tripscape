@@ -1,17 +1,24 @@
 package com.example.tripscape.data;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.tripscape.model.Attraction;
+import com.example.tripscape.model.Trip;
+import com.example.tripscape.presentation.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 public class AttractionFirestore {
     private CollectionReference attractions;
@@ -34,44 +41,9 @@ public class AttractionFirestore {
         attractions.document(id).set(attraction);
     }
 
-    public void getAttractions(final FirestoreDataCallback firestoreData) {
-        AsyncTask<Void, Void, Boolean> task = new FirestoreTask(firestoreData).execute();
-    }
-
     public void generateFirestoreData(AttractionList attractionList) {
         for(int id = 0; id < attractionList.getSize(); id++) {
             attractions.add(attractionList.getElementAt(id));
-        }
-    }
-
-    class FirestoreTask extends AsyncTask<Void, Void, Boolean> {
-        boolean isSuccessful;
-        boolean isComplete;
-        FirestoreDataCallback callback;
-
-        public FirestoreTask(FirestoreDataCallback callback) {
-            this.callback = callback;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... String) {
-            attractions.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    isSuccessful = task.isSuccessful();
-                    if(task.isSuccessful()) {
-                        for(DocumentSnapshot document: task.getResult()) {
-                            Log.d(TAG, document.getId() + " => " + document.getData().toString());
-                            Attraction a = document.toObject(Attraction.class);
-                            callback.addAttraction(a);
-                        }
-                    }
-                    else {
-                        Log.d(TAG, "Error getting documents ", task.getException());
-                    }
-                }
-            });
-            return isComplete && isSuccessful;
         }
     }
 }
