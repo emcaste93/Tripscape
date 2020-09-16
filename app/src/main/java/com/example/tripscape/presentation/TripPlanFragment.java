@@ -84,14 +84,14 @@ public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
         MapsHelper gpsHelper = new MapsHelper(getActivity(),LOCATION_PERMISSION_REQUEST);
 
         if(longitude > 0  && latitude > 0) {
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 10.0f));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),7.5f));
         }
         else {
             //Get Current Location
            Location loc = gpsHelper.getCurrentLocation(getContext());
             if (loc!=null){
                 Log.d(TAG, "onMapReady: " + loc.getLatitude() + ", " + loc.getLongitude());
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(loc.getLatitude(),loc.getLongitude()), 10.0f));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(loc.getLatitude(),loc.getLongitude()), 7.5f));
             }
         }
     }
