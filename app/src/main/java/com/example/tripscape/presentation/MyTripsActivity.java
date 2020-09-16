@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ public class MyTripsActivity extends AppCompatActivity {
     private List<Trip> myTrips;
     private TripsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    ImageButton imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,12 @@ public class MyTripsActivity extends AppCompatActivity {
 
     private void init() {
         recyclerView = findViewById(R.id.recyclerView_myTrips);
+        imageButton = findViewById(R.id.myTrips_addTrip);
+
+        imageButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
     }
 
     //TODO: Modify this and filter by user
