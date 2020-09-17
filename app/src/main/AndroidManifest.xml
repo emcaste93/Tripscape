@@ -26,6 +26,7 @@
 
         <activity android:name=".data.FirestoreData" android:screenOrientation="portrait"/>
         <activity android:name=".presentation.MyTripsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.TripCodeActivity" android:screenOrientation="portrait"/>
         <activity android:name=".presentation.ActionActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

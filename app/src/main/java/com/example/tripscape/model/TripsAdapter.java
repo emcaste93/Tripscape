@@ -1,17 +1,22 @@
 package com.example.tripscape.model;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripscape.R;
 import com.example.tripscape.data.FirestoreData;
+import com.example.tripscape.presentation.MyTripsActivity;
+import com.example.tripscape.presentation.TripCodeActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -45,7 +50,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         return tripList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title, subtitle;
         public ImageView icon;
 
@@ -54,6 +59,19 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             title = itemView.findViewById(R.id.tripTitle);
             subtitle = itemView.findViewById(R.id.tripSubtitle);
             icon = itemView.findViewById(R.id.tripIcon);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            //Start activity for that trip
+            Trip selectedTrip = tripList.get(getAdapterPosition());
+            Intent intent = new Intent(v.getContext(), TripCodeActivity.class);
+            intent.putExtra("destination", selectedTrip.getDestination().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            intent.putExtra("startDate", sdf.format(selectedTrip.getStartDate()));
+            intent.putExtra("endDate", sdf.format(selectedTrip.getEndDate()));
+            v.getContext().startActivity(intent);
         }
     }
 }

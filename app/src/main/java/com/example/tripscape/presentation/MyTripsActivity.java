@@ -20,11 +20,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripscape.R;
 import com.example.tripscape.model.Attraction;
+import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Trip;
 import com.example.tripscape.model.TripsAdapter;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class MyTripsActivity extends AppCompatActivity {
@@ -60,13 +65,13 @@ public class MyTripsActivity extends AppCompatActivity {
     }
 
     private void initRecyclerVieW() {
-        //TODO: Order Trip list by startDate
+        //Order Trip list by startDate
+        Collections.sort(myTrips, (trip, t1) -> trip.getStartDate().compareTo(t1.getStartDate()));
         adapter = new TripsAdapter(this, myTrips);
         recyclerView.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
     }
-
 
     public void readFirestoreData () {
         Query query = FirebaseFirestore.getInstance()

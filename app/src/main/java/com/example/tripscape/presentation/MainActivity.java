@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnExit = dialog.findViewById(R.id.btnExit);
         btnExit.setOnClickListener(view -> {
             dialog.dismiss();
-            Intent intent = new Intent(this, MyTripsActivity.class);
+            Intent intent = new Intent(this, ActionActivity.class);
             startActivity(intent);
         });
 

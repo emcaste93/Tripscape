@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 import static com.example.tripscape.model.Enums.*;
 
@@ -21,6 +22,7 @@ public class Trip implements Serializable {
     private Location destination;
     private static Trip tripInstance;
     private Location lastDestination;
+    private String id;
 
     public Trip() {
         if (tripInstance != null){
@@ -35,6 +37,7 @@ public class Trip implements Serializable {
         desiredActivities = new ArrayList<>();
         selectedAttractions = new ArrayList<>();
         lastBudget = 0;
+        id = UUID.randomUUID().toString();
     }
 
     public static Trip getInstance(){
@@ -50,6 +53,14 @@ public class Trip implements Serializable {
         calendar.setTime(startDate);
         calendar.add(Calendar.DAY_OF_YEAR, x);
         endDate = calendar.getTime();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getTotalPrice() {

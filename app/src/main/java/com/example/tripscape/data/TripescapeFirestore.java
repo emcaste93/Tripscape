@@ -20,12 +20,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-public class AttractionFirestore {
+public class TripescapeFirestore {
     private CollectionReference attractions;
     private CollectionReference trips;
     private static final String TAG = "Tripescape";
 
-    public AttractionFirestore() {
+    public TripescapeFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         attractions = db.collection("attractionsGermany");
         trips = db.collection("tripsGermany");

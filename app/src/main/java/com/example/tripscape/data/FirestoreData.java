@@ -18,13 +18,13 @@ import static com.example.tripscape.model.Enums.*;
 import static java.util.Arrays.asList;
 
 public class FirestoreData extends AppCompatActivity {
-    private AttractionFirestore attractions;
+    private TripescapeFirestore attractions;
     private static List<Attraction> attractionList;
     private static final String TAG = "Tripescape";
 
     public FirestoreData() {
        attractionList = new ArrayList<>();
-       attractions = new AttractionFirestore();
+       attractions = new TripescapeFirestore();
     }
         public static void generateAttractionsData() {
         Attraction attraction1 =
