@@ -36,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -270,7 +271,12 @@ public class MainActivity extends AppCompatActivity {
         btnExitAndSave.setOnClickListener(view -> {
             dialog.dismiss();
             FirestoreDataAdapterImpl.getInstance().saveTripData();
-            Intent intent = new Intent(this, MyTripsActivity.class);
+            Intent intent = new Intent(this, TripCodeActivity.class);
+            Trip trip = Trip.getInstance();
+            intent.putExtra("destination", trip.getDestination().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            intent.putExtra("startDate", sdf.format(trip.getStartDate()));
+            intent.putExtra("endDate", sdf.format(trip.getEndDate()));
             startActivity(intent);
         });
 
