@@ -216,28 +216,35 @@ public class EnterDataFragment extends Fragment {
     private void initCalendars(){
         final Calendar startCalendar = Calendar.getInstance();
         final Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(Trip.getInstance().getEndDate());
         startDate = new DatePickerDialog(context, R.style.datepicker, (view, year, monthOfYear, dayOfMonth) -> {
             Calendar newDate = Calendar.getInstance();
             newDate.set(year, monthOfYear, dayOfMonth);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
             //Start date valid if it is today or later, and it is earlier than the end date.
-            boolean b1 = newDate.getTime().compareTo((getTripEndDate())) > 0;
-            boolean b2 = newDate.getTime().compareTo(Calendar.getInstance().getTime())  >= 0;
-            if(b2) {
+            boolean b1 = newDate.getTime().compareTo((EnterDataFragment.this.getTripEndDate())) > 0;
+            boolean b2 = newDate.getTime().compareTo(Calendar.getInstance().getTime()) >= 0;
+            if (b2) {
                 Trip.getInstance().setStartDate(newDate.getTime());
-                buttonStartDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
+                buttonStartDate.setText(simpleDateFormat.format(EnterDataFragment.this.getTripStartDate().getTime()));
                 startCalendar.setTime(newDate.getTime());
                 Trip.getInstance().setStartDate(newDate.getTime());
-                if(b1) {
-                    buttonEndDate.setText(simpleDateFormat.format(getTripStartDate().getTime()));
+                if (b1) {
+                    //If start date is later than end date then set end date = start date
+                    buttonEndDate.setText(simpleDateFormat.format(EnterDataFragment.this.getTripStartDate().getTime()));
                     endCalendar.setTime(newDate.getTime());
+                    endDate.updateDate(year, monthOfYear, dayOfMonth);
                     Trip.getInstance().setEndDate(newDate.getTime());
                 }
-            }
-            else {
+            } else {
                 Snackbar.make(view, R.string.startDateError, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                //Cancel click event and set calendar date to old start date
+                Date savedDate = Trip.getInstance().getStartDate();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(savedDate);
+                startDate.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             }
         }, startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.MONTH), startCalendar.get(Calendar.DAY_OF_MONTH));
 
@@ -253,6 +260,10 @@ public class EnterDataFragment extends Fragment {
             else {
                 Snackbar.make(view, R.string.endDateError, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Date savedDate = Trip.getInstance().getEndDate();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(savedDate);
+                endDate.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             }
         }, endCalendar.get(Calendar.YEAR), endCalendar.get(Calendar.MONTH), endCalendar.get(Calendar.DAY_OF_MONTH));
     }
