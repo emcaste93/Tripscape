@@ -93,4 +93,10 @@ public class MyTripsActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show());
     }
+
+    public void loginButtonMyTripsActivityOnClick(View view) {
+        //TODO Add confirm dialog(Log out)
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }

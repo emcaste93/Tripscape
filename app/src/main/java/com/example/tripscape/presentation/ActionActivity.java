@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,6 +66,12 @@ public class ActionActivity extends AppCompatActivity {
         int textViewId = alertDialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
         TextView tv = alertDialog.findViewById(textViewId);
         tv.setTextColor(getResources().getColor(R.color.colorBlack));
+    }
+
+    public void loginButtonActionActivityOnClick(View view) {
+        //TODO Add confirm dialog(Log out)
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
 }

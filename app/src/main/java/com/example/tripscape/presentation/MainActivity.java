@@ -289,4 +289,10 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
+    public void loginButtonOnClick(View view) {
+        //TODO Add confirm dialog(Log out)
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }

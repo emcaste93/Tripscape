@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "851000037657-p904dfs87e175ko4n6knj965vr0iqkqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripscape",
+            "certificate_hash": "ab6350d34a02aeadfc473abe35bc7e2917a11049"
+          }
+        },
+        {
           "client_id": "851000037657-6rlsrh6r3b80eju1vbt4lb6rutnbbk6c.apps.googleusercontent.com",
           "client_type": 3
         }
