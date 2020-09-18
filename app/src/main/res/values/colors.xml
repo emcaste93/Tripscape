@@ -8,4 +8,5 @@
     <color name="colorRed">#FF0000</color>
     <color name="colorGrey">#C0C0C0</color>
     <color name="colorOrange">#ff6700</color>
+    <color name="colorGoogleRed">#f44336</color>
 </resources>
