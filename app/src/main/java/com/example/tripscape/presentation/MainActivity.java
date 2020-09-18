@@ -29,12 +29,14 @@ import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.example.tripscape.model.Trip;
+import com.example.tripscape.model.TripUser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -292,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loginButtonOnClick(View view) {
         //TODO Add confirm dialog(Log out)
+        Trip.getInstance().setUserId("");
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

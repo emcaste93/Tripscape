@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tripscape.R;
+import com.example.tripscape.model.TripUser;
 import com.example.tripscape.model.Users;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -41,6 +42,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.firestore.auth.User;
 
 public class LoginActivity extends AppCompatActivity  implements GoogleApiClient.OnConnectionFailedListener {
     private static final int RC_GOOGLE_SIGN_IN = 123;
@@ -58,7 +60,6 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
-
         FacebookSdk.sdkInitialize(this);
 
         etEmail = (EditText) findViewById(R.id.email);
@@ -161,8 +162,11 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
         FirebaseUser usuario = auth.getCurrentUser();
         boolean usesEmailPassword = false;
         if (!join &&  usuario != null) {
-            Users.saveUser(auth.getCurrentUser());
-
+            TripUser tripUser = TripUser.getInstance();
+            tripUser.setName(usuario.getEmail());
+            tripUser.setEmail(usuario.getDisplayName());
+            tripUser.setUid(usuario.getUid());
+            Users.saveUser(tripUser);
             for (UserInfo info : usuario.getProviderData()) {
                 if (info.getProviderId().equals("password")) {
                     usesEmailPassword = true;
@@ -173,6 +177,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                 sendVerificationEmail();
             }
             else {
+                //Create User instance
                 Intent i = new Intent(this, ActionActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_NEW_TASK
@@ -208,24 +213,6 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                             }
                         });
             }
-        }
-    }
-
-    private void checkIfEmailVerified()
-    {
-        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (usuario.isEmailVerified())
-        {
-            // user is verified, so you can finish this activity or send user to activity which you want.
-            Toast.makeText(this, "Log in: " + usuario.getDisplayName() + " - " + usuario.getEmail(), Toast.LENGTH_LONG).show();
-            Intent i = new Intent(this, ActionActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
-        }
-        else
-        {
-            sendVerificationEmail();
         }
     }
 

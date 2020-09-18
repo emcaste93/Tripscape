@@ -22,6 +22,7 @@ import com.example.tripscape.R;
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Trip;
+import com.example.tripscape.model.TripUser;
 import com.example.tripscape.model.TripsAdapter;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -76,6 +77,7 @@ public class MyTripsActivity extends AppCompatActivity {
     public void readFirestoreData () {
         Query query = FirebaseFirestore.getInstance()
                 .collection("tripsGermany")
+                .whereEqualTo("userId", TripUser.getInstance().getUid())
                 .limit(50);
         ProgressDialog loadingDialog = ProgressDialog.show(this, "", "Loading data. Please wait...", true);
 
@@ -96,6 +98,7 @@ public class MyTripsActivity extends AppCompatActivity {
 
     public void loginButtonMyTripsActivityOnClick(View view) {
         //TODO Add confirm dialog(Log out)
+        Trip.getInstance().setUserId("");
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

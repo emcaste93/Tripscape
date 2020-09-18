@@ -16,13 +16,14 @@ public class Trip implements Serializable {
 
     private int numPersons, budget, lastBudget;
     private int totalPrice;
-    private Date startDate, endDate, lastStartDate, lastEndDate;
+    private Date startDate, endDate;
     private ArrayList<Activity> desiredActivities;
     private ArrayList<Attraction> selectedAttractions;
     private Location destination;
     private static Trip tripInstance;
     private Location lastDestination;
     private String id;
+    private String userId;
 
     public Trip() {
         if (tripInstance != null){
@@ -38,6 +39,7 @@ public class Trip implements Serializable {
         selectedAttractions = new ArrayList<>();
         lastBudget = 0;
         id = UUID.randomUUID().toString();
+        userId = "";
     }
 
     public static Trip getInstance(){
@@ -138,8 +140,7 @@ public class Trip implements Serializable {
     }
 
     public void initialiseSelectedAttractions() {
-        if (lastDestination == null || lastDestination != destination || lastBudget != budget
-                || lastStartDate != startDate || lastEndDate != endDate) {
+        if (lastDestination == null || lastDestination != destination || lastBudget != budget) {
             totalPrice = 0;
             selectedAttractions = FirestoreDataAdapterImpl.getInstance().getAttractionsForLocation(destination, startDate, endDate, budget);
             for(Attraction a: selectedAttractions) {
@@ -176,6 +177,14 @@ public class Trip implements Serializable {
             data += "\n " + count + ") " + a.toString();
         }
         return data;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 }

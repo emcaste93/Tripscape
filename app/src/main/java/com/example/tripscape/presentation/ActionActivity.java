@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tripscape.R;
+import com.example.tripscape.model.Trip;
 
 public class ActionActivity extends AppCompatActivity {
     Button buttonSearch, buttonMyTrips;
@@ -70,6 +71,7 @@ public class ActionActivity extends AppCompatActivity {
 
     public void loginButtonActionActivityOnClick(View view) {
         //TODO Add confirm dialog(Log out)
+        Trip.getInstance().setUserId("");
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.Trip;
+import com.example.tripscape.model.TripUser;
 import com.example.tripscape.presentation.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,6 +57,9 @@ public class TripescapeFirestore {
     }
 
     public void saveTripData(Trip trip) {
+        if(trip.getUserId() == "") {
+            trip.setUserId(TripUser.getInstance().getUid());
+        }
         trips.add(trip);
     }
 
