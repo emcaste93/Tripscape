@@ -1,12 +1,17 @@
 package com.example.tripscape.model;
 
+import android.util.Log;
+
 import com.example.tripscape.data.TripescapeFirestore;
 import com.example.tripscape.data.AttractionList;
 import com.example.tripscape.data.FirestoreData;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
     private FirestoreData firestoreData;
@@ -69,6 +74,11 @@ public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
     @Override
     public void saveTripData() {
         attractionFirestore.saveTripData(Trip.getInstance());
+    }
+
+    @Override
+    public void saveUser(final TripUser user) {
+        attractionFirestore.saveUser(user);
     }
 
     @Override

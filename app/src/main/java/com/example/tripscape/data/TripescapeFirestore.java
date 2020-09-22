@@ -21,6 +21,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 public class TripescapeFirestore {
     private CollectionReference attractions;
     private CollectionReference trips;
@@ -68,4 +70,16 @@ public class TripescapeFirestore {
             attractions.add(attractionList.getElementAt(id));
         }
     }
+
+    public void saveUser(final TripUser user) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        try {
+            db.collection("users").document(user.getUid()).set(user);
+        }
+        catch (Exception e) {
+            Log.d(TAG, "Error when storing the user into FirebaseFirestore: " +e.getMessage());
+        }
+    }
+
+
 }

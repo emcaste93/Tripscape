@@ -62,6 +62,18 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="backgroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="0" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="foregroundClipArt">
                                         <value>
                                           <PersistentState>
@@ -79,8 +91,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\e.castellano\Desktop\Mis cosas\Uni\activities\logo.png" />
-                                                <entry key="scalingPercent" value="43" />
+                                                <entry key="imagePath" value="C:\Users\e.castellano\Desktop\Mis cosas\Uni\activities\logo_1 - Kopie.png" />
+                                                <entry key="scalingPercent" value="66" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -112,9 +124,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="outputName" value="logo_tripescape" />
+                                      <entry key="legacyIconShape" value="NONE" />
+                                      <entry key="outputName" value="logo_tripescape_1" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -2,30 +2,27 @@ package com.example.tripscape.model;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripscape.R;
 import com.example.tripscape.data.FirestoreData;
-import com.example.tripscape.presentation.MyTripsActivity;
 import com.example.tripscape.presentation.TripCodeActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> {
+public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private List<Trip> tripList;
 
-    public TripsAdapter(Context context, List<Trip> tripList) {
+    public TripAdapter(Context context, List<Trip> tripList) {
         this.tripList = tripList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

@@ -15,5 +15,6 @@ public interface FirestoreDataAdapter {
     AttractionList getAttractionList();
     void generateFirestoreData();
     void saveTripData();
+    void saveUser(final TripUser user);
     ArrayList<Enums.Activity> getAllActivities();
 }

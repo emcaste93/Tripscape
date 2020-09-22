@@ -47,7 +47,7 @@
         android:layout_gravity="center"/>
 
     <TextView
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/action_text"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"

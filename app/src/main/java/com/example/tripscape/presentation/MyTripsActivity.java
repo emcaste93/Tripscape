@@ -1,17 +1,10 @@
 package com.example.tripscape.presentation;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,24 +12,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripscape.R;
-import com.example.tripscape.model.Attraction;
-import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.Trip;
 import com.example.tripscape.model.TripUser;
-import com.example.tripscape.model.TripsAdapter;
+import com.example.tripscape.model.TripAdapter;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 public class MyTripsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Trip> myTrips;
-    private TripsAdapter adapter;
+    private TripAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     ImageButton imageButton;
 
@@ -70,7 +59,7 @@ public class MyTripsActivity extends AppCompatActivity {
         if(myTrips != null && myTrips.size() > 0) {
             Collections.sort(myTrips, (trip, t1) -> trip.getStartDate().compareTo(t1.getStartDate()));
         }
-        adapter = new TripsAdapter(this, myTrips);
+        adapter = new TripAdapter(this, myTrips);
         recyclerView.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

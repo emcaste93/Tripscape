@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tripscape.R;
+import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.example.tripscape.model.TripUser;
-import com.example.tripscape.model.Users;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -42,7 +42,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
-import com.google.firebase.firestore.auth.User;
 
 public class LoginActivity extends AppCompatActivity  implements GoogleApiClient.OnConnectionFailedListener {
     private static final int RC_GOOGLE_SIGN_IN = 123;
@@ -85,7 +84,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
         //Facebook
         callbackManager = CallbackManager.Factory.create();
         btnFacebook = (LoginButton) findViewById(R.id.facebook);
-        btnFacebook.setReadPermissions("email", "public_profile");
+        btnFacebook.setReadPermissions("email", "public_profile", "user_friends");
         btnFacebook.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override public void onSuccess(LoginResult loginResult) {
@@ -113,6 +112,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    dialogo.dismiss();
                                     verifyUserValidated();
                                 } else {
                                     dialogo.dismiss();
@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
             tripUser.setName(usuario.getDisplayName());
             tripUser.setEmail(usuario.getEmail());
             tripUser.setUid(usuario.getUid());
-            Users.saveUser(tripUser);
+            FirestoreDataAdapterImpl.getInstance().saveUser(tripUser);
             for (UserInfo info : usuario.getProviderData()) {
                 if (info.getProviderId().equals("password")) {
                     usesEmailPassword = true;
@@ -206,6 +206,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     verifyUserValidated();
+                                    dialogo.dismiss();
                                 } else {
                                     dialogo.dismiss();
                                     message(task.getException().getLocalizedMessage());
