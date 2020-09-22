@@ -163,8 +163,8 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
         boolean usesEmailPassword = false;
         if (!join &&  usuario != null) {
             TripUser tripUser = TripUser.getInstance();
-            tripUser.setName(usuario.getEmail());
-            tripUser.setEmail(usuario.getDisplayName());
+            tripUser.setName(usuario.getDisplayName());
+            tripUser.setEmail(usuario.getEmail());
             tripUser.setUid(usuario.getUid());
             Users.saveUser(tripUser);
             for (UserInfo info : usuario.getProviderData()) {
@@ -322,6 +322,7 @@ public class LoginActivity extends AppCompatActivity  implements GoogleApiClient
                     @Override public void onComplete(@NonNull Task<AuthResult> task){
                         if (task.isSuccessful()) {
                             verifyUserValidated();
+                            dialogo.dismiss();
                         } else {
                             dialogo.dismiss();
                             Log.w("Tripscape", "Error en signInAnonymously", task.getException());

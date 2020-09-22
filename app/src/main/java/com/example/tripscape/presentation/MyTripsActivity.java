@@ -67,7 +67,9 @@ public class MyTripsActivity extends AppCompatActivity {
 
     private void initRecyclerVieW() {
         //Order Trip list by startDate
-        Collections.sort(myTrips, (trip, t1) -> trip.getStartDate().compareTo(t1.getStartDate()));
+        if(myTrips != null && myTrips.size() > 0) {
+            Collections.sort(myTrips, (trip, t1) -> trip.getStartDate().compareTo(t1.getStartDate()));
+        }
         adapter = new TripsAdapter(this, myTrips);
         recyclerView.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(this);
@@ -84,13 +86,13 @@ public class MyTripsActivity extends AppCompatActivity {
         query.get().
                 addOnSuccessListener(documentSnapshots -> {
                     if (documentSnapshots.isEmpty()) {
+                        myTrips = new ArrayList<>();
                         //   Log.d(TAG, "onSuccess: LIST EMPTY");
-                        return;
                     } else {
                         //Save data into Attraction class and initialise Selected Activities to All activities
                         myTrips = documentSnapshots.toObjects(Trip.class);
-                        initRecyclerVieW();
                     }
+                    initRecyclerVieW();
                     loadingDialog.dismiss();
                 })
                 .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show());

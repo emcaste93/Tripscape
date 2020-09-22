@@ -28,7 +28,6 @@ public class Attraction implements Serializable {
 
     }
 
-
     public Attraction(String title, Activity activity, Location location, int price, boolean transportation ,String duration, String startAddress, String startTime,
                       List<String> seasonsAvailable, String link, List<TripDay> tripDays, GeoPoint coordinates, double latitude) {
         this.title = title;

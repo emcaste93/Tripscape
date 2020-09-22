@@ -3,6 +3,7 @@ package com.example.tripscape.presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -47,5 +48,12 @@ public class TripCodeActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MyTripsActivity.class);
             startActivity(intent);
         });
+    }
+
+    public void loginButtonTripCodeOnClick(View view) {
+        //TODO Add confirm dialog(Log out)
+        Trip.getInstance().setUserId("");
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
