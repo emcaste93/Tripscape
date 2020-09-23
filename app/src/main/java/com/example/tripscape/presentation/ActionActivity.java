@@ -60,7 +60,7 @@ public class ActionActivity extends AppCompatActivity {
         alertDialog.show();
         Button b = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
         if(b != null) {
-            b.setTextSize(14);
+            b.setTextSize(24);
             b.setTypeface(Typeface.DEFAULT_BOLD);
             b.setTextColor(getResources().getColor(R.color.colorBlack));
         }

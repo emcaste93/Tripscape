@@ -77,6 +77,11 @@ public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
     }
 
     @Override
+    public void deleteTrip(Trip trip) {
+        attractionFirestore.removeTrip(trip.getId());
+    }
+
+    @Override
     public void saveUser(final TripUser user) {
         attractionFirestore.saveUser(user);
     }

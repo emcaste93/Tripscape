@@ -33,6 +33,7 @@
     <string name="not_included">No incluida</string>
     <string name="about">Acerca de</string>
     <string name="share">Compartir</string>
+    <string name="remove">Borrar</string>
     <string name="cancel">Cancelar</string>
     <string name="search">Nueva búsqueda</string>
     <string name="mytrips">Mis viajes</string>
@@ -41,6 +42,7 @@
     <string name="exit_text">Quieres salir y guardar tus datos?</string>
     <string name="trip_text">Seleccione un viaje guardado</string>
     <string name="share_confirmation_question">Está seguro de que quiere compartir la información sobre su viaje por correo?</string>
+    <string name="removeTrip_confirmation_question">Está seguro de que quiere eliminar el viaje?</string>
     <string name="app_description">"Tripescape, planea tus excursiones y actividades deportivas de una manera simple! \n Porque importa el qué y no el dónde.\n"</string>
 
 </resources>

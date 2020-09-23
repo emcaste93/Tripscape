@@ -32,6 +32,7 @@
     <string name="not_included">Not included</string>
     <string name="about">About</string>
     <string name="share">Share</string>
+    <string name="remove">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="search">New search</string>
     <string name="mytrips">My trips</string>
@@ -39,7 +40,8 @@
     <string name="trip_text">Select a saved trip</string>
     <string name="exit">Exit and save</string>
     <string name="exit_text">Would you like to exit and save your data?</string>
-    <string name="share_confirmation_question">Are you sure you wanna share your trip information per email?</string>
+    <string name="share_confirmation_question">Are you sure you want to share your trip information per email?</string>
+    <string name="removeTrip_confirmation_question">Are you sure you want to delete the selected trip?</string>
     <string name="app_description">"Tripescape, plan your excursions and sport activities in the easiest way! \nBecause it matters what you want to do and not where.\n"</string>
     <string name="facebook_application_id" translatable="false">1230640850619857</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1230640850619857</string>

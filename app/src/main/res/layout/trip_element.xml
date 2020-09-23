@@ -14,8 +14,9 @@
         android:layout_marginLeft="20dp"
         android:src="@drawable/logo"/>
 
-    <TextView android:id="@+id/tripTitle"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tripTitle"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/tripIcon"
         android:layout_marginLeft="20dp"
@@ -27,8 +28,9 @@
         android:text="test"
         android:textStyle="bold"
         />
-    <TextView android:id="@+id/tripSubtitle"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tripSubtitle"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="40dp"
@@ -38,4 +40,12 @@
         android:maxLines="1"
         android:text="test2"
         />
+    <Button
+        android:id="@+id/btnRemoveTrip"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="X"
+        android:textSize="14dp"
+        android:layout_toRightOf="@id/tripTitle"
+        android:background="@color/fui_transparent"/>
 </RelativeLayout>

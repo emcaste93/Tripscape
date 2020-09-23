@@ -141,11 +141,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             dialog.dismiss();
                         });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
                 final AlertDialog alertDialog = builder.create();
                 alertDialog.show();
                 Button bPositive = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
@@ -279,12 +275,14 @@ public class MainActivity extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             intent.putExtra("startDate", sdf.format(trip.getStartDate()));
             intent.putExtra("endDate", sdf.format(trip.getEndDate()));
+            Trip.getInstance().deleteInstance();
             startActivity(intent);
         });
 
         Button btnExit = dialog.findViewById(R.id.btnExit);
         btnExit.setOnClickListener(view -> {
             dialog.dismiss();
+            Trip.getInstance().deleteInstance();
             Intent intent = new Intent(this, ActionActivity.class);
             startActivity(intent);
         });

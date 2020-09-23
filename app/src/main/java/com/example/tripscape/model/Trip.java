@@ -50,6 +50,10 @@ public class Trip implements Serializable {
         return tripInstance;
     }
 
+    public static void deleteInstance() {
+        tripInstance = null;
+    }
+
     private void setEndDateAsStartDayPlusXDays(int x) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(startDate);
