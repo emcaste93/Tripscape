@@ -45,8 +45,6 @@ public class ActionActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MyTripsActivity.class);
             startActivity(intent);
         });
-
-
     }
 
     private void displayAboutDialog() {
