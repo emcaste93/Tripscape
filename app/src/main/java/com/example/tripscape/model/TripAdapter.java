@@ -5,21 +5,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripscape.R;
-import com.example.tripscape.data.FirestoreData;
-import com.example.tripscape.presentation.MainActivity;
+import com.example.tripscape.data.FirestoreDataManager;
 import com.example.tripscape.presentation.TripCodeActivity;
 
 import java.text.SimpleDateFormat;
@@ -48,7 +45,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.title.setText(trip.getDestination().toString());
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         holder.subtitle.setText(formatter.format(trip.getStartDate().getTime()) + " - " +  formatter.format(trip.getEndDate().getTime()));
-        holder.icon.setImageResource(FirestoreData.getDrawableFromLocation(trip.getDestination()));
+        holder.icon.setImageResource(FirestoreDataManager.getDrawableFromLocation(trip.getDestination()));
     }
 
     @Override

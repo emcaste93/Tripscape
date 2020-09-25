@@ -3,43 +3,31 @@ package com.example.tripscape.presentation;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransitionImpl;
 
 import com.example.tripscape.R;
-import com.example.tripscape.data.FirestoreData;
+import com.example.tripscape.data.FirestoreDataManager;
 import com.example.tripscape.model.Attraction;
-import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.example.tripscape.model.Trip;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static com.example.tripscape.model.Enums.*;
 
 public class ManageActivitiesFragment extends Fragment {
     Context context;
@@ -88,7 +76,7 @@ public class ManageActivitiesFragment extends Fragment {
         //Create new image view
         ImageView imageView = new ImageView(context);
         imageView.setLayoutParams(rowParams);
-        imageView.setImageResource(FirestoreData.getDrawableFromActivity(attraction.getActivity()));
+        imageView.setImageResource(FirestoreDataManager.getDrawableFromActivity(attraction.getActivity()));
         imageView.getLayoutParams().height = (int) getResources().getDimension(R.dimen.imageview_height_large);
         imageView.getLayoutParams().width = (int) getResources().getDimension(R.dimen.imageview_width_large);
         tableRow.addView(imageView);
@@ -192,7 +180,7 @@ public class ManageActivitiesFragment extends Fragment {
                 return true;
             }
         });
-        tableRow.setOnClickListener(view -> ((MainActivity) getActivity()).changeFragment(new AttractionDetailsFragment(), attraction));
+        tableRow.setOnClickListener(view -> ((SearchActivity) getActivity()).changeFragment(new AttractionDetailsFragment(), attraction));
         //Add relative layout to row
         tableRow.addView(rl);
 

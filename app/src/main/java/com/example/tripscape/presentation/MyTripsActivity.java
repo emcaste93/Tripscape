@@ -44,7 +44,7 @@ public class MyTripsActivity extends AppCompatActivity {
         imageButton = findViewById(R.id.myTrips_addTrip);
 
         imageButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, SearchActivity.class);
             startActivity(intent);
         });
     }

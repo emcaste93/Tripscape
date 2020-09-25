@@ -1,6 +1,5 @@
 package com.example.tripscape.model;
 
-import com.example.tripscape.data.FirestoreData;
 import com.google.firebase.firestore.Exclude;
 
 import java.io.Serializable;

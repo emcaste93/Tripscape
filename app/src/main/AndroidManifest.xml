@@ -28,7 +28,7 @@
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id"/>
 
         <activity android:name=".presentation.ActionActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".data.FirestoreData" android:screenOrientation="portrait"/>
+        <activity android:name=".data.FirestoreDataManager" android:screenOrientation="portrait"/>
         <activity android:name=".presentation.MyTripsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".presentation.TripCodeActivity" android:screenOrientation="portrait"/>
         <activity android:name=".presentation.LoginActivity" android:screenOrientation="portrait">
@@ -37,7 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.MainActivity" android:screenOrientation="portrait">
+        <activity android:name=".presentation.SearchActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SENDTO" />
                 <data android:scheme="mailto" />

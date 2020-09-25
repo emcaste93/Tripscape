@@ -1,6 +1,5 @@
 package com.example.tripscape.presentation;
 
-import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,11 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import com.example.tripscape.R;
-import com.example.tripscape.data.FirestoreData;
+import com.example.tripscape.data.FirestoreDataManager;
 import com.example.tripscape.model.Attraction;
 import com.example.tripscape.model.MapsHelper;
 import com.example.tripscape.model.Trip;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -21,12 +19,10 @@ import com.google.android.gms.maps.MapsInitializer;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
-import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -66,7 +62,7 @@ public class TripPlanFragment extends Fragment implements OnMapReadyCallback {
                     .position(new LatLng(attraction.getCoordinates().getLatitude(), attraction.getCoordinates().getLongitude()))
                     .title(attraction.getTitle())
                     .snippet(attraction.getActivity().toString())
-                    .icon(BitmapDescriptorFactory.fromResource(FirestoreData.getDrawableFromActivity(attraction.getActivity()))));
+                    .icon(BitmapDescriptorFactory.fromResource(FirestoreDataManager.getDrawableFromActivity(attraction.getActivity()))));
         }
         //Set latitude and longitude as the "average point" from all attractions
         longitude = totalLong / tripAttractions.size();

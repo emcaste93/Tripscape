@@ -1,20 +1,15 @@
 package com.example.tripscape.model;
 
-import android.util.Log;
-
 import com.example.tripscape.data.TripescapeFirestore;
 import com.example.tripscape.data.AttractionList;
-import com.example.tripscape.data.FirestoreData;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.tripscape.data.FirestoreDataManager;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
 public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
-    private FirestoreData firestoreData;
+    private FirestoreDataManager firestoreData;
     private static FirestoreDataAdapterImpl firestoreDataInstance;
     TripescapeFirestore attractionFirestore;
 
@@ -22,7 +17,7 @@ public class FirestoreDataAdapterImpl implements FirestoreDataAdapter {
         if (firestoreDataInstance != null){
         //    throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
         }
-        firestoreData = new FirestoreData();
+        firestoreData = new FirestoreDataManager();
         attractionFirestore = new TripescapeFirestore();
     }
 

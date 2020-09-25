@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.tripscape.R;
-import com.example.tripscape.data.FirestoreData;
+import com.example.tripscape.data.FirestoreDataManager;
 import com.example.tripscape.model.Attraction;
 
 public class AttractionDetailsFragment  extends Fragment {
@@ -49,7 +49,7 @@ public class AttractionDetailsFragment  extends Fragment {
             String transportationText = attraction.getTransportation() ? "Included" : "Not included";
             tvTransportation.setText(transportationText);
             tvLink.setText(attraction.getLink());
-            imageView.setImageResource(FirestoreData.getDrawableFromActivity(attraction.getActivity()));
+            imageView.setImageResource(FirestoreDataManager.getDrawableFromActivity(attraction.getActivity()));
         }
     }
 }

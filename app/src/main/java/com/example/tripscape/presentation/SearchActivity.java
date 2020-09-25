@@ -1,6 +1,5 @@
 package com.example.tripscape.presentation;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -13,8 +12,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,27 +20,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tripscape.R;
-import com.example.tripscape.data.AttractionList;
-import com.example.tripscape.data.FirestoreData;
 import com.example.tripscape.model.Attraction;
-import com.example.tripscape.model.Enums;
 import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.example.tripscape.model.Trip;
-import com.example.tripscape.model.TripUser;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
     Button buttonNext, buttonBack;
     ChooseDestinationFragment chooseDestinationFragment;
     EnterDataFragment enterDataFragment;
@@ -101,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
             if(item.getItemId() == R.id.action_about)
             {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.alertDialog);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this, R.style.alertDialog);
                 builder.setCancelable(false);
                 builder.setTitle(R.string.about);
                 builder.setMessage(getResources().getString(R.string.app_description));
@@ -120,14 +108,14 @@ public class MainActivity extends AppCompatActivity {
                 tv.setTextColor(getResources().getColor(R.color.colorBlack));
             }
             else if(item.getItemId() == R.id.action_share) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.alertDialog);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this, R.style.alertDialog);
                 builder.setCancelable(false);
                 builder.setTitle(R.string.share);
                 builder.setMessage(getResources().getString(R.string.share_confirmation_question));
                 builder.setPositiveButton(getResources().getString(R.string.share),
                         (dialog, which) -> {
                             if(Trip.getInstance().getSelectedAttractions().size() == 0) {
-                                Toast.makeText(MainActivity.this, "You must complete the search of the attractions of the trip before sharing!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SearchActivity.this, "You must complete the search of the attractions of the trip before sharing!",Toast.LENGTH_SHORT).show();
                             }
                             else {
                                 //Send info per email
@@ -234,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         Query query = FirebaseFirestore.getInstance()
                 .collection("attractionsGermany")
                 .limit(50);
-        ProgressDialog loadingDialog = ProgressDialog.show(MainActivity.this, "", "Loading data. Please wait...", true);
+        ProgressDialog loadingDialog = ProgressDialog.show(SearchActivity.this, "", "Loading data. Please wait...", true);
 
         query.get().
                 addOnSuccessListener(documentSnapshots -> {

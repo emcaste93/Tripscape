@@ -17,12 +17,12 @@ import java.util.List;
 import static com.example.tripscape.model.Enums.*;
 import static java.util.Arrays.asList;
 
-public class FirestoreData extends AppCompatActivity {
+public class FirestoreDataManager extends AppCompatActivity {
     private TripescapeFirestore attractions;
     private static List<Attraction> attractionList;
     private static final String TAG = "Tripescape";
 
-    public FirestoreData() {
+    public FirestoreDataManager() {
        attractionList = new ArrayList<>();
        attractions = new TripescapeFirestore();
     }

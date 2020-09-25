@@ -36,7 +36,7 @@ public class ActionActivity extends AppCompatActivity {
         logo.setOnClickListener( v -> displayAboutDialog());
 
         buttonSearch.setOnClickListener( v -> {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, SearchActivity.class);
             startActivity(intent);
         });
 

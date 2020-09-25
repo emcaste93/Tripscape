@@ -4,24 +4,19 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.tripscape.R;
-import com.example.tripscape.data.FirestoreData;
 import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.example.tripscape.model.Trip;
 import com.google.android.material.snackbar.Snackbar;

@@ -1,10 +1,7 @@
 package com.example.tripscape.presentation;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +14,10 @@ import android.widget.TableRow;
 
 import androidx.fragment.app.Fragment;
 import com.example.tripscape.R;
-import com.example.tripscape.data.FirestoreData;
-import com.example.tripscape.model.Enums;
+import com.example.tripscape.data.FirestoreDataManager;
 import com.example.tripscape.model.Enums.Location;
-import com.example.tripscape.model.FirestoreDataAdapter;
 import com.example.tripscape.model.FirestoreDataAdapterImpl;
 import com.example.tripscape.model.Trip;
-import com.google.android.material.button.MaterialButton;
 
 
 import java.util.ArrayList;
@@ -31,8 +25,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import static com.example.tripscape.model.Enums.*;
 
@@ -116,7 +108,7 @@ public class ChooseDestinationFragment extends Fragment {
         ImageView imageView = new ImageView(context);
         imageView.setLayoutParams(rowParams);
 
-        imageView.setImageResource(FirestoreData.getDrawableFromLocation(location));
+        imageView.setImageResource(FirestoreDataManager.getDrawableFromLocation(location));
         imageView.getLayoutParams().height = (int) getResources().getDimension(R.dimen.imageview_height);
         imageView.getLayoutParams().width = (int) getResources().getDimension(R.dimen.imageview_width);
         tableRow.addView(imageView);
